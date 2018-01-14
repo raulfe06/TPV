@@ -20,6 +20,8 @@ const int NUM_MAP_TEXTURES = 4; // Casilla vacía, Muro, Comida, Vitamina
 // Arrays con los atrubitos de cada textura del mapa
 const textAtributes TEXTURE_ATRIBUTES[NUM_MAP_TEXTURES] = { {"empty.png",1,1}, { "wall.png", 1, 1 },{ "food.png", 1, 1 },{ "vitamin.png", 1, 1 } };
 
+const int maxR = 50;
+const int maxC = 50;
 /*
 Clase GameMap: crea la matriz, a partir de la cual se creará y actualizará el nivel
 

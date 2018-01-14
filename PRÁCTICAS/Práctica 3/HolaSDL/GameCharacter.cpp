@@ -1,13 +1,13 @@
 #include "GameCharacter.h"
 #include "Game.h"
 #include <fstream>
+#include "FileFormatError.h"
+#include <iostream>
 
 using namespace std;
 GameCharacter::GameCharacter()
 {
 }
-
-
 
 // A) SE INICIALIZA A PARTIR DE <GameObject>, CREA LA TEXTURA DEL PERSONAJE Y OBTIENE LAS MEDIDAS DE SU RECTÁNGULO DESTINO
 GameCharacter::GameCharacter(Game* game, SDL_Renderer* renderer, int row, int col) : GameObject(game), textRow(row), textCol(col)
@@ -42,6 +42,20 @@ void GameCharacter::loadFromFile(ifstream& file)
 	dirY = aux;
 	file >> aux;
 	dirX = aux;
+	try {
+		if (dirY > 1 || dirY < -1) throw FileFormatError("Direccion Y del objeto incorrectas, se ha asignado DirY = 1");
+	}
+	catch (FileFormatError& e) {
+		cout << e.what() << endl;
+		dirY = 1;
+	}
+	try {
+		if (dirX > 1 || dirX < -1) throw FileFormatError("Direccion X del objeto incorrectas, se ha asignado DirX = 1");
+	}
+	catch (FileFormatError& e) {
+		cout << e.what() << endl;
+		dirX = 1;
+	}
 }
 
 // C) PARTE COMÚN DEL GUARDADO -> GUARDA POSICIONES Y DIRECCIÓN

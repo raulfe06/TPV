@@ -1,9 +1,10 @@
 #pragma once
 #include "PacmanError.h"
-class FileNotFoundError : PacmanError
+class FileNotFoundError : public PacmanError
 {
+private:
 public:
-	FileNotFoundError();
-	~FileNotFoundError();
+	FileNotFoundError(const string& m) : PacmanError("archivo no encontrado: " + m){};
+	~FileNotFoundError() {};
 };
 
