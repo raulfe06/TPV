@@ -33,6 +33,6 @@
 
 *.zip
 
-*bin/
-*Debug/
+bin/
+Debug/
 .vs/
