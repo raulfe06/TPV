@@ -32,8 +32,11 @@
 *.app
 
 *.zip
+*.vcxproj
+
+*.filters
+
 
 bin/
 Debug/
 .vs/
-.vcxproj
