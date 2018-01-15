@@ -1,12 +1,12 @@
 #include "Ghost.h"
-#include "Game.h"
+#include "PlayState.h"
 #include <fstream>
 
 bool Ghost::frightened;
 
 
 // A) INICALIZA LAS VARIABLES DEL FANTASMA -> UTILIZA LA CONSTRUCTORA DEL PADRE, Y LUEGO INICIALIZA LAS VARIABLES PROPIAS
-Ghost::Ghost(Game* game, SDL_Renderer* renderer, int textRow, int textCol) : GameCharacter(game, renderer, textRow, textCol),
+Ghost::Ghost(PlayState* game, SDL_Renderer* renderer, int textRow, int textCol) : GameCharacter(game, renderer, textRow, textCol),
 braveFrame(textCol), frightenedFrame(12)
 {
 }

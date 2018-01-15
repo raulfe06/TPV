@@ -1,5 +1,5 @@
 ﻿#include "Pacman.h"
-#include "Game.h"
+#include"PlayState.h"
 #include <fstream>
 #include <iostream>
 
@@ -11,7 +11,7 @@ Pacman::Pacman()
 }
 
 // A) CREA A PACMAN 
-Pacman::Pacman(Game* game, SDL_Renderer* renderer, int textRow, int textCol) : GameCharacter(game, renderer, textRow, textCol)
+Pacman::Pacman(PlayState* game, SDL_Renderer* renderer, int textRow, int textCol) : GameCharacter(game, renderer, textRow, textCol)
 {
 }
 

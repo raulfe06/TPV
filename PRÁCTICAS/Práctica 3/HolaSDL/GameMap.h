@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Texture.h"
 #include "SDL.h"
-class Game;
+class PlayState;
 
 // Tipos de celda para el mapa
 enum mapCell { Empty, Wall, Food, Vitamins };
@@ -45,7 +45,7 @@ private:
 	int rows, cols;
 	
 public:
-	GameMap(Game*game);
+	GameMap(PlayState*game);
 	void initializeTextures(SDL_Renderer* renderer);
 
 	 void loadFromFile(ifstream& file);

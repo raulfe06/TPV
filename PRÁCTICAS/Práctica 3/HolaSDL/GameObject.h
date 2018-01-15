@@ -4,7 +4,7 @@
 
 using namespace std;
 
-class Game;
+class PlayState;
 
 /*
 Clase GameObject: clase abstracta
@@ -17,9 +17,9 @@ Clase GameObject: clase abstracta
 class GameObject
 {
 protected:
-	Game* game = nullptr;
+	PlayState* game = nullptr;
 
-	GameObject(Game* game);
+	GameObject(PlayState* game);
 	GameObject();
 
 	// Métodos virtuales puros -> Necesitan ser (re)definidos por las clases hijas 
@@ -28,5 +28,8 @@ protected:
 	virtual void loadFromFile(ifstream& file) = 0;
 	virtual void saveToFile(ofstream& file) = 0;
 
+public:
+	virtual void update() {};
+	virtual bool handleEvent(SDL_Event& e) { return true; };
 	virtual ~GameObject() = 0;
 };

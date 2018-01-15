@@ -1,12 +1,12 @@
 ﻿#include "GameMap.h"
 #include <fstream>
-#include "Game.h"
+#include "PlayState.h"
 #include <iostream>
 #include "FileFormatError.h"
 using namespace std;
 
 // A) CONSTRUCTORA DEL MAPA: APUNTA A <Game>
-GameMap::GameMap(Game*game) : GameObject(game)
+GameMap::GameMap(PlayState*game) : GameObject(game)
 {
 }
 

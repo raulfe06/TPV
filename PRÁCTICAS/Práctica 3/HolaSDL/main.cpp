@@ -2,7 +2,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include <iostream>
-#include "Game.h"
+#include "PlayState.h"
 #include "Pacman.h"
 
 using namespace std;
@@ -11,7 +11,7 @@ using namespace std;
 int main(int argc, char* argv[]){
 
 	bool menu = true;
-	Game* game = new Game();
+	PlayState* game = new PlayState();
 	while (game->getMenu() && !game->getExit()) {
 		game->loadMenu();
 	}

@@ -1,11 +1,11 @@
 #include "SmartGhost.h"
 #include "Pacman.h"
-#include "Game.h"
+#include "PlayState.h"
 #include "FileFormatError.h"
 #include <iostream>
 
 // A) INICALIZA LAS VARIABLES DEL FANTASMA INTELIGENTE -> UTILIZA LA CONSTRUCTORA DEL PADRE, Y LUEGO INICIALIZA LAS VARIABLES PROPIAS
-SmartGhost::SmartGhost(Game* game, SDL_Renderer* renderer, int textRow, int textCol, Pacman* pacman, int defX, int defY) : Ghost(game, renderer, textRow, textCol),
+SmartGhost::SmartGhost(PlayState* game, SDL_Renderer* renderer, int textRow, int textCol, Pacman* pacman, int defX, int defY) : Ghost(game, renderer, textRow, textCol),
 pacman(pacman), dead(false), cooldown(0), age(0)
 {
 	// 1) En caso de crearse por reproducción, se le da valor a la posición por defecto

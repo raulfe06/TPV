@@ -34,7 +34,7 @@ protected:
 	int dirX, dirY;
 	
 	// MÉTODOS
-	GameCharacter(Game* game, SDL_Renderer* renderer, int textRow, int textCol);
+	GameCharacter(PlayState* game, SDL_Renderer* renderer, int textRow, int textCol);
 	GameCharacter();
 	
 	virtual void setAnimation() = 0;

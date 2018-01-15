@@ -1,11 +1,11 @@
 #include "GameObject.h"
-#include "Game.h"
+#include "PlayState.h"
 
 
 GameObject::GameObject()
 {
 }
-GameObject::GameObject(Game* game)
+GameObject::GameObject(PlayState* game)
 {
 	this->game = game;
 }

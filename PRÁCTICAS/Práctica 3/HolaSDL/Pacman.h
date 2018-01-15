@@ -31,7 +31,7 @@ private:
 	void pacmanEnergy(bool power);
 	void setAnimation();
 public:
-	Pacman(Game* game, SDL_Renderer* renderer, int textRow, int textCol);
+	Pacman(PlayState* game, SDL_Renderer* renderer, int textRow, int textCol);
 	Pacman();
 
 	// Lectura y escritura

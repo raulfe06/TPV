@@ -52,7 +52,7 @@ protected:
 	virtual void setAnimation();
 	
 public:
-	Ghost(Game* game, SDL_Renderer* renderer, int textRow, int textCol);
+	Ghost(PlayState* game, SDL_Renderer* renderer, int textRow, int textCol);
 
 	virtual void render(SDL_Renderer* renderer);
 	virtual void update();

@@ -42,7 +42,7 @@ private:
 	
 
 public:
-	SmartGhost(Game* game, SDL_Renderer* renderer, int textRow, int textCol, Pacman* pacman, int defX = 0, int defY = 0);
+	SmartGhost(PlayState* game, SDL_Renderer* renderer, int textRow, int textCol, Pacman* pacman, int defX = 0, int defY = 0);
 
 	void loadFromFile(ifstream& file);
 	void saveToFile(ofstream& file);
