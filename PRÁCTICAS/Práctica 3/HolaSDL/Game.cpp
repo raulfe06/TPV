@@ -10,6 +10,8 @@
 #include <SDL_ttf.h>
 
 #include "SDLError.h"
+#include "FileFormatError.h"
+#include "FileNotFoundError.h"
 
 using namespace std;
 
@@ -25,7 +27,7 @@ Game::Game()
 		if (TTF_Init() < 0)
 			throw SDLError(TTF_GetError());
 		// b) Creamos la ventana y el renderer
-		//window = SDL_CreateWindow("PACMAN", winX, winY, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
+		window = SDL_CreateWindow("PACMAN", winX, winY, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
 		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
 		if (window == nullptr || renderer == nullptr)
@@ -70,7 +72,19 @@ void Game::loadFile(string filename) {
 
 	map = new GameMap(this);
 
-	file.open(filename);
+	try
+	{
+		file.open(filename);
+
+		if (!file.good())
+			throw FileNotFoundError("Archivo " + filename +" no encontrado");
+
+	}
+	catch (FileNotFoundError& e)
+	{
+		cout << e.what() << endl;
+	}
+	
 	if (!file.fail()) {
 		map->loadFromFile(file);
 		map->initializeTextures(renderer);
@@ -83,23 +97,22 @@ void Game::loadFile(string filename) {
 		file >> numGhosts;
 		for (int i = 0; i < numGhosts; i++)
 		{
+			Ghost* ghost;
 			file >> auxGhostType;
 
 			if (auxGhostType == 0)
 			{
-				Ghost* ghost = new Ghost(this, renderer, 0, aux * 2);
-				ghost->setType(auxGhostType);
-				ghost->loadFromFile(file);
-				characters.push_back(ghost);
+			    ghost = new Ghost(this, renderer, 0, aux * 2);
 				aux++;
 			}
 			else
 			{
-				SmartGhost* smartGhost = new SmartGhost(this, renderer, 0, 8, pacman);
-				smartGhost->setType(auxGhostType);
-				smartGhost->loadFromFile(file);
-				characters.push_back(smartGhost);
+			    ghost = new SmartGhost(this, renderer, 0, 8, pacman);
 			}
+
+			ghost->setType(auxGhostType);
+			ghost->loadFromFile(file);
+			characters.push_back(ghost);
 		}
 
 		pacman->loadFromFile(file);
@@ -175,7 +188,7 @@ int Game::saveState() {
 			}
 		}
 	}
-	if (!savingState && !loading) saveToFile(to_string(code) + ".pac");
+	if (!savingState && !loading) saveToFile("levels\\" + to_string(code) + ".pac");
 	return code;
 }
 void Game::run() {
@@ -185,10 +198,11 @@ void Game::run() {
 			while (loading) {
 				savingState = true;
 				int code = saveState();
-				loadFile(to_string(code) + ".pac");
+				loadFile("levels\\" + to_string(code) + ".pac");
 			}
 		}
-		else loadFile("level0" + to_string(level) + ".pac");
+		else 
+			loadFile("levels\\level0" + to_string(level) + ".pac");
 		win = false;
 		end = false;
 

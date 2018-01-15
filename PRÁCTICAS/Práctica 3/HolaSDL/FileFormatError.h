@@ -1,9 +1,10 @@
 #pragma once
 #include "PacmanError.h"
-class FileFormatError : PacmanError
+
+class FileFormatError : public PacmanError
 {
+
 public:
-	FileFormatError();
-	~FileFormatError();
+	FileFormatError(const string& m) : PacmanError("al leer el arcvhivo: " + m) {};
 };
 

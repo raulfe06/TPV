@@ -2,7 +2,7 @@
 #include <fstream>
 #include "Game.h"
 #include <iostream>
-
+#include "FileFormatError.h"
 using namespace std;
 
 // A) CONSTRUCTORA DEL MAPA: APUNTA A <Game>
@@ -31,32 +31,41 @@ void GameMap::loadFromFile(ifstream& file)
 	
 		int cell;
 		
+		try {
+			// b) Según la implementación del archivo, leemos la primera fila para obtener las filas y columnas del mapa
+			file >> rows >> cols;
+			this->game->setCols(this->cols);
+			this->game->setFils(this->rows);
 
-		// b) Segun la implementación del archivo, leemos la primera fila para obtener las filas y columnas del mapa
-		file >> rows >> cols;
-		this->game->setCols(this->cols);
-		this->game->setFils(this->rows);
+			destRect.w = (WIN_WIDTH - 200) / game->getCols();
+			destRect.h = (WIN_HEIGHT) / game->getFils();
 
-		destRect.w = (WIN_WIDTH-200) / game->getCols();
-		destRect.h = (WIN_HEIGHT) / game->getFils();
-
-		map = new mapCell*[rows];
-		for (int i = 0; i < rows; i++)
-		{
-			map[i] = new mapCell[cols];
-		}
-		// d) Recorremos la "matriz" del archivo:
-		for (int i = 0; i < rows; i++)
-		{
-			for (int j = 0; j < cols; j++)
+			map = new mapCell*[rows];
+			for (int i = 0; i < rows; i++)
 			{
-				// 1) Leemos cada numero... 
-				file >> cell;
-				// ...y le damos el tipo de celda según el valor del mismo
-				setCell(i, j, (mapCell)cell);
-				 if (cell == 2 || cell == 3)
-					this->game->modifyNumFood(1);
+				map[i] = new mapCell[cols];
 			}
+			// d) Recorremos la "matriz" del archivo:
+			for (int i = 0; i < rows; i++)
+			{
+				for (int j = 0; j < cols; j++)
+				{
+					// 1) Leemos cada numero... 
+					file >> cell;
+
+					if (cell > 3)
+						throw FileFormatError("Error al codificar las celdas del mapa");
+
+					// ...y le damos el tipo de celda según el valor del mismo
+					setCell(i, j, (mapCell)cell);
+					if (cell == 2 || cell == 3)
+						this->game->modifyNumFood(1);
+				}
+			}
+		}
+		catch(FileFormatError& e)
+		{
+			cout << e.what() << endl;
 		}
 		
 }
