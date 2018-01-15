@@ -7,9 +7,11 @@ class GameState
 private:
 	list<GameObject*> scene;
 	
-	PlayState* game;
+	Game* game;
 public:
-	GameState();
+	GameState(Game* game);
+	GameState() {};
+
 	~GameState() 
 	{
 		for (GameObject* obj : scene) delete obj;

@@ -41,4 +41,7 @@ public:
 	void update();
 	void render();
 
+	bool getExit() { return exit; };
+	SDL_Renderer* getRenderer() { return renderer; };
+
 };

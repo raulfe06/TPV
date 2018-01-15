@@ -2,7 +2,8 @@
 
 
 
-GameState::GameState()
+GameState::GameState(Game* game)
 {
+	this->game = game;
 }
 

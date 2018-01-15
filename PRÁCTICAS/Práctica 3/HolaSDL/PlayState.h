@@ -75,6 +75,8 @@ private:
 public:
 	PlayState();
 
+	
+
 	// Lectura y escritura
 	void loadFile(std::string filename);
 	void saveToFile(string filename);
