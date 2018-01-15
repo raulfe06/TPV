@@ -11,10 +11,10 @@ class Pacman;
 
 //*CONSTANTES GENERALES*
 
-const int WIN_WIDTH = 800;
-const int WIN_HEIGHT = 600;
+//const int WIN_WIDTH = 800;
+//const int WIN_HEIGHT = 600;
 const int OFFSET = 200;
-const int NUM_MENU_TEXT = 4;
+//const int NUM_MENU_TEXT = 4;
 
 
 //CONSTANTES DE LOS PUNTOS
@@ -25,7 +25,7 @@ const int INTELLI_GHOST_POINTS = 100;
 const int NUM_TOTAL_LEVELS = 3;
 const int FRAME_RATE = 160; // milliseconds per frame -> 6 frames/s
 const std::string TEXT_PATHFILE = "..\\images\\";
-const std::string menuNames[NUM_MENU_TEXT] = { "newGame.png","loadGame.png","menu.png","code.png" };
+//const std::string menuNames[NUM_MENU_TEXT] = { "newGame.png","loadGame.png","menu.png","code.png" };
 
 
 class PlayState :public GameState
@@ -41,10 +41,9 @@ private:
 	SDL_Rect rectNG, rectLG; //destino de new game y load game
 
 							 // Texturas del menú
-	Texture* menuTextures[NUM_MENU_TEXT];
+	//Texture* menuTextures[NUM_MENU_TEXT];
 
-	// Lista de personajes del juego
-	std::list<GameCharacter*> characters;
+	
 
 	// Puntero directo a Pacman
 	Pacman* pacman = nullptr;
@@ -67,10 +66,10 @@ private:
 	bool exit = false;
 	bool savingState = false;
 
-	bool menu = true;
+	
 	bool win = false;
 	bool end = false;
-	bool loading = false;
+	
 
 public:
 	PlayState();
@@ -103,13 +102,7 @@ public:
 
 
 	// UI
-	int checkInsideRect(int x, int y, struct SDL_Rect rect);
-	void mousePress(SDL_MouseButtonEvent& b);
-
-	void renderCode(const int& count);
-	void renderMenu();
-	bool getMenu() const { return menu; };
-	void loadMenu();
+	
 
 
 	// Fantasmas

@@ -15,6 +15,7 @@
 
 #include"GameStateMachine.h"
 #include"PlayState.h"
+#include "MainMenuState.h"
 
 
 using namespace std;

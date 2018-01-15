@@ -2,12 +2,17 @@
 #include <list>
 #include "GameObject.h"
 #include "Game.h"
+
+const int WIN_WIDTH = 800;
+const int WIN_HEIGHT = 600;
+
+
 class GameState
 {
-private:
+protected:
 	list<GameObject*> scene;
 	
-	PlayState* game;
+	Game* game;
 public:
 	GameState();
 	~GameState() 
