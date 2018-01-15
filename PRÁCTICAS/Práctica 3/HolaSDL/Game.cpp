@@ -10,6 +10,9 @@
 #include <SDL_ttf.h>
 
 #include "SDLError.h"
+#include "FileNotFoundError.h"
+#include "FileFormatError.h"
+
 
 using namespace std;
 
@@ -25,7 +28,7 @@ Game::Game()
 		if (TTF_Init() < 0)
 			throw SDLError(TTF_GetError());
 		// b) Creamos la ventana y el renderer
-		//window = SDL_CreateWindow("PACMAN", winX, winY, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
+		window = SDL_CreateWindow("PACMAN", winX, winY, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
 		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
 		if (window == nullptr || renderer == nullptr)
@@ -69,9 +72,12 @@ void Game::loadFile(string filename) {
 	iteratorCharacters = characters.begin();
 
 	map = new GameMap(this);
+	try {
+		
 
-	file.open(filename);
-	if (!file.fail()) {
+		file.open(filename);
+		if (!file.good()) throw FileNotFoundError(filename);
+
 		map->loadFromFile(file);
 		map->initializeTextures(renderer);
 
@@ -84,6 +90,7 @@ void Game::loadFile(string filename) {
 		for (int i = 0; i < numGhosts; i++)
 		{
 			file >> auxGhostType;
+			if (auxGhostType < 0 || auxGhostType >1) throw FileFormatError("El tipo de fanstasma no es compatible");
 
 			if (auxGhostType == 0)
 			{
@@ -119,10 +126,23 @@ void Game::loadFile(string filename) {
 			file >> level;
 		}
 		loading = false;
+
+		file.close();
 	}
-	else loading = true;
+	catch (FileNotFoundError& e) 
+	{
+		cout << e.what() << endl;
+		level++;
+		loadFile("level0" + to_string(level) + ".pac");
+
+	}
+	catch (FileFormatError& e)
+	{
+		cout << e.what() << endl;
+	}
 	
-	file.close();
+	
+	
 }
 void Game::saveToFile(string filename) {
 	list<GameCharacter*>::iterator it;

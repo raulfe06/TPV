@@ -1,6 +1,8 @@
 #include "SmartGhost.h"
 #include "Pacman.h"
 #include "Game.h"
+#include "FileFormatError.h"
+#include <iostream>
 
 // A) INICALIZA LAS VARIABLES DEL FANTASMA INTELIGENTE -> UTILIZA LA CONSTRUCTORA DEL PADRE, Y LUEGO INICIALIZA LAS VARIABLES PROPIAS
 SmartGhost::SmartGhost(Game* game, SDL_Renderer* renderer, int textRow, int textCol, Pacman* pacman, int defX, int defY) : Ghost(game, renderer, textRow, textCol),
@@ -19,7 +21,13 @@ void SmartGhost::loadFromFile(ifstream& file)
 {
 	GameCharacter::loadFromFile(file);
 	file >> age;
+	try {
+		if (age < 0 || age >100) throw FileFormatError("La edad del fantasma Inteligente está fuera del rango [0,100]");
+	}
+	catch(FileFormatError& e){
+		cout << e.what() << endl;
 
+	}
 	defAge = age;
 }
 
