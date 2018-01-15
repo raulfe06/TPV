@@ -23,7 +23,10 @@ Game::Game()
 {
 	stateMachine = new GameStateMachine();
 
-	stateMachine->pushState(new PlayState());
+	test = new PlayState();
+	stateMachine->pushState(test);
+	test->loadFile("levels\\level0" + to_string(1) + ".pac");
+
 }
 
 void Game::run() 
@@ -33,6 +36,7 @@ void Game::run()
 	{
 		handleEvents();
 		stateMachine->currentState()->update();
+		render();
 	}
 }
 

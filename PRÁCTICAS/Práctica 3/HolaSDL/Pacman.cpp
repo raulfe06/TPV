@@ -36,6 +36,13 @@ void Pacman::render(SDL_Renderer* renderer)
 	GameCharacter::render(renderer);
 }
 
+bool Pacman::handleEvent(SDL_Event& e)
+{
+	setDir(e);
+
+	return true;
+}
+
 // E) DETERMINA LA FILA Y LA COLUMNA DE LA TEXTURA (ES DECIR, DEL SPRITESHEET) QUE HAY QUE PINTAR SEGÚN LA DIRECCIÓN DE PACMAN
 void Pacman::setAnimation()
 {

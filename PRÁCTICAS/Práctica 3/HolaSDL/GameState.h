@@ -15,12 +15,12 @@ public:
 		for (GameObject* obj : scene) delete obj;
 	};
 
-	void update()
+	virtual void update()
 	{
 		for (GameObject* obj : scene) obj->update();
 	}
 
-	void handleEvents(SDL_Event& e)
+	virtual void handleEvents(SDL_Event& e)
 	{
 		bool handled = false;
 
@@ -35,7 +35,7 @@ public:
 		}
 	}
 
-	void render()
+	virtual void render()
 	{
 		for (GameObject* obj : scene) obj->render();
 	}

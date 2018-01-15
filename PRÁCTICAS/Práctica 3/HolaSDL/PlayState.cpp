@@ -196,6 +196,7 @@ int PlayState::saveState() {
 	if (!savingState && !loading) saveToFile("levels\\" + to_string(code) + ".pac");
 	return code;
 }
+/*
 void PlayState::run() {
 
 	while (level<NUM_TOTAL_LEVELS && !exit) {
@@ -226,29 +227,17 @@ void PlayState::run() {
 			endLevel();
 		}
 	}
-}
-void PlayState::handleEvents()
+}*/
+void PlayState::handleEvent(SDL_Event& e)
 {
-	SDL_Event event;
+       // ......
 
-	// Mientras NO queden eventos por procesar en la cola...
-	while (SDL_PollEvent(&event))
-	{
-		if (event.type == SDL_QUIT)
 
-			exit = true;
-		if (event.key.keysym.sym == SDLK_g) {
-			savingState = true;
-		}
-		if (event.type == SDL_QUIT) {
-			exit = true;
-		}
-
-		// ...entramos al bucle y metemos todos los eventos en la cola para procesarlos
-		pacman->setDir(event);
-	}
+		pacman->handleEvent(e);
+	
 }
-void PlayState::update() {
+void PlayState::update() 
+{
 	list<GameCharacter*>::iterator it = characters.begin();
 	advance(it, 1);
 	if (pacman->getEnergy())

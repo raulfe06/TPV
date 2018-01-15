@@ -30,6 +30,7 @@ private:
 	bool exit = false;
 
 	GameStateMachine* stateMachine;
+	PlayState* test;
 
 public:
 

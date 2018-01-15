@@ -41,6 +41,7 @@ public:
 
     void render(SDL_Renderer* renderer);
 	void update();
+	bool handleEvent(SDL_Event& e);
 
 	void setDir(SDL_Event event);
 
