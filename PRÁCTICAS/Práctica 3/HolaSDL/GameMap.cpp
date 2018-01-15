@@ -3,7 +3,6 @@
 #include "Game.h"
 #include <iostream>
 #include "FileFormatError.h"
-
 using namespace std;
 
 // A) CONSTRUCTORA DEL MAPA: APUNTA A <Game>
@@ -37,7 +36,7 @@ void GameMap::loadFromFile(ifstream& file)
 		file >> rows >> cols;
 		
 		
-			if (rows > maxR|| cols > maxC) throw FileFormatError("El tamanyo del mapa supera los limites [ "
+			if (rows > maxR || cols > maxC) throw FileFormatError("El mapa supera los limites [ "
 				+ to_string(maxR) + ", " + to_string(maxC) + "]" );
 
 			this->game->setCols(this->cols);

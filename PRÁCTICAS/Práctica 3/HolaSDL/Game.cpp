@@ -89,24 +89,23 @@ void Game::loadFile(string filename) {
 		file >> numGhosts;
 		for (int i = 0; i < numGhosts; i++)
 		{
+			Ghost* ghost;
 			file >> auxGhostType;
-			if (auxGhostType < 0 || auxGhostType >1) throw FileFormatError("El tipo de fanstasma no es compatible");
+			if (auxGhostType < 0 || auxGhostType > 1) throw FileFormatError("El tipo de fanstasma no es compatible");
 
 			if (auxGhostType == 0)
 			{
-				Ghost* ghost = new Ghost(this, renderer, 0, aux * 2);
-				ghost->setType(auxGhostType);
-				ghost->loadFromFile(file);
-				characters.push_back(ghost);
+			    ghost = new Ghost(this, renderer, 0, aux * 2);
 				aux++;
 			}
 			else
 			{
-				SmartGhost* smartGhost = new SmartGhost(this, renderer, 0, 8, pacman);
-				smartGhost->setType(auxGhostType);
-				smartGhost->loadFromFile(file);
-				characters.push_back(smartGhost);
+			    ghost = new SmartGhost(this, renderer, 0, 8, pacman);
 			}
+
+			ghost->setType(auxGhostType);
+			ghost->loadFromFile(file);
+			characters.push_back(ghost);
 		}
 
 		pacman->loadFromFile(file);
@@ -133,7 +132,7 @@ void Game::loadFile(string filename) {
 	{
 		cout << e.what() << endl;
 		level++;
-		loadFile("level0" + to_string(level) + ".pac");
+		loadFile("levels\\level0" + to_string(level) + ".pac");
 
 	}
 	catch (FileFormatError& e)
@@ -195,7 +194,7 @@ int Game::saveState() {
 			}
 		}
 	}
-	if (!savingState && !loading) saveToFile(to_string(code) + ".pac");
+	if (!savingState && !loading) saveToFile("levels\\" + to_string(code) + ".pac");
 	return code;
 }
 void Game::run() {
@@ -205,10 +204,11 @@ void Game::run() {
 			while (loading) {
 				savingState = true;
 				int code = saveState();
-				loadFile(to_string(code) + ".pac");
+				loadFile("levels\\" + to_string(code) + ".pac");
 			}
 		}
-		else loadFile("level0" + to_string(level) + ".pac");
+		else 
+			loadFile("levels\\level0" + to_string(level) + ".pac");
 		win = false;
 		end = false;
 
