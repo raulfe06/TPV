@@ -10,6 +10,11 @@ public:
 	GameStateMachine();
 	~GameStateMachine();
 
+	GameState* currentState()
+	{
+		return states.top();
+	}
+
 	void popState()
 	{
 		if (!states.empty())

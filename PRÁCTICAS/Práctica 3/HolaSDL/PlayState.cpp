@@ -13,7 +13,6 @@
 #include "FileNotFoundError.h"
 #include "FileFormatError.h"
 
-
 using namespace std;
 
 
@@ -294,12 +293,7 @@ void PlayState::render()
 	for (it; it != characters.end(); it++)
 	{
 		(*it)->render(renderer);
-		/*if(pacman->energyEnabled())
-		(*it)->render(renderer);
-		else
-		{
-
-		}*/
+		
 		i++;
 	}
 	renderTexts();

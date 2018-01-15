@@ -4,6 +4,8 @@
 #include "GameMap.h"
 #include <iterator>
 
+#include "GameState.h"
+
 class SmartGhost;
 class Pacman;
 
@@ -26,7 +28,7 @@ const std::string TEXT_PATHFILE = "..\\images\\";
 const std::string menuNames[NUM_MENU_TEXT] = { "newGame.png","loadGame.png","menu.png","code.png" };
 
 
-class PlayState
+class PlayState :public GameState
 {
 private:
 	SDL_Window* window = nullptr;

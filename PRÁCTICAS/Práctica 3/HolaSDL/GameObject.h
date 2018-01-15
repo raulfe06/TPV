@@ -31,5 +31,6 @@ protected:
 public:
 	virtual void update() {};
 	virtual bool handleEvent(SDL_Event& e) { return true; };
+	virtual void render() {};
 	virtual ~GameObject() = 0;
 };

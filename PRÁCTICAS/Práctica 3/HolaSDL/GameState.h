@@ -20,7 +20,7 @@ public:
 		for (GameObject* obj : scene) obj->update();
 	}
 
-	void handleEvent(SDL_Event& e)
+	void handleEvents(SDL_Event& e)
 	{
 		bool handled = false;
 
@@ -33,6 +33,11 @@ public:
 			else
 				it++;
 		}
+	}
+
+	void render()
+	{
+		for (GameObject* obj : scene) obj->render();
 	}
 };
 
