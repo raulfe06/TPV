@@ -26,6 +26,8 @@ private:
 	// Texturas del menú
 //	Texture* menuTextures[NUM_MENU_TEXT];
 
+	int delta;
+
 	// *BOOLEANOS DE CONTROL*
 	bool exit = false;
 

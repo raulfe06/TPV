@@ -29,7 +29,7 @@ public:
 	{
 		bool handled = false;
 
-		auto it = scene.begin();
+ 		auto it = scene.begin();
 
 		while (it!= scene.end() && !handled)
 		{

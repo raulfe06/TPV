@@ -1,4 +1,5 @@
 #include "Ghost.h"
+#include "Pacman.h"
 #include "PlayState.h"
 #include <fstream>
 
@@ -6,7 +7,7 @@ bool Ghost::frightened;
 
 
 // A) INICALIZA LAS VARIABLES DEL FANTASMA -> UTILIZA LA CONSTRUCTORA DEL PADRE, Y LUEGO INICIALIZA LAS VARIABLES PROPIAS
-Ghost::Ghost(PlayState* game, SDL_Renderer* renderer, int textRow, int textCol) : GameCharacter(game, renderer, textRow, textCol),
+Ghost::Ghost(PlayState* game, SDL_Renderer* renderer, int textRow, int textCol, Pacman* pac) : GameCharacter(game, renderer, textRow, textCol), pacman(pac),
 braveFrame(textCol), frightenedFrame(12)
 {
 }
@@ -21,6 +22,11 @@ void Ghost::render(SDL_Renderer* renderer)
 // C) DETERMINA LA TEXTURA DEPENDIENDO EL ESTADO DEL FANTASMA: VALIENTE O ASUSTADO
 void Ghost::setAnimation()
 {
+	if (pacman->energyEnabled())
+		toggleFear(true);
+	else
+		toggleFear(false);
+
 	if (frightened)
 		textCol = frightenedFrame;
 	else

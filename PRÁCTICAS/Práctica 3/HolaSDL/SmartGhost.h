@@ -20,8 +20,6 @@ Clase SmartGhost: Controla la edad, posible spawn de un nuevo fantasma, etc.
 class SmartGhost : public Ghost
 {
 private:
-	// Puntero a Pacman para conocer su posición en el mapa
-	Pacman* pacman = nullptr;
 
 	// Edad inicial y actual
 	int defAge;

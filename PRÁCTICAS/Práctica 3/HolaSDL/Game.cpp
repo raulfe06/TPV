@@ -35,9 +35,14 @@ void Game::run()
 
 	while (!exit)
 	{
+		int startTime = SDL_GetTicks();
 		handleEvents();
 		stateMachine->currentState()->update();
 		render();
+		delta = SDL_GetTicks() - startTime;
+
+		if (delta < FRAME_RATE)
+			SDL_Delay(FRAME_RATE - delta);
 	}
 }
 

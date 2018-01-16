@@ -18,11 +18,18 @@ Clase Ghost: Inicializa un fantasma y controla su dirección, movimiento, etc.
 - Hereda de ella: <SmartGhost>
 
 */
+
+class Pacman;
 class Ghost : public GameCharacter
 {
 protected:
 	// Atributo estático -> Va a ser el mismo para todas las instancias de la clase. De esta manera, todos los fantasmas se "asustan" mirando a la misma variable
 	static bool frightened;
+
+
+	// Puntero a Pacman para conocer su posición en el mapa
+	Pacman* pacman = nullptr;
+
 
 	// Tipo de fantasma -> normal (0) o inteligente (1)
 	int ghostType;
@@ -52,7 +59,7 @@ protected:
 	virtual void setAnimation();
 	
 public:
-	Ghost(PlayState* game, SDL_Renderer* renderer, int textRow, int textCol);
+	Ghost(PlayState* game, SDL_Renderer* renderer, int textRow, int textCol, Pacman* pac);
 
 	virtual void render(SDL_Renderer* renderer);
 	virtual void update();

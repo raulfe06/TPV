@@ -89,7 +89,8 @@ void GameMap::saveToFile(ofstream& file) {
  }
 
 // E) RENDER DE LAS TEXTURAS DEL MAPA
-void GameMap::render(SDL_Renderer* renderer) {
+void GameMap::render(SDL_Renderer* renderer) 
+{
 
 	// 1) Recorremos la matriz de celdas
 	for (int i = 0; i < rows; i++)

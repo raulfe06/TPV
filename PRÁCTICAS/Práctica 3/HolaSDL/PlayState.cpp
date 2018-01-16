@@ -93,7 +93,7 @@ void PlayState::loadFile(string filename) {
 
 			if (auxGhostType == 0)
 			{
-				ghost = new Ghost(this, renderer, 0, aux * 2);
+				ghost = new Ghost(this, renderer, 0, aux * 2, pacman);
 				aux++;
 			}
 			else
@@ -238,12 +238,6 @@ void PlayState::handleEvent(SDL_Event& e)
 }
 void PlayState::update() 
 {
-	auto it = scene.begin();
-	advance(it, 1);
-	if (pacman->getEnergy())
-	{
-		pacman->timer();
-	}
 	int foodX, foodY;
 	if (pacman->eat(foodX, foodY))
 	{
@@ -251,14 +245,9 @@ void PlayState::update()
 		score += FOOD_POINTS;
 		numFood--;
 	}
-	pacman->update();
-	checkCapture();
-	while (it != scene.end())
-	{
-		(*it)->update();
+	
 
-		++it;
-	}
+	GameState::update();
 	checkCapture();
 }
 void PlayState::render()
@@ -273,11 +262,6 @@ void PlayState::render()
 	map->render(renderer);
 
 	pacman->render(renderer);
-
-	if (pacman->energyEnabled())
-		dynamic_cast<Ghost*>(*it)->toggleFear(true);
-	else
-		dynamic_cast<Ghost*>(*it)->toggleFear(false);
 
 	for (it; it != scene.end(); it++)
 	{
