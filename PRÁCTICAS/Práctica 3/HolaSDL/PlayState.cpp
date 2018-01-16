@@ -32,8 +32,6 @@ void PlayState::loadFile(string filename) {
 	ifstream file;
 	int auxGhostType;
 
-	
-
 	map = new GameMap(this);
 
 	try {

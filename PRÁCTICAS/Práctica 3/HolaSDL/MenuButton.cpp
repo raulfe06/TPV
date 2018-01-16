@@ -11,3 +11,9 @@ void MenuButton::render() {
 MenuButton::~MenuButton()
 {
 }
+void MenuButton::loadFromFile(ifstream& file) {
+
+ }
+void MenuButton::saveToFile(ofstream& file) {
+
+ }

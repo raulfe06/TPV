@@ -1,7 +1,7 @@
 #pragma once
 #include "Texture.h"
 #include "Game.h"
-class MenuButton
+class MenuButton : public GameObject
 {
 private:
 	int x,
@@ -12,7 +12,10 @@ private:
 	
 	Game* game;
 public:
-	MenuButton(Game* game,int x,int y,int w,int h) : game(game), x(x), y(y), w(w), h(h) {};
+	MenuButton(Game* game,int x,int y,int w,int h) : game(game), x(x), y(y), w(w), h(h) {}; //Hay que pasarle la textura y darle valor a text
+	virtual void loadFromFile(ifstream& file);
+	virtual void saveToFile(ofstream& file);
+
 	void render();
 	~MenuButton();
 };

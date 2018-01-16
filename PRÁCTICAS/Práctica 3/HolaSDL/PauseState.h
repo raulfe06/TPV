@@ -6,8 +6,7 @@
 
 class PauseState : GameState
 {
-private:
-	vector<MenuButton*> menuButtons;
+
 public:
 	PauseState(Game* game);
 	~PauseState();

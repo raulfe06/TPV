@@ -8,6 +8,9 @@ class SmartGhost;
 class Pacman;
 class GameStateMachine;
 
+const int WIN_WIDTH = 800;
+const int WIN_HEIGHT = 600;
+
 //*CONSTANTES GENERALES*
 //const int NUM_MENU_TEXT = 4;
 
@@ -20,6 +23,7 @@ class GameStateMachine;
 class Game
 {
 private:
+
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 
@@ -48,13 +52,13 @@ public:
 	void update();
 	void render();
 
-<<<<<<< HEAD
-	bool getExit() { return exit; };
+
+	bool getExit() const { return exit; };
+	
+
 	SDL_Renderer* getRenderer() { return renderer; };
-=======
 	GameStateMachine* getStateMachine();
 
 	~Game();
->>>>>>> fa0f77b8f43cff312967d6bac72122b208de1411
 
 };

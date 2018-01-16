@@ -3,8 +3,8 @@
 #include "GameObject.h"
 #include "Game.h"
 
-const int WIN_WIDTH = 800;
-const int WIN_HEIGHT = 600;
+//const int WIN_WIDTH = 800;
+//const int WIN_HEIGHT = 600;
 
 
 class GameState
