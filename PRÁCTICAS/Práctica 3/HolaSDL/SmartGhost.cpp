@@ -1,12 +1,12 @@
 #include "SmartGhost.h"
-#include "Pacman.h"
 #include "PlayState.h"
 #include "FileFormatError.h"
+#include "Pacman.h"
 #include <iostream>
 
 // A) INICALIZA LAS VARIABLES DEL FANTASMA INTELIGENTE -> UTILIZA LA CONSTRUCTORA DEL PADRE, Y LUEGO INICIALIZA LAS VARIABLES PROPIAS
-SmartGhost::SmartGhost(PlayState* game, SDL_Renderer* renderer, int textRow, int textCol, Pacman* pacman, int defX, int defY) : Ghost(game, renderer, textRow, textCol),
-pacman(pacman), dead(false), cooldown(0), age(0)
+SmartGhost::SmartGhost(PlayState* game, SDL_Renderer* renderer, int textRow, int textCol, Pacman* pacman, int defX, int defY) : Ghost(game, renderer, textRow, textCol, pacman),
+ dead(false), cooldown(0), age(0)
 {
 	// 1) En caso de crearse por reproducción, se le da valor a la posición por defecto
 	this->defX = defX;
@@ -44,6 +44,11 @@ void SmartGhost::saveToFile(ofstream& file)
 // D) CARGA LA TEXTURA CORRESPONDIENTE TRAS ACTUALIZAR LA ANIMACIÓN
 void SmartGhost::render(SDL_Renderer* renderer)
 {
+	if (pacman->energyEnabled())
+		toggleFear(true);
+	else
+		toggleFear(false);
+
 	setAnimation();
 
 	texture->RenderFrame(renderer, textRow, textCol, destRect);

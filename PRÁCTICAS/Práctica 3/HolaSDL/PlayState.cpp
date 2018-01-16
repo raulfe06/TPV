@@ -13,66 +13,30 @@
 #include "FileNotFoundError.h"
 #include "FileFormatError.h"
 
+#include "GameStateMachine.h"
+
 using namespace std;
 
 
-PlayState::PlayState()
-{
-
-	try
-	{
-		if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
-			throw SDLError(SDL_GetError());
-
-		if (TTF_Init() < 0)
-			throw SDLError(TTF_GetError());
-		// b) Creamos la ventana y el renderer
-		window = SDL_CreateWindow("PACMAN", winX, winY, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
-		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
-		if (window == nullptr || renderer == nullptr)
-		{
-			throw SDLError(SDL_GetError());
-		}
-		else
-			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); //RGB y alpha
-
-
-		for (int i = 0; i < NUM_MENU_TEXT; i++)
-		{
-			menuTextures[i] = new Texture();
-			menuTextures[i]->Load(renderer, TEXT_PATHFILE + menuNames[i], 1, 1);
-		}
-	}
-	catch (SDLError& e)
-	{
-		char out = ' ';
-		cout << e.what() << endl;
-
-		cout << "\nPulse la tecla 'x' para salir" << endl;
-
-		while (out != 'x')
-		{
-			cin >> out;
-		}
-		exit = true;
-	}
+PlayState::PlayState(Game* game, SDL_Renderer* renderer) : GameState(game),renderer(renderer)
+{	
 }
 
 // LECTURA Y ESCRITURA
 void PlayState::loadFile(string filename) {
 	score = 0;
-	characters.clear();
-	list<GameCharacter*>::iterator iteratorCharacters;
+	scene.clear();
+	auto iteratorCharacters = scene.begin();
 
 	GameCharacter* gch;
 	ifstream file;
 	int auxGhostType;
-	iteratorCharacters = characters.begin();
+
+	
 
 	map = new GameMap(this);
-	try {
 
+	try {
 
 		file.open(filename);
 		if (!file.good()) throw FileNotFoundError(filename);
@@ -80,9 +44,9 @@ void PlayState::loadFile(string filename) {
 		map->loadFromFile(file);
 		map->initializeTextures(renderer);
 
-
-		// Pacman se crea antes que los fantasmas porque los smartGhost necesitarán su puntero
+		// Pacman se crea antes porque necesitarán su puntero
 		pacman = new Pacman(this, renderer, 0, 10);
+		
 
 		int aux = 0;
 		file >> numGhosts;
@@ -94,7 +58,7 @@ void PlayState::loadFile(string filename) {
 
 			if (auxGhostType == 0)
 			{
-				ghost = new Ghost(this, renderer, 0, aux * 2);
+				ghost = new Ghost(this, renderer, 0, aux * 2, pacman);
 				aux++;
 			}
 			else
@@ -104,14 +68,18 @@ void PlayState::loadFile(string filename) {
 
 			ghost->setType(auxGhostType);
 			ghost->loadFromFile(file);
-			characters.push_back(ghost);
+			scene.push_back(ghost);
 		}
 
 		pacman->loadFromFile(file);
-		characters.push_front(pacman);
 
-		if (loading) {
-			file >> score;
+		scene.push_front(pacman);
+		scene.push_front(map);
+
+		file >> score;
+
+		if (!file.fail()) 
+		{
 			int energyTime;
 			file >> energyTime;
 			int loadingLives;
@@ -123,7 +91,7 @@ void PlayState::loadFile(string filename) {
 			pacman->setEnergy(energyState);
 			file >> level;
 		}
-		loading = false;
+		//loading = false;
 
 		file.close();
 	}
@@ -143,17 +111,16 @@ void PlayState::loadFile(string filename) {
 
 }
 void PlayState::saveToFile(string filename) {
-	list<GameCharacter*>::iterator it;
 	int i = 0;
 	ofstream file;
 	file.open(filename);
 	map->saveToFile(file);
 	file << numGhosts << endl;;
-	it = characters.begin();
-	advance(it, 1);
-	while (it != characters.end())
+	auto it = scene.begin();
+	advance(it, 2);
+	while (it != scene.end())
 	{
-		(*it)->saveToFile(file);
+		dynamic_cast<GameCharacter*>(*it)->saveToFile(file);
 		it++;
 	}
 	pacman->saveToFile(file);
@@ -172,7 +139,7 @@ int PlayState::saveState() {
 	unsigned int code = 0;
 	while (savingState && !exit)
 	{
-		renderCode(count);
+	//	renderCode(count);
 		SDL_WaitEvent(&event);
 
 		if (event.type == SDL_QUIT) {
@@ -193,7 +160,7 @@ int PlayState::saveState() {
 			}
 		}
 	}
-	if (!savingState && !loading) saveToFile("levels\\" + to_string(code) + ".pac");
+	if (!savingState) saveToFile("levels\\" + to_string(code) + ".pac");
 	return code;
 }
 /*
@@ -228,67 +195,31 @@ void PlayState::run() {
 		}
 	}
 }*/
-void PlayState::handleEvent(SDL_Event& e)
+void PlayState::handleEvents(SDL_Event& e)
 {
-       // ......
+     /* if(e.type == SDL_KEYDOWN)
+	  {
+		  if (e.key.keysym.sym == SDLK_ESCAPE)
+			  game->getStateMachine()->pushState(new PauseState(game));
+			  
+	  }*/
 
-
-		pacman->handleEvent(e);
-	
+	pacman->handleEvent(e);
 }
+
 void PlayState::update() 
 {
-	list<GameCharacter*>::iterator it = characters.begin();
-	advance(it, 1);
-	if (pacman->getEnergy())
-	{
-		pacman->timer();
-	}
-	int foodX, foodY;
-	if (pacman->eat(foodX, foodY))
-	{
-		map->setCell(foodY, foodX, Empty);
-		score += FOOD_POINTS;
-		numFood--;
-	}
-	pacman->update();
-	checkCapture();
-	while (it != characters.end())
-	{
-		(*it)->update();
-
-		++it;
-	}
+	GameState::update();
 	checkCapture();
 }
-void PlayState::render()
+
+void PlayState::render(SDL_Renderer* renderer)
 {
-	list<GameCharacter*>::iterator it = characters.begin();
-	advance(it, 1);
 
-	int i = 0;
-	SDL_RenderClear(renderer);
-
-
-	map->render(renderer);
-
-	pacman->render(renderer);
-
-	if (pacman->energyEnabled())
-		dynamic_cast<Ghost*>(*it)->toggleFear(true);
-	else
-		dynamic_cast<Ghost*>(*it)->toggleFear(false);
-
-	for (it; it != characters.end(); it++)
-	{
-		(*it)->render(renderer);
-		
-		i++;
-	}
+	GameState::render(renderer);
 	renderTexts();
-
-	SDL_RenderPresent(renderer);
 }
+
 void PlayState::endLevel() {
 	if (pacman->getLives() == 0) {
 		end = true;
@@ -343,23 +274,23 @@ mapCell PlayState::getCell(int posX, int posY) const
 // COLISIONES
 void PlayState::checkCapture()
 {
-	list<GameCharacter*>::iterator it = characters.begin();
-	advance(it, 1);
+	auto it = scene.begin();
+	advance(it, 2);
 	bool capture = false;
 	// Comprobamos por cada fantasma si coincide la posici�n con la de Pacman:
-	while (it != characters.end() && !capture)
+	while (it != scene.end() && !capture)
 	{
-		if (pacman->getPosX() == (*it)->getPosX() && pacman->getPosY() == (*it)->getPosY())
+		if (pacman->getPosX() == dynamic_cast<GameCharacter*>(*it)->getPosX() && pacman->getPosY() == dynamic_cast<GameCharacter*>(*it)->getPosY())
 		{
 			// 1) Si coincide, pero la energ�a estuviera ACTIVA... 
 			if (pacman->energyEnabled()) {
-				(*it)->restartPos(); // ...reiniciamos la posicion del fantasma
+				dynamic_cast<GameCharacter*>(*it)->restartPos(); // ...reiniciamos la posicion del fantasma
 				score += NORMAL_GHOST_POINTS;
 			}
 
 			else if (dynamic_cast<Ghost*>(*it)->getType() == 1 && dynamic_cast<SmartGhost*>(*it)->isDead())
 			{
-				it = characters.erase(it);
+				it = scene.erase(it);
 				it--;
 				score += INTELLI_GHOST_POINTS;
 			}
@@ -375,82 +306,24 @@ void PlayState::checkCapture()
 	}
 }
 void PlayState::restartCharacters() {
-	list<GameCharacter*>::iterator it;
-	for (it = characters.begin(); it != characters.end(); it++) {
-		(*it)->restartPos();
+	auto it = scene.begin();
+	advance(it, 1);
+	for (it; it != scene.end(); it++) {
+		dynamic_cast<GameCharacter*>(*it)->restartPos();
 	}
 }
 
-// UI
-int PlayState::checkInsideRect(int x, int y, SDL_Rect rect)
+bool PlayState::pacmanEat(int& foodX, int& foodY)
 {
+	bool eat = false;
 
-	if (x >= rect.x && x < (rect.x + rect.w))
+	if (pacman->eat(foodX, foodY))
 	{
-		if (y >= rect.y && y < (rect.y + rect.h))
-		{
-			return 1;
-		}
+		addScore(FOOD_POINTS);
+		subFood();
+		eat = true;
 	}
-	return 0;
-}
-void PlayState::mousePress(SDL_MouseButtonEvent& b) {
-	if (b.button == SDL_BUTTON_LEFT) {
-
-		if (checkInsideRect(b.x, b.y, rectNG) == 1) {
-			level = 1;
-			menu = false;
-		}
-		else if (checkInsideRect(b.x, b.y, rectLG) == 1) {
-			loading = true;
-			menu = false;
-		}
-	}
-}
-
-void PlayState::renderCode(const int& count) {
-	SDL_Rect destRect;
-	destRect.h = 218; destRect.w = 419;
-	destRect.x = (WIN_WIDTH) / 2 - (destRect.w / 2); destRect.y = WIN_HEIGHT / 2 - (destRect.h / 2);
-	menuTextures[3]->renderFrame(renderer, destRect, 0, count, 1, 11);
-	SDL_RenderPresent(renderer);
-}
-void PlayState::renderMenu() {
-	SDL_Rect destRect1, destRect2, destRectFondo;
-
-	destRectFondo.x = destRectFondo.y = 0; destRectFondo.w = WIN_WIDTH; destRectFondo.h = WIN_HEIGHT;
-	menuTextures[2]->Render(renderer, destRectFondo);
-
-	destRect1.x = (WIN_WIDTH) / 2 - 200;
-	destRect1.y = WIN_HEIGHT / 2 + 30; destRect1.w = 329; destRect1.h = 60;
-
-	rectNG = destRect1;
-
-	menuTextures[0]->Render(renderer, destRect1);
-
-	destRect2.x = (WIN_WIDTH) / 2 - 200; destRect2.y = WIN_HEIGHT / 2 + 120; destRect2.w = 329; destRect2.h = 60;
-
-	rectLG = destRect2;
-
-	menuTextures[1]->Render(renderer, destRect2);
-
-	SDL_RenderPresent(renderer);
-}
-void PlayState::loadMenu()
-{
-	SDL_Event event;
-
-	renderMenu();
-
-	while (SDL_PollEvent(&event))
-	{
-		if (event.type == SDL_MOUSEBUTTONDOWN) {
-			mousePress(event.button);
-		}
-		if (event.type == SDL_QUIT) {
-			exit = true;
-		}
-	}
+	return eat;
 }
 
 // FANTASMAS
@@ -458,12 +331,12 @@ bool PlayState::existGhost(int posX, int posY)
 {
 	bool ghostFound = false;
 
-	list<GameCharacter*>::iterator it = characters.begin();
-	advance(it, 1);
+	auto it = scene.begin();
+	advance(it, 2);
 	// Recorremos todos los fantasmas y comprobamos su posición
-	while (it != characters.end() && !ghostFound)
+	while (it != scene.end() && !ghostFound)
 	{
-		if ((*it)->getPosX() == posX && (*it)->getPosY() == posY)
+		if (dynamic_cast<GameCharacter*>(*it)->getPosX() == posX && dynamic_cast<GameCharacter*>(*it)->getPosY() == posY)
 		{
 			// Si coincide la posición con alguna de los fantasmas, devuelve 'true'
 			ghostFound = true;
@@ -478,14 +351,14 @@ bool PlayState::existGhost(SmartGhost* ghost, int posX, int posY, const bool& ad
 	bool ghostFound = false;
 	spawnGhost = false;
 
-	list<GameCharacter*>::iterator it = characters.begin();
-	advance(it, 1);
+	auto it = scene.begin();
+	advance(it, 2);
 	// Recorremos todos los fantasmas y comprobamos su posición
-	while (it != characters.end() && !ghostFound)
+	while (it != scene.end() && !ghostFound)
 	{
 		if ((*it) != ghost)
 		{
-			if ((*it)->getPosX() == posX && (*it)->getPosY() == posY)
+			if (dynamic_cast<GameCharacter*>(*it)->getPosX() == posX && dynamic_cast<GameCharacter*>(*it)->getPosY() == posY)
 			{
 				// Si coincide la posición con alguna de los fantasmas, devuelve 'true'
 				ghostFound = true;
@@ -506,7 +379,7 @@ void PlayState::spawnGhost(int posX, int posY)
 {
 	SmartGhost* smartGhost = new SmartGhost(this, renderer, 0, 8, pacman, posX, posY);
 	smartGhost->setType(1);
-	characters.push_back(smartGhost);
+	scene.push_back(smartGhost);
 
 }
 
@@ -548,13 +421,11 @@ void PlayState::renderTexts() {
 PlayState::~PlayState()
 {
 	delete map;
-	for (int i = 0; i < NUM_MENU_TEXT; i++)
+	/*for (int i = 0; i < NUM_MENU_TEXT; i++)
 	{
 		menuTextures[i]->Free();
 		delete menuTextures[i];
-	}
+	}*/
 
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
+	renderer = nullptr;
 }

@@ -28,9 +28,7 @@ void GameMap::initializeTextures(SDL_Renderer* renderer)
 // C) CARGAMOS EL MAPA LEYÉNDOLO DE FICHERO
 void GameMap::loadFromFile(ifstream& file)
 {
-	
 		int cell;
-		
 
 		// b) Segun la implementación del archivo, leemos la primera fila para obtener las filas y columnas del mapa
 		file >> rows >> cols;
@@ -89,7 +87,8 @@ void GameMap::saveToFile(ofstream& file) {
  }
 
 // E) RENDER DE LAS TEXTURAS DEL MAPA
-void GameMap::render(SDL_Renderer* renderer) {
+void GameMap::render(SDL_Renderer* renderer) 
+{
 
 	// 1) Recorremos la matriz de celdas
 	for (int i = 0; i < rows; i++)
@@ -101,6 +100,13 @@ void GameMap::render(SDL_Renderer* renderer) {
 			// 2) Miramos el tipo de celda de dicha posición en la matriz, y elegimos la textura:
 			textures[(int)map[i][j]]->Render(renderer, destRect);
 		}
+}
+
+void GameMap::update()
+{
+	int foodX, foodY;
+	if (game->pacmanEat(foodX, foodY))
+		setCell(foodY, foodX, Empty);
 }
 
 // F) DEVUELVE EL TIPO DE CELDA EN LA POSICIÓN DADA

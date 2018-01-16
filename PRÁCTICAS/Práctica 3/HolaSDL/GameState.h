@@ -2,16 +2,21 @@
 #include <list>
 #include "GameObject.h"
 #include "Game.h"
+
+const int WIN_WIDTH = 800;
+const int WIN_HEIGHT = 600;
+
+
 class GameState
 {
-private:
+protected:
 	list<GameObject*> scene;
 	
 	Game* game;
 public:
 	GameState(Game* game);
-	GameState() {};
 
+	GameState();
 	~GameState() 
 	{
 		for (GameObject* obj : scene) delete obj;
@@ -26,7 +31,7 @@ public:
 	{
 		bool handled = false;
 
-		auto it = scene.begin();
+ 		auto it = scene.begin();
 
 		while (it!= scene.end() && !handled)
 		{
@@ -37,9 +42,9 @@ public:
 		}
 	}
 
-	virtual void render()
+	virtual void render(SDL_Renderer* renderer)
 	{
-		for (GameObject* obj : scene) obj->render();
+		for (GameObject* obj : scene) obj->render(renderer);
 	}
 };
 

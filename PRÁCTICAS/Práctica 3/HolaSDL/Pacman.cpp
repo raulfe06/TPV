@@ -77,6 +77,9 @@ void Pacman::setAnimation()
 // F) ACTUALIZA LA POSICIÓN DE PACMAN
 void Pacman::update() 
 {
+	if (getEnergy())
+		timer();
+
 	// a) Con la dirección siguiente guardada, miramos si podemos avanzar en dicha dirección: 
 	if (game->nextCell(posX, posY, nextDirX, nextDirY, posX, posY))
 	{
@@ -87,10 +90,12 @@ void Pacman::update()
 	}
 	else // b) Miramos si con la dirección actual podemos avanzar -> Si podemos, avanza. Si no, se parará
 		game->nextCell(posX, posY, dirX, dirY, posX, posY);
+
+	game->checkCapture();
 }
 
 // G) ACTUALIZA LA DIRECCIÓN SIGUENTE DE PACMAN SEGÚN LA TECLA DE DIRECCIÓN PULSADA
-void Pacman::setDir(SDL_Event event)
+void Pacman::setDir(SDL_Event& event)
 {
 	// 1) Miramos la pulsación de la tecla:
 	if (event.type == SDL_KEYDOWN)

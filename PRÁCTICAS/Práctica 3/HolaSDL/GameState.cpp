@@ -1,9 +1,11 @@
 #include "GameState.h"
 
-
-
-GameState::GameState(Game* game)
+GameState::GameState(Game* game) : game(game)
 {
-	this->game = game;
+}
+GameState::GameState()
+{
+
+
 }
 

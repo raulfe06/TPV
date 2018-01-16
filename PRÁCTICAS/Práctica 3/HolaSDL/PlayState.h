@@ -11,10 +11,10 @@ class Pacman;
 
 //*CONSTANTES GENERALES*
 
-const int WIN_WIDTH = 800;
-const int WIN_HEIGHT = 600;
+//const int WIN_WIDTH = 800;
+//const int WIN_HEIGHT = 600;
 const int OFFSET = 200;
-const int NUM_MENU_TEXT = 4;
+//const int NUM_MENU_TEXT = 4;
 
 
 //CONSTANTES DE LOS PUNTOS
@@ -25,26 +25,23 @@ const int INTELLI_GHOST_POINTS = 100;
 const int NUM_TOTAL_LEVELS = 3;
 const int FRAME_RATE = 160; // milliseconds per frame -> 6 frames/s
 const std::string TEXT_PATHFILE = "..\\images\\";
-const std::string menuNames[NUM_MENU_TEXT] = { "newGame.png","loadGame.png","menu.png","code.png" };
+//const std::string menuNames[NUM_MENU_TEXT] = { "newGame.png","loadGame.png","menu.png","code.png" };
 
 
 class PlayState :public GameState
 {
 private:
-	SDL_Window* window = nullptr;
+	//SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 
 	// Posición de la ventana
-	int winX = SDL_WINDOWPOS_CENTERED;
-	int winY = winX;
+	//int winX = SDL_WINDOWPOS_CENTERED;
+	//int winY = winX;
 
 	SDL_Rect rectNG, rectLG; //destino de new game y load game
 
 							 // Texturas del menú
-	Texture* menuTextures[NUM_MENU_TEXT];
-
-	// Lista de personajes del juego
-	std::list<GameCharacter*> characters;
+	//Texture* menuTextures[NUM_MENU_TEXT];
 
 	// Puntero directo a Pacman
 	Pacman* pacman = nullptr;
@@ -67,13 +64,13 @@ private:
 	bool exit = false;
 	bool savingState = false;
 
-	bool menu = true;
+	
 	bool win = false;
 	bool end = false;
-	bool loading = false;
+	
 
 public:
-	PlayState();
+	PlayState(Game* game, SDL_Renderer* renderer);
 
 	
 
@@ -86,9 +83,9 @@ public:
 	// Bucle del juego
 	int saveState();
 	void run();
-	void handleEvent(SDL_Event& e);
+	void handleEvents(SDL_Event& e);
 	void update();
-	void render();
+	void render(SDL_Renderer* renderer);
 	void endLevel();
 	bool getExit() const { return exit; };
 
@@ -98,20 +95,18 @@ public:
 	bool nextCell(int x, int y, int dx, int dy, int& nx, int& ny);
 	mapCell getCell(int posX, int posY) const;
 
+	void addScore(int amount) { score += amount; };
+	void subFood() { numFood--; };
+
 
 	// Colisiones
 	void checkCapture();
 	void restartCharacters();
+	bool pacmanEat(int& foodX, int& foodY);
 
 
 	// UI
-	int checkInsideRect(int x, int y, struct SDL_Rect rect);
-	void mousePress(SDL_MouseButtonEvent& b);
-
-	void renderCode(const int& count);
-	void renderMenu();
-	bool getMenu() const { return menu; };
-	void loadMenu();
+	
 
 
 	// Fantasmas
@@ -125,6 +120,7 @@ public:
 	int getCols() const { return cols; };
 	void setFils(int fils) { this->rows = fils; };
 	void setCols(int cols) { this->cols = cols; };
+
 
 
 	// Texto

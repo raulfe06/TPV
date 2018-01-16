@@ -43,7 +43,7 @@ public:
 	void update();
 	bool handleEvent(SDL_Event& e);
 
-	void setDir(SDL_Event event);
+	void setDir(SDL_Event& event);
 
 	bool eat(int& foodX, int& foodY);
 
