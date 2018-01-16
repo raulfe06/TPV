@@ -23,7 +23,7 @@ protected:
 	GameObject();
 
 	// Métodos virtuales puros -> Necesitan ser (re)definidos por las clases hijas 
-	virtual void render(SDL_Renderer* renderer) = 0;
+	
 
 	virtual void loadFromFile(ifstream& file) = 0;
 	virtual void saveToFile(ofstream& file) = 0;
@@ -31,6 +31,6 @@ protected:
 public:
 	virtual void update() {};
 	virtual bool handleEvent(SDL_Event& e) { return true; };
-	virtual void render() {};
+	virtual void render(SDL_Renderer* renderer) {};
 	virtual ~GameObject() = 0;
 };

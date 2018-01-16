@@ -30,6 +30,9 @@ Clase GameMap: crea la matriz, a partir de la cual se creará y actualizará el ni
 - Se comunica con <Game> -> Indica, actualiza, etc., sus celdas
 
 */
+
+class Pacman;
+
 class GameMap : public GameObject
 {
 private:
@@ -52,6 +55,7 @@ public:
 	 void saveToFile(ofstream& file);
 
 	 void render(SDL_Renderer* renderer);
+	 void update();
 
 	 mapCell getCell(int posX, int posY) const;
 	 void setCell(int posX, int posY, mapCell cellKind);

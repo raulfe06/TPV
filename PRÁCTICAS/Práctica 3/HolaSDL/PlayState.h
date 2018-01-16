@@ -31,12 +31,12 @@ const std::string TEXT_PATHFILE = "..\\images\\";
 class PlayState :public GameState
 {
 private:
-	SDL_Window* window = nullptr;
+	//SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 
 	// Posición de la ventana
-	int winX = SDL_WINDOWPOS_CENTERED;
-	int winY = winX;
+	//int winX = SDL_WINDOWPOS_CENTERED;
+	//int winY = winX;
 
 	SDL_Rect rectNG, rectLG; //destino de new game y load game
 
@@ -72,7 +72,7 @@ private:
 	
 
 public:
-	PlayState();
+	PlayState(SDL_Renderer* renderer);
 
 	// Lectura y escritura
 	void loadFile(std::string filename);
@@ -85,7 +85,7 @@ public:
 	void run();
 	void handleEvent(SDL_Event& e);
 	void update();
-	void render();
+	void render(SDL_Renderer* renderer);
 	void endLevel();
 	bool getExit() const { return exit; };
 
@@ -95,10 +95,14 @@ public:
 	bool nextCell(int x, int y, int dx, int dy, int& nx, int& ny);
 	mapCell getCell(int posX, int posY) const;
 
+	void addScore(int amount) { score += amount; };
+	void subFood() { numFood--; };
+
 
 	// Colisiones
 	void checkCapture();
 	void restartCharacters();
+	bool pacmanEat(int& foodX, int& foodY);
 
 
 	// UI
@@ -116,6 +120,7 @@ public:
 	int getCols() const { return cols; };
 	void setFils(int fils) { this->rows = fils; };
 	void setCols(int cols) { this->cols = cols; };
+
 
 
 	// Texto

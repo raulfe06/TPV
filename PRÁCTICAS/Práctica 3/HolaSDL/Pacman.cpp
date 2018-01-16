@@ -95,7 +95,7 @@ void Pacman::update()
 }
 
 // G) ACTUALIZA LA DIRECCIÓN SIGUENTE DE PACMAN SEGÚN LA TECLA DE DIRECCIÓN PULSADA
-void Pacman::setDir(SDL_Event event)
+void Pacman::setDir(SDL_Event& event)
 {
 	// 1) Miramos la pulsación de la tecla:
 	if (event.type == SDL_KEYDOWN)

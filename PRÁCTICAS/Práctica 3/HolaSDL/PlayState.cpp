@@ -16,47 +16,10 @@
 using namespace std;
 
 
-PlayState::PlayState()
+PlayState::PlayState(SDL_Renderer* renderer) : renderer(renderer)
 {
 
-	try
-	{
-		if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
-			throw SDLError(SDL_GetError());
-
-		if (TTF_Init() < 0)
-			throw SDLError(TTF_GetError());
-		// b) Creamos la ventana y el renderer
-		window = SDL_CreateWindow("PACMAN", winX, winY, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
-		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
-		if (window == nullptr || renderer == nullptr)
-		{
-			throw SDLError(SDL_GetError());
-		}
-		else
-			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); //RGB y alpha
-
-
-		/*for (int i = 0; i < NUM_MENU_TEXT; i++)
-		{
-			menuTextures[i] = new Texture();
-			menuTextures[i]->Load(renderer, TEXT_PATHFILE + menuNames[i], 1, 1);
-		}*/
-	}
-	catch (SDLError& e)
-	{
-		char out = ' ';
-		cout << e.what() << endl;
-
-		cout << "\nPulse la tecla 'x' para salir" << endl;
-
-		while (out != 'x')
-		{
-			cin >> out;
-		}
-		exit = true;
-	}
+	
 }
 
 // LECTURA Y ESCRITURA
@@ -69,9 +32,11 @@ void PlayState::loadFile(string filename) {
 	ifstream file;
 	int auxGhostType;
 
-	map = new GameMap(this);
-	try {
+	
 
+	map = new GameMap(this);
+
+	try {
 
 		file.open(filename);
 		if (!file.good()) throw FileNotFoundError(filename);
@@ -79,9 +44,9 @@ void PlayState::loadFile(string filename) {
 		map->loadFromFile(file);
 		map->initializeTextures(renderer);
 
-
-		// Pacman se crea antes que los fantasmas porque los smartGhost necesitarán su puntero
+		// Pacman se crea antes porque necesitarán su puntero
 		pacman = new Pacman(this, renderer, 0, 10);
+		
 
 		int aux = 0;
 		file >> numGhosts;
@@ -107,7 +72,9 @@ void PlayState::loadFile(string filename) {
 		}
 
 		pacman->loadFromFile(file);
+
 		scene.push_front(pacman);
+		scene.push_front(map);
 
 		file >> score;
 
@@ -150,7 +117,7 @@ void PlayState::saveToFile(string filename) {
 	map->saveToFile(file);
 	file << numGhosts << endl;;
 	auto it = scene.begin();
-	advance(it, 1);
+	advance(it, 2);
 	while (it != scene.end())
 	{
 		dynamic_cast<GameCharacter*>(*it)->saveToFile(file);
@@ -238,37 +205,30 @@ void PlayState::handleEvent(SDL_Event& e)
 }
 void PlayState::update() 
 {
-	int foodX, foodY;
-	if (pacman->eat(foodX, foodY))
-	{
-		map->setCell(foodY, foodX, Empty);
-		score += FOOD_POINTS;
-		numFood--;
-	}
-	
-
 	GameState::update();
 	checkCapture();
 }
-void PlayState::render()
+void PlayState::render(SDL_Renderer* renderer)
 {
 	auto it = scene.begin();
-	advance(it, 1);
+	//advance(it, 2);
 
 	int i = 0;
 	SDL_RenderClear(renderer);
 
 
-	map->render(renderer);
+	//map->render(renderer);
 
-	pacman->render(renderer);
+	//pacman->render(renderer);
 
-	for (it; it != scene.end(); it++)
+	/*for (it; it != scene.end(); it++)
 	{
 		dynamic_cast<GameCharacter*>(*it)->render(renderer);
 		
 		i++;
-	}
+	}*/
+
+	GameState::render(renderer);
 	renderTexts();
 
 	SDL_RenderPresent(renderer);
@@ -328,7 +288,7 @@ mapCell PlayState::getCell(int posX, int posY) const
 void PlayState::checkCapture()
 {
 	auto it = scene.begin();
-	advance(it, 1);
+	advance(it, 2);
 	bool capture = false;
 	// Comprobamos por cada fantasma si coincide la posici�n con la de Pacman:
 	while (it != scene.end() && !capture)
@@ -360,9 +320,23 @@ void PlayState::checkCapture()
 }
 void PlayState::restartCharacters() {
 	auto it = scene.begin();
+	advance(it, 1);
 	for (it; it != scene.end(); it++) {
 		dynamic_cast<GameCharacter*>(*it)->restartPos();
 	}
+}
+
+bool PlayState::pacmanEat(int& foodX, int& foodY)
+{
+	bool eat = false;
+
+	if (pacman->eat(foodX, foodY))
+	{
+		addScore(FOOD_POINTS);
+		subFood();
+		eat = true;
+	}
+	return eat;
 }
 
 // FANTASMAS
@@ -371,7 +345,7 @@ bool PlayState::existGhost(int posX, int posY)
 	bool ghostFound = false;
 
 	auto it = scene.begin();
-	advance(it, 1);
+	advance(it, 2);
 	// Recorremos todos los fantasmas y comprobamos su posición
 	while (it != scene.end() && !ghostFound)
 	{
@@ -391,7 +365,7 @@ bool PlayState::existGhost(SmartGhost* ghost, int posX, int posY, const bool& ad
 	spawnGhost = false;
 
 	auto it = scene.begin();
-	advance(it, 1);
+	advance(it, 2);
 	// Recorremos todos los fantasmas y comprobamos su posición
 	while (it != scene.end() && !ghostFound)
 	{
@@ -467,6 +441,6 @@ PlayState::~PlayState()
 	}*/
 
 	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
+	//SDL_DestroyWindow(window);
 	SDL_Quit();
 }

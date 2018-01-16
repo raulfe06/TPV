@@ -40,9 +40,9 @@ public:
 		}
 	}
 
-	virtual void render()
+	virtual void render(SDL_Renderer* renderer)
 	{
-		for (GameObject* obj : scene) obj->render();
+		for (GameObject* obj : scene) obj->render(renderer);
 	}
 };
 

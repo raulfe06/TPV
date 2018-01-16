@@ -23,6 +23,10 @@ private:
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 
+	// Posición de la ventana
+	int winX = SDL_WINDOWPOS_CENTERED;
+	int winY = winX;
+
 	// Texturas del menú
 //	Texture* menuTextures[NUM_MENU_TEXT];
 
