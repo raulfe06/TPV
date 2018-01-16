@@ -2,7 +2,7 @@
 
 
 
-MainMenuState::MainMenuState(SDL_Renderer* renderer)
+MainMenuState::MainMenuState(Game* game, SDL_Renderer* renderer) : GameState(game)
 {
 	for (int i = 0; i < NUM_MENU_TEXT; i++)
 	{

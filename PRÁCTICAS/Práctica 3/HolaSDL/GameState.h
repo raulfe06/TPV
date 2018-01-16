@@ -14,6 +14,7 @@ protected:
 	
 	Game* game;
 public:
+	GameState(Game* game);
 	GameState();
 	~GameState() 
 	{

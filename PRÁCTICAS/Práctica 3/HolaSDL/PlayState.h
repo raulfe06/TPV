@@ -43,8 +43,6 @@ private:
 							 // Texturas del menú
 	//Texture* menuTextures[NUM_MENU_TEXT];
 
-	
-
 	// Puntero directo a Pacman
 	Pacman* pacman = nullptr;
 
@@ -72,7 +70,7 @@ private:
 	
 
 public:
-	PlayState(SDL_Renderer* renderer);
+	PlayState(Game* game, SDL_Renderer* renderer);
 
 	// Lectura y escritura
 	void loadFile(std::string filename);

@@ -22,7 +22,7 @@ private:
 	bool loading = false;
 
 public:
-	MainMenuState(SDL_Renderer* renderer);
+	MainMenuState(Game* game, SDL_Renderer* renderer);
 
 	int checkInsideRect(int x, int y, SDL_Rect rect);
 	void mousePress(SDL_MouseButtonEvent& b);

@@ -57,7 +57,7 @@ Game::Game()
 
 	stateMachine = new GameStateMachine();
 
-	test = new PlayState(renderer);
+	test = new PlayState(this, renderer);
 	stateMachine->pushState(test);
 	test->loadFile("levels\\level0" + to_string(1) + ".pac");
 
@@ -101,4 +101,16 @@ void Game::render()
 	stateMachine->currentState()->render(renderer);
 
 	SDL_RenderPresent(renderer);
+}
+
+GameStateMachine* Game::getStateMachine()
+{
+	return stateMachine;
+}
+
+Game::~Game()
+{
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 }

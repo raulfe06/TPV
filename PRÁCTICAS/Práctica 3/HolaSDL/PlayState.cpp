@@ -13,13 +13,13 @@
 #include "FileNotFoundError.h"
 #include "FileFormatError.h"
 
+#include "GameStateMachine.h"
+
 using namespace std;
 
 
-PlayState::PlayState(SDL_Renderer* renderer) : renderer(renderer)
-{
-
-	
+PlayState::PlayState(Game* game, SDL_Renderer* renderer) : GameState(game),renderer(renderer)
+{	
 }
 
 // LECTURA Y ESCRITURA
@@ -197,42 +197,29 @@ void PlayState::run() {
 }*/
 void PlayState::handleEvents(SDL_Event& e)
 {
-       // ......
-
+     /* if(e.type == SDL_KEYDOWN)
+	  {
+		  if (e.key.keysym.sym == SDLK_ESCAPE)
+			  game->getStateMachine()->pushState(new PauseState(game));
+			  
+	  }*/
 
 	pacman->handleEvent(e);
-	
 }
+
 void PlayState::update() 
 {
 	GameState::update();
 	checkCapture();
 }
+
 void PlayState::render(SDL_Renderer* renderer)
 {
-	auto it = scene.begin();
-	//advance(it, 2);
-
-	int i = 0;
-	SDL_RenderClear(renderer);
-
-
-	//map->render(renderer);
-
-	//pacman->render(renderer);
-
-	/*for (it; it != scene.end(); it++)
-	{
-		dynamic_cast<GameCharacter*>(*it)->render(renderer);
-		
-		i++;
-	}*/
 
 	GameState::render(renderer);
 	renderTexts();
-
-	SDL_RenderPresent(renderer);
 }
+
 void PlayState::endLevel() {
 	if (pacman->getLives() == 0) {
 		end = true;
@@ -440,7 +427,5 @@ PlayState::~PlayState()
 		delete menuTextures[i];
 	}*/
 
-	SDL_DestroyRenderer(renderer);
-	//SDL_DestroyWindow(window);
-	SDL_Quit();
+	renderer = nullptr;
 }

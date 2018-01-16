@@ -41,10 +41,15 @@ private:
 public:
 
 	Game();
+
 	// Bucle del juego
 	void run();
 	void handleEvents();
 	void update();
 	void render();
+
+	GameStateMachine* getStateMachine();
+
+	~Game();
 
 };
