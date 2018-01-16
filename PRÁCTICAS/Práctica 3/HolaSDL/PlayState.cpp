@@ -195,12 +195,12 @@ void PlayState::run() {
 		}
 	}
 }*/
-void PlayState::handleEvent(SDL_Event& e)
+void PlayState::handleEvents(SDL_Event& e)
 {
        // ......
 
 
-		pacman->handleEvent(e);
+	pacman->handleEvent(e);
 	
 }
 void PlayState::update() 

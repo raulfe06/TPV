@@ -65,7 +65,6 @@ Game::Game()
 
 void Game::run() 
 {
-
 	while (!exit)
 	{
 		int startTime = SDL_GetTicks();
@@ -89,7 +88,6 @@ void Game::handleEvents()
 	while (SDL_PollEvent(&event) && !exit)
 	{
 		if (event.type == SDL_QUIT)
-
 			exit = true;
 		else
 			stateMachine->currentState()->handleEvents(event);

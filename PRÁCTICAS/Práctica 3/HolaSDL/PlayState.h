@@ -83,7 +83,7 @@ public:
 	// Bucle del juego
 	int saveState();
 	void run();
-	void handleEvent(SDL_Event& e);
+	void handleEvents(SDL_Event& e);
 	void update();
 	void render(SDL_Renderer* renderer);
 	void endLevel();
