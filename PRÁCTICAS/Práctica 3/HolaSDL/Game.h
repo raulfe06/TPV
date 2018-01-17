@@ -1,6 +1,8 @@
 #pragma once
 #include "GameCharacter.h"
 #include "GameMap.h"
+#include "checkML.h"
+
 
 class SmartGhost;
 class Pacman;
@@ -12,8 +14,9 @@ const int WIN_HEIGHT = 600;
 
 const int FRAME_RATE = 160; // milliseconds per frame -> 6 frames/s
 
-const int NUM_GAME_TEXTURES = 12;
-enum enumTextures { EmptyTex, WallTex, FoodTex, VitaminsTex, NewGameTex, LoadGameTex, ExitGameTex, ResumeGameTex, CharactersText, SaveGameTex, MainMenuText, CodeText };
+const int NUM_GAME_TEXTURES = 17;
+enum enumTextures { EmptyTex, WallTex, FoodTex, VitaminsTex, NewGameTex, LoadGameTex, ExitGameTex, ResumeGameTex, 
+	CharactersText, SaveGameTex, MainMenuText, CodeText,MenuBACK,PlayStateBACK,PauseBACK,VictoryBack,DefeatBack };
 
 typedef struct {
 	// 1) Nombre del archivo de la imagen
@@ -24,7 +27,8 @@ typedef struct {
 } textAtributes;
 
 const textAtributes GAME_TEXTURES[NUM_GAME_TEXTURES] = { { "empty.png",1,1 },{ "wall.png", 1, 1 },{ "food.png", 1, 1 },{ "vitamin.png", 1, 1 },
-{ "newGame.png", 1, 1 },{ "loadGame.png", 1, 1 },{ "exitGame.png", 1, 1 },{ "resumeGame.png", 1, 1 },{ "characters.png", 4, 14 },{ "saveGame.png", 1, 1 },{ "mainMenu.png", 1, 1 },{ "code.png", 1, 1 } };
+{ "newGame.png", 1, 1 },{ "loadGame.png", 1, 1 },{ "exitGame.png", 1, 1 },{ "resumeGame.png", 1, 1 },{ "characters.png", 4, 14 },{ "saveGame.png", 1, 1 },{ "mainMenu.png", 1, 1 },{ "code.png", 1, 1 }
+,{ "menuBack.png", 1, 1 },{ "playBack.png", 1, 1 },{ "pauseBack.png", 1, 1 },{ "victoryBack.png", 1, 1 },{ "defeatBack.png", 1, 1 } };
 
 const std::string TEXT_PATHFILE = "..\\images\\";
 

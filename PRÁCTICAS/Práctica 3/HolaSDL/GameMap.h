@@ -2,6 +2,8 @@
 #include "PacmanObject.h"
 #include "Texture.h"
 #include "SDL.h"
+#include "checkML.h"
+
 class PlayState;
 
 // Tipos de celda para el mapa

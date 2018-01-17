@@ -3,6 +3,7 @@
 #include "GameCharacter.h"
 #include "GameMap.h"
 #include <iterator>
+#include "checkML.h"
 
 #include "GameState.h"
 
@@ -49,7 +50,7 @@ private:
 	// Delta time del juego
 	int delta;
 
-	int level;
+	int level=1;
 	int score;
 	int numGhosts;
 
@@ -67,7 +68,7 @@ public:
 	void saveToFile(string filename);
 	void modifyNumFood(int m) { numFood += m; };
 
-	int saveState();
+	int saveState(bool loadingGame);
 
 	// Bucle del juego
 	void handleEvents(SDL_Event& e);

@@ -16,4 +16,12 @@ GameState::GameState()
 {
 
 }
+void GameState::renderBackGround() {
+
+	
+	SDL_Rect dest = { 0,0,WIN_WIDTH,WIN_HEIGHT };
+	Texture* text = game->getTexture(backGroundName);
+	text->Render(game->getRenderer(), dest);
+}
+
 

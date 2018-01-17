@@ -1,9 +1,11 @@
 #pragma once
 #include "GameState.h"
-class EndState : GameState
+#include "checkML.h"
+class EndState : public GameState
 {
 public:
-	EndState();
+	EndState(Game* game,bool win);
+	static void goToMenu(Game* game);
 	~EndState();
 };
 

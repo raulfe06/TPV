@@ -1,5 +1,6 @@
 #pragma once
 #include "Ghost.h"
+#include "checkML.h"
 
 // CONSTANTES: 
 const int COOLDOWN = 20;

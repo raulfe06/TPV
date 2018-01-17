@@ -2,13 +2,14 @@
 #include <list>
 #include "GameObject.h"
 #include "Game.h"
+#include "checkML.h"
 
 
 class GameState
 {
 protected:
 	list<GameObject*> scene;
-	
+	enumTextures backGroundName;
 	Game* game;
 public:
 	GameState(Game* game);
@@ -41,6 +42,7 @@ public:
 
 	virtual void render(SDL_Renderer* renderer)
 	{
+		renderBackGround();
 		for (GameObject* obj : scene) obj->render(renderer);
 	}
 
@@ -48,5 +50,8 @@ public:
 	{
 		return game->getTexture(name);
 	}
+
+	void renderBackGround();
+	void setBackName(enumTextures name) { backGroundName = name; };
 };
 

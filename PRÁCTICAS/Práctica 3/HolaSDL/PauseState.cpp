@@ -6,10 +6,12 @@
 
 PauseState::PauseState(Game* game) : GameState (game)
 {
+	setBackName(PauseBACK);
+
 	SDL_Rect resumeButton, saveGameButton,mainMenuButton;
-	resumeButton = { 0, 0 ,329 ,60 };
-	saveGameButton = { 0,200,329,60};
-	mainMenuButton = { 0,300,329,60 };
+	resumeButton = { WIN_WIDTH / 2 - (buttonWidth / 2), buttonHeight ,buttonWidth ,buttonHeight };
+	saveGameButton = { WIN_WIDTH / 2 - (buttonWidth / 2),WIN_HEIGHT / 2 - (buttonHeight / 2),buttonWidth ,buttonHeight };
+	mainMenuButton = { WIN_WIDTH / 2 - (buttonWidth / 2),WIN_HEIGHT - buttonHeight * 2,buttonWidth ,buttonHeight };
 
 
 scene.push_back(new MenuButton(game,resumeButton.x,resumeButton.y,resumeButton.w,resumeButton.h,game->getTexture(ResumeGameTex),resume));
@@ -30,8 +32,7 @@ PauseState::~PauseState()
 }
  void PauseState::saveGame(Game* game) {
 	 resume(game);
-	int code =  dynamic_cast<PlayState*>(game->getStateMachine()->currentState())->saveState();
-	//dynamic_cast<PlayState*>(game->getStateMachine()->currentState())->saveToFile("levels\\" + to_string(code) + ".pac");
+	int code =  dynamic_cast<PlayState*>(game->getStateMachine()->currentState())->saveState(false);
  }
  void PauseState::goToMenu(Game* game) {
 	 resume(game);

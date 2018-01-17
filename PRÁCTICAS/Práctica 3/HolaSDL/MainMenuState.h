@@ -1,5 +1,6 @@
 #pragma once
 #include "GameState.h"
+#include "checkML.h"
 
 
 //*CONSTANTES GENERALES*
@@ -23,6 +24,8 @@ public:
 	MainMenuState(Game* game);
 	
 	static void newGame(Game* game);
+	static void loadGame(Game* game);
+	static void exitGame(Game* game);
 	~MainMenuState();
 };
 

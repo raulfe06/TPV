@@ -1,6 +1,11 @@
 #pragma once
 #include "Texture.h"
 #include "Game.h"
+#include "checkML.h"
+
+const int buttonWidth = 398;
+const int buttonHeight = 98;
+
 class MenuButton : public GameObject
 {
 private:

@@ -2,6 +2,7 @@
 #include "SDL.h"
 #include "Texture.h"
 #include "PacmanObject.h"
+#include "checkML.h"
 
 //class Game;
 

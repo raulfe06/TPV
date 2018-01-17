@@ -1,5 +1,6 @@
 #pragma once
 #include "PacmanError.h"
+#include "checkML.h"
 
 
 class FileFormatError : public PacmanError

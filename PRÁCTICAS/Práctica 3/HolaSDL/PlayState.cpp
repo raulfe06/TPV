@@ -16,16 +16,19 @@
 #include "GameStateMachine.h"
 #include "PauseState.h"
 #include "GameState.h"
+#include "EndState.h"
 
 using namespace std;
 
 
 PlayState::PlayState(Game* game, SDL_Renderer* renderer, bool loadingFile) : GameState(game),renderer(renderer)
 {	
-	if (!loadingFile) loadFile("levels\\level0" + to_string(1) + ".pac");
+	setBackName(PlayStateBACK);
+
+	if (!loadingFile) loadFile("levels\\level0" + to_string(level) + ".pac");
 	else {
-		int code =saveState();
-		loadFile("levels\\level0" + to_string(code) + ".pac");
+		int code =saveState(loadingFile);
+		loadFile("levels\\" + to_string(code) + ".pac");
 	}
 }
 
@@ -136,7 +139,7 @@ void PlayState::saveToFile(string filename) {
 }
 
 // BUCLE DEL JUEGO
-int PlayState::saveState() {
+int PlayState::saveState(bool loadingGame) {
 	SDL_Event event;
 	bool savingGame = true;
 	int count = 0;
@@ -164,7 +167,7 @@ int PlayState::saveState() {
 			}
 		}
 	}
-	saveToFile("levels\\" + to_string(code) + ".pac");
+	if(!loadingGame) saveToFile("levels\\" + to_string(code) + ".pac");
 	return code;
 }
 
@@ -174,6 +177,10 @@ void PlayState::handleEvents(SDL_Event& e)
 	  {
 		  if (e.key.keysym.sym == SDLK_ESCAPE)
 			  game->getStateMachine()->pushState(new PauseState(game));
+		  else if(e.key.keysym.sym == SDLK_F8) 
+			  game->getStateMachine()->pushState(new EndState(game, true));
+		  else if (e.key.keysym.sym == SDLK_F9)
+			  game->getStateMachine()->pushState(new EndState(game, false));
 			  
 	  }
 
@@ -201,13 +208,12 @@ void PlayState::endLevel() {
 		if (level < NUM_TOTAL_LEVELS)
 			loadFile("levels\\level0" + to_string(level) + ".pac");
 		else
-			int hola = 0;
-		//Meter EndState();
+			game->getStateMachine()->pushState(new EndState(game, true));
 	}
 
 	else if (pacman->getLives() == 0)
-		int adios = 0;
-		// Meter EndState();
+		game->getStateMachine()->pushState(new EndState(game, false));
+
 	
 }
 

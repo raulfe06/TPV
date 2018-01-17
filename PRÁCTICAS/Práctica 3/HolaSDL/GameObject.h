@@ -1,6 +1,7 @@
 #pragma once
 #include <fstream>
 #include "SDL.h"
+#include "checkML.h"
 
 using namespace std;
 
@@ -17,7 +18,6 @@ Clase GameObject: clase abstracta
 class GameObject
 {
 protected:
-	//PlayState* game = nullptr;
 
 	GameObject();
 

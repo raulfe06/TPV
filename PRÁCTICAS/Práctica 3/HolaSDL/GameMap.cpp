@@ -27,8 +27,8 @@ void GameMap::loadFromFile(ifstream& file)
 			if (rows > maxR || cols > maxC) throw FileFormatError("El mapa supera los limites [ "
 				+ to_string(maxR) + ", " + to_string(maxC) + "]" );
 
-			this->playState->setCols(this->cols);
-			this->playState->setFils(this->rows);
+			playState->setCols(this->cols);
+			playState->setFils(this->rows);
 
 
 			destRect.w = (WIN_WIDTH - 200) / playState->getCols();
