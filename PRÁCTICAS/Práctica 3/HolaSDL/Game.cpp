@@ -124,6 +124,8 @@ void Game::initializeTextures() {
 
 Game::~Game()
 {
+
+	for (Texture* tex : textures) tex->Free();
 	renderer = nullptr;
 	window = nullptr;
 	SDL_DestroyRenderer(renderer);

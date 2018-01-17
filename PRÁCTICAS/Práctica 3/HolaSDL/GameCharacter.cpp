@@ -13,8 +13,6 @@ GameCharacter::GameCharacter()
 GameCharacter::GameCharacter(PlayState* playState, SDL_Renderer* renderer, int row, int col) : PacmanObject(playState), textRow(row), textCol(col)
 {
 	// 1) Creamos la textura, cargándola del spritesheet de personajes
-	//texture = new Texture();
-//	texture->Load(renderer, "..\\images\\characters1.png", 4, 14);
 	texture = playState->getTexture(CharactersText);
 
 	// 2) Obtenemos las medidas del rectángulo de destino, donde se pintará la textura cargada 
@@ -73,7 +71,6 @@ void GameCharacter::render(SDL_Renderer* renderer)
 	destRect.y = posY * destRect.h;
 	
 	texture->RenderFrame(renderer, textRow, textCol, destRect);
-	//texture->Render(renderer, destRect);
 }
 
 
@@ -81,5 +78,4 @@ void GameCharacter::render(SDL_Renderer* renderer)
 GameCharacter::~GameCharacter()
 {
 	playState = nullptr;
-	texture->Free();
 }

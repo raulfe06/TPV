@@ -15,21 +15,6 @@ GameMap::GameMap(PlayState*playState) : PacmanObject(playState)
 	}
 }
 
-/*// B) CREA LAS TEXTURAS DEL MAPA
-void GameMap::initializeTextures(SDL_Renderer* renderer)
-{
-
-	//Inicializa las texturas
-	for (int i = 0; i < NUM_MAP_TEXTURES; i++)
-	{
-		textures[i] = new Texture();
-		const textAtributes& atributes = TEXTURE_ATRIBUTES[i];
-		textures[i]->Load(renderer, TEXT_PATHFILE + atributes.filename, atributes.row, atributes.col);
-	}
-
-
-}*/
-
 // C) CARGAMOS EL MAPA LEYÉNDOLO DE FICHERO
 void GameMap::loadFromFile(ifstream& file)
 {
@@ -130,12 +115,6 @@ void GameMap::setCell(int posY, int posX, mapCell cellKind) {
 // DESTRUCTORA DEL MAPA (MATRIZ DINÁMICA)
 GameMap::~GameMap()
 {
-
-/*	for (int i = 0; i < NUM_MAP_TEXTURES; i++)
-	{
-		textures[i]->Free();
-	}
-	*/
 	if (map != nullptr)
 	{
 		for (int i = 0; i < rows; i++)

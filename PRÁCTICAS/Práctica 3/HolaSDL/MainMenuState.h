@@ -13,22 +13,15 @@ class MainMenuState : public GameState
 {
 
 private:
-
 	// Texturas del menú
 	Texture* menuTextures[NUM_MENU_TEXT];
-
 
 	bool menu = true;
 	bool loading = false;
 
 public:
 	MainMenuState(Game* game);
-
-	int checkInsideRect(int x, int y, SDL_Rect rect);
-	void mousePress(SDL_MouseButtonEvent& b);
-	void renderCode(const int& count);
-	void renderMenu();
-	void loadMenu();
+	
 	static void newGame(Game* game);
 	~MainMenuState();
 };

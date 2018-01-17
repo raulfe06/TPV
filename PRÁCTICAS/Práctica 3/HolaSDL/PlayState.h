@@ -30,17 +30,11 @@ const int NUM_TOTAL_LEVELS = 3;
 class PlayState : public GameState
 {
 private:
-	//SDL_Window* window = nullptr;
+
 	SDL_Renderer* renderer = nullptr;
 
-	// Posición de la ventana
-	//int winX = SDL_WINDOWPOS_CENTERED;
-	//int winY = winX;
-
-	SDL_Rect rectNG, rectLG; //destino de new game y load game
-
-							 // Texturas del menú
-	//Texture* menuTextures[NUM_MENU_TEXT];
+	//SDL_Rect rectNG, rectLG; //destino de new game y load game
+	
 
 	// Puntero directo a Pacman
 	Pacman* pacman = nullptr;
@@ -63,10 +57,6 @@ private:
 	bool error = false;
 	bool exit = false;
 	bool savingState = false;
-
-	
-	bool win = false;
-	bool end = false;
 	
 
 public:
@@ -77,17 +67,14 @@ public:
 	void saveToFile(string filename);
 	void modifyNumFood(int m) { numFood += m; };
 
+	int saveState();
 
 	// Bucle del juego
-	int saveState();
-	void run();
 	void handleEvents(SDL_Event& e);
 	void update();
 	void render(SDL_Renderer* renderer);
 	void endLevel();
 	bool getExit() const { return exit; };
-
-
 
 	// Mapa
 	bool nextCell(int x, int y, int dx, int dy, int& nx, int& ny);
@@ -100,11 +87,7 @@ public:
 	// Colisiones
 	void checkCapture();
 	void restartCharacters();
-	bool pacmanEat(int& foodX, int& foodY);
-
-
-	// UI
-	
+	bool pacmanEat(int& foodX, int& foodY);	
 
 
 	// Fantasmas

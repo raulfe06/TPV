@@ -50,7 +50,6 @@ private:
 	
 public:
 	GameMap(PlayState*game);
-	//void initializeTextures(SDL_Renderer* renderer);
 
 	 void loadFromFile(ifstream& file);
 	 void saveToFile(ofstream& file);

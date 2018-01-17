@@ -39,8 +39,6 @@ void PlayState::loadFile(string filename) {
 	ifstream file;
 	int auxGhostType;
 
-	
-
 	map = new GameMap(this);
 
 	try {
@@ -49,7 +47,6 @@ void PlayState::loadFile(string filename) {
 		if (!file.good()) throw FileNotFoundError(filename);
 
 		map->loadFromFile(file);
-		//map->initializeTextures(renderer);
 
 		// Pacman se crea antes porque necesitarán su puntero
 		pacman = new Pacman(this, renderer, 0, 10);
@@ -98,7 +95,6 @@ void PlayState::loadFile(string filename) {
 			pacman->setEnergy(energyState);
 			file >> level;
 		}
-		//loading = false;
 
 		file.close();
 	}
@@ -145,13 +141,13 @@ int PlayState::saveState() {
 	bool savingGame = true;
 	int count = 0;
 	unsigned int code = 0;
-	while (savingGame && !exit)
+	while (savingGame)
 	{
 		renderCode(count);
 		SDL_WaitEvent(&event);
 
 		if (event.type == SDL_QUIT) {
-			exit = true;
+			game->EXIT();
 		}
 		else if (event.key.keysym.sym == SDLK_RETURN)
 		{
@@ -171,38 +167,7 @@ int PlayState::saveState() {
 	saveToFile("levels\\" + to_string(code) + ".pac");
 	return code;
 }
-/*
-void PlayState::run() {
 
-	while (level<NUM_TOTAL_LEVELS && !exit) {
-		if (loading) {
-			while (loading) {
-				savingState = true;
-				int code = saveState();
-				loadFile("levels\\" + to_string(code) + ".pac");
-			}
-		}
-		else
-			loadFile("levels\\level0" + to_string(level) + ".pac");
-		win = false;
-		end = false;
-
-		while (!exit && !win && !end)
-		{
-			int startTime = SDL_GetTicks();
-			handleEvents();
-			update();
-			render();
-			delta = SDL_GetTicks() - startTime;
-
-			if (delta < FRAME_RATE)
-				SDL_Delay(FRAME_RATE - delta);
-			if (savingState) saveState();
-
-			endLevel();
-		}
-	}
-}*/
 void PlayState::handleEvents(SDL_Event& e)
 {
       if(e.type == SDL_KEYDOWN)
@@ -223,19 +188,27 @@ void PlayState::update()
 
 void PlayState::render(SDL_Renderer* renderer)
 {
-
 	GameState::render(renderer);
 	renderTexts();
 }
 
 void PlayState::endLevel() {
-	if (pacman->getLives() == 0) {
-		end = true;
-	}
-	if (numFood == 0) {
+
+	if (numFood == 0)
+	{
 		level++;
-		win = true;
+
+		if (level < NUM_TOTAL_LEVELS)
+			loadFile("levels\\level0" + to_string(level) + ".pac");
+		else
+			int hola = 0;
+		//Meter EndState();
 	}
+
+	else if (pacman->getLives() == 0)
+		int adios = 0;
+		// Meter EndState();
+	
 }
 
 // MAPA
@@ -429,10 +402,4 @@ void PlayState::renderTexts() {
 PlayState::~PlayState()
 {
 	delete map;
-	/*for (int i = 0; i < NUM_MENU_TEXT; i++)
-	{
-		menuTextures[i]->Free();
-		delete menuTextures[i];
-	}*/
-
 }

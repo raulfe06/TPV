@@ -12,16 +12,8 @@ const int WIN_HEIGHT = 600;
 
 const int FRAME_RATE = 160; // milliseconds per frame -> 6 frames/s
 
-//const int NUM_MENU_TEXT = 4;
-
-
-//CONSTANTES DE LOS PUNTOS
-//const std::string TEXT_PATHFILE = "..\\images\\";
-//const std::string menuNames [NUM_MENU_TEXT] =  { "newGame.png","loadGame.png","menu.png","code.png" };
-
 const int NUM_GAME_TEXTURES = 12;
-//CONSTANTES DE LOS PUNTOS
-enum enumTextures { EmptyTex, WallTex, FoodTex, VitaminsTex, NewGameTex, LoadGameTex, ExitGameTex, ResumeGameTex, CharactersText, SaveGameTex,MainMenuText,CodeText };
+enum enumTextures { EmptyTex, WallTex, FoodTex, VitaminsTex, NewGameTex, LoadGameTex, ExitGameTex, ResumeGameTex, CharactersText, SaveGameTex, MainMenuText, CodeText };
 
 typedef struct {
 	// 1) Nombre del archivo de la imagen
@@ -35,8 +27,9 @@ const textAtributes GAME_TEXTURES[NUM_GAME_TEXTURES] = { { "empty.png",1,1 },{ "
 { "newGame.png", 1, 1 },{ "loadGame.png", 1, 1 },{ "exitGame.png", 1, 1 },{ "resumeGame.png", 1, 1 },{ "characters.png", 4, 14 },{ "saveGame.png", 1, 1 },{ "mainMenu.png", 1, 1 },{ "code.png", 1, 1 } };
 
 const std::string TEXT_PATHFILE = "..\\images\\";
-//const std::string menuNames [NUM_MENU_TEXT] =  { "newGame.png","loadGame.png","menu.png","code.png" };
 
+
+class MainMenuState;
 
 class Game
 {
@@ -73,6 +66,7 @@ public:
 
 	Texture* getTexture(enumTextures name);
 	SDL_Renderer* getRenderer() const { return renderer; };
+
 	void initializeTextures();
 	void EXIT() { exit = true; };
 
