@@ -40,6 +40,8 @@ Game::Game()
 		else
 			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); //RGB y alpha
 
+		initializeTextures();
+
 	}
 	catch (SDLError& e)
 	{
@@ -106,6 +108,19 @@ void Game::render()
 GameStateMachine* Game::getStateMachine()
 {
 	return stateMachine;
+}
+
+Texture* Game::getTexture(enumTextures name) {
+	return textures[name];
+}
+void Game::initializeTextures() {
+	//Inicializa las texturas
+	for (int i = 0; i < NUM_GAME_TEXTURES; i++)
+	{
+		textures[i] = new Texture();
+		const textAtributes& atributes = GAME_TEXTURES[i];
+		textures[i]->Load(renderer, TEXT_PATHFILE + atributes.filename, atributes.row, atributes.col);
+	}
 }
 
 Game::~Game()

@@ -42,7 +42,7 @@ void PlayState::loadFile(string filename) {
 		if (!file.good()) throw FileNotFoundError(filename);
 
 		map->loadFromFile(file);
-		map->initializeTextures(renderer);
+		//map->initializeTextures(renderer);
 
 		// Pacman se crea antes porque necesitarán su puntero
 		pacman = new Pacman(this, renderer, 0, 10);

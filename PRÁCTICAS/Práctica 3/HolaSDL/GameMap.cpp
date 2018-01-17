@@ -6,11 +6,16 @@
 using namespace std;
 
 // A) CONSTRUCTORA DEL MAPA: APUNTA A <Game>
-GameMap::GameMap(PlayState*game) : PacmanObject(game)
+GameMap::GameMap(PlayState*playState) : PacmanObject(playState)
 {
+	for (size_t i = 0; i < NUM_MAP_TEXTURES; i++)
+	{
+		//textures[i] = new Texture();
+		textures[i] = playState->getTexture((enumTextures)i);
+	}
 }
 
-// B) CREA LAS TEXTURAS DEL MAPA
+/*// B) CREA LAS TEXTURAS DEL MAPA
 void GameMap::initializeTextures(SDL_Renderer* renderer)
 {
 
@@ -23,7 +28,7 @@ void GameMap::initializeTextures(SDL_Renderer* renderer)
 	}
 
 
-}
+}*/
 
 // C) CARGAMOS EL MAPA LEYÉNDOLO DE FICHERO
 void GameMap::loadFromFile(ifstream& file)
@@ -37,12 +42,12 @@ void GameMap::loadFromFile(ifstream& file)
 			if (rows > maxR || cols > maxC) throw FileFormatError("El mapa supera los limites [ "
 				+ to_string(maxR) + ", " + to_string(maxC) + "]" );
 
-			this->game->setCols(this->cols);
-			this->game->setFils(this->rows);
+			this->playState->setCols(this->cols);
+			this->playState->setFils(this->rows);
 
 
-			destRect.w = (WIN_WIDTH - 200) / game->getCols();
-			destRect.h = (WIN_HEIGHT) / game->getFils();
+			destRect.w = (WIN_WIDTH - 200) / playState->getCols();
+			destRect.h = (WIN_HEIGHT) / playState->getFils();
 
 			map = new mapCell*[rows];
 			for (int i = 0; i < rows; i++)
@@ -62,7 +67,7 @@ void GameMap::loadFromFile(ifstream& file)
 					// ...y le damos el tipo de celda según el valor del mismo
 					setCell(i, j, (mapCell)cell);
 					if (cell == 2 || cell == 3)
-						this->game->modifyNumFood(1);
+						this->playState->modifyNumFood(1);
 				}
 			}
 		
@@ -106,7 +111,7 @@ void GameMap::render(SDL_Renderer* renderer)
 void GameMap::update()
 {
 	int foodX, foodY;
-	if (game->pacmanEat(foodX, foodY))
+	if (playState->pacmanEat(foodX, foodY))
 		setCell(foodY, foodX, Empty);
 }
 
@@ -126,11 +131,11 @@ void GameMap::setCell(int posY, int posX, mapCell cellKind) {
 GameMap::~GameMap()
 {
 
-	for (int i = 0; i < NUM_MAP_TEXTURES; i++)
+/*	for (int i = 0; i < NUM_MAP_TEXTURES; i++)
 	{
 		textures[i]->Free();
 	}
-
+	*/
 	if (map != nullptr)
 	{
 		for (int i = 0; i < rows; i++)

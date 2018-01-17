@@ -1,19 +1,40 @@
 #pragma once
-#include <list>
 #include "GameCharacter.h"
 #include "GameMap.h"
-#include <iterator>
 
 class SmartGhost;
 class Pacman;
 class GameStateMachine;
 
 //*CONSTANTES GENERALES*
+const int WIN_WIDTH = 800;
+const int WIN_HEIGHT = 600;
+
+const int FRAME_RATE = 160; // milliseconds per frame -> 6 frames/s
+
 //const int NUM_MENU_TEXT = 4;
 
 
 //CONSTANTES DE LOS PUNTOS
 //const std::string TEXT_PATHFILE = "..\\images\\";
+//const std::string menuNames [NUM_MENU_TEXT] =  { "newGame.png","loadGame.png","menu.png","code.png" };
+
+const int NUM_GAME_TEXTURES = 13;
+//CONSTANTES DE LOS PUNTOS
+enum enumTextures { EmptyTex, WallTex, FoodTex, VitaminsTex, NewGameTex, LoadGameTex, ExitGameTex, ResumeGameTex, CharactersText, GhostText, SmartGhostText, CodeTex, SaveGameTex };
+
+typedef struct {
+	// 1) Nombre del archivo de la imagen
+	string filename;
+	// 2) Fila y columna de la textura (por si estuviera dividida como un sprite sheet)
+	int row = 0;
+	int col = 0;
+} textAtributes;
+
+const textAtributes GAME_TEXTURES[NUM_GAME_TEXTURES] = { { "empty.png",1,1 },{ "wall.png", 1, 1 },{ "food.png", 1, 1 },{ "vitamin.png", 1, 1 },
+{ "newGame.png", 1, 1 },{ "loadGame.png", 1, 1 },{ "exitGame.png", 1, 1 },{ "resumeGame.png", 1, 1 },{ "characters.png", 4, 14 },{ "saveGame.png", 1, 9 } };
+
+const std::string TEXT_PATHFILE = "..\\images\\";
 //const std::string menuNames [NUM_MENU_TEXT] =  { "newGame.png","loadGame.png","menu.png","code.png" };
 
 
@@ -28,7 +49,7 @@ private:
 	int winY = winX;
 
 	// Texturas del menú
-//	Texture* menuTextures[NUM_MENU_TEXT];
+	Texture* textures[NUM_GAME_TEXTURES];
 
 	int delta;
 
@@ -45,10 +66,12 @@ public:
 	// Bucle del juego
 	void run();
 	void handleEvents();
-	void update();
 	void render();
 
 	GameStateMachine* getStateMachine();
+
+	Texture* getTexture(enumTextures name);
+	void initializeTextures();
 
 	~Game();
 

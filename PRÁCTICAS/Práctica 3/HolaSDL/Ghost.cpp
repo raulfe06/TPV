@@ -40,7 +40,7 @@ void Ghost::update()
 	chooseDir();
 
 	// b) Mueve al fantasma
-	game->nextCell(posX, posY, dirX, dirY, posX, posY);
+	playState->nextCell(posX, posY, dirX, dirY, posX, posY);
 }
 
 // E) OBTIENE LAS POSIBLES DIRECCIONES A TOMAR POR EL FANTASMA
@@ -56,7 +56,7 @@ void Ghost::possibleDirs(int& numDirs)
 	// 2) Comprobamos para cada dirección si el fantasma puede moverse. Es decir, si no hay muro ni hay otro fantasma:
 	for (int i = 0; i < NUM_DIRS; i++)
 	{
-		if (game->nextCell(posX, posY, AllDirs[i].x, AllDirs[i].y, nextPosX, nextPosY) &&!game->existGhost(nextPosX, nextPosY))
+		if (playState->nextCell(posX, posY, AllDirs[i].x, AllDirs[i].y, nextPosX, nextPosY) &&!playState->existGhost(nextPosX, nextPosY))
 		{
 			// En caso de ser accesible la posición, añadimos la dirección en el vector
 			dir.x = AllDirs[i].x;

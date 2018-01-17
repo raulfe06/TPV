@@ -3,9 +3,6 @@
 #include "GameObject.h"
 #include "Game.h"
 
-const int WIN_WIDTH = 800;
-const int WIN_HEIGHT = 600;
-
 
 class GameState
 {
@@ -44,6 +41,11 @@ public:
 	virtual void render(SDL_Renderer* renderer)
 	{
 		for (GameObject* obj : scene) obj->render(renderer);
+	}
+
+	Texture* getTexture(enumTextures name)
+	{
+		return game->getTexture(name);
 	}
 };
 

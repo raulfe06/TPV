@@ -20,9 +20,9 @@ class PacmanObject : public GameObject
 {
 protected:
 
-	PlayState* game;
+	PlayState* playState;
 
-	PacmanObject(PlayState* game);
+	PacmanObject(PlayState* playState);
 	PacmanObject() {};
 
 	// Métodos virtuales puros -> Necesitan ser (re)definidos por las clases hijas 
