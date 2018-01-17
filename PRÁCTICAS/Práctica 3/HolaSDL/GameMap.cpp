@@ -3,28 +3,32 @@
 #include "PlayState.h"
 #include <iostream>
 #include "FileFormatError.h"
-#include "GameStateMachine.h"
 using namespace std;
 
 // A) CONSTRUCTORA DEL MAPA: APUNTA A <Game>
-GameMap::GameMap(PlayState*game) : PacmanObject(game)
+GameMap::GameMap(PlayState*playState) : PacmanObject(playState)
 {
+	for (size_t i = 0; i < NUM_MAP_TEXTURES; i++)
+	{
+		//textures[i] = new Texture();
+		textures[i] = playState->getTexture((enumTextures)i);
+	}
 }
 
-// B) CREA LAS TEXTURAS DEL MAPA
+/*// B) CREA LAS TEXTURAS DEL MAPA
 void GameMap::initializeTextures(SDL_Renderer* renderer)
 {
-	/*
+
 	//Inicializa las texturas
-	for (int i = 0; i < NUM_GAME_TEXTURES; i++)
+	for (int i = 0; i < NUM_MAP_TEXTURES; i++)
 	{
 		textures[i] = new Texture();
-		const textAtributes& atributes = GAME_TEXTURES[i];
+		const textAtributes& atributes = TEXTURE_ATRIBUTES[i];
 		textures[i]->Load(renderer, TEXT_PATHFILE + atributes.filename, atributes.row, atributes.col);
 	}
-	*/
 
-}
+
+}*/
 
 // C) CARGAMOS EL MAPA LEYÉNDOLO DE FICHERO
 void GameMap::loadFromFile(ifstream& file)
@@ -41,7 +45,8 @@ void GameMap::loadFromFile(ifstream& file)
 			this->playState->setCols(this->cols);
 			this->playState->setFils(this->rows);
 
-			//destRect.w = (WIN_WIDTH - 200) / game->getCols();
+
+			destRect.w = (WIN_WIDTH - 200) / playState->getCols();
 			destRect.h = (WIN_HEIGHT) / playState->getFils();
 
 			map = new mapCell*[rows];
@@ -126,11 +131,11 @@ void GameMap::setCell(int posY, int posX, mapCell cellKind) {
 GameMap::~GameMap()
 {
 
-	for (int i = 0; i < NUM_MAP_TEXTURES; i++)
+/*	for (int i = 0; i < NUM_MAP_TEXTURES; i++)
 	{
 		textures[i]->Free();
 	}
-
+	*/
 	if (map != nullptr)
 	{
 		for (int i = 0; i < rows; i++)

@@ -15,9 +15,6 @@ Clase GameCharacter: base para los personajes del juego, conteniendo todo lo com
 - Heredan de ella: <Pacman> y <Ghost>
 
 */
-
-
-
 class GameCharacter : public PacmanObject
 {
 protected:
@@ -37,7 +34,7 @@ protected:
 	int dirX, dirY;
 	
 	// MÉTODOS
-	GameCharacter(Game* game, SDL_Renderer* renderer, int textRow, int textCol);
+	GameCharacter(PlayState* game, SDL_Renderer* renderer, int textRow, int textCol);
 	GameCharacter();
 	
 	virtual void setAnimation() = 0;

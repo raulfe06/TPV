@@ -4,12 +4,15 @@
 #include <vector>
 #include "MenuButton.h"
 
-class PauseState : GameState
+class PauseState : public GameState
 {
-
+private:
+	PlayState* playState;
 public:
 	PauseState(Game* game);
 	~PauseState();
-	bool handleEvent(SDL_Event&e);
+	static void resume(Game* game);
+	static void saveGame(Game* game);
+	static void goToMenu(Game* game);
 };
 

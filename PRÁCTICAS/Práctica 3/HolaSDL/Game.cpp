@@ -14,7 +14,6 @@
 #include "FileFormatError.h"
 
 #include"GameStateMachine.h"
-#include"PlayState.h"
 #include "MainMenuState.h"
 
 
@@ -40,6 +39,8 @@ Game::Game()
 		else
 			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); //RGB y alpha
 
+		initializeTextures();
+
 	}
 	catch (SDLError& e)
 	{
@@ -57,9 +58,9 @@ Game::Game()
 
 	stateMachine = new GameStateMachine();
 
-	test = new PlayState(this, renderer);
+	test = new MainMenuState(this);
 	stateMachine->pushState(test);
-	test->loadFile("levels\\level0" + to_string(1) + ".pac");
+	//test->loadFile("levels\\level0" + to_string(1) + ".pac");
 
 }
 
@@ -108,14 +109,8 @@ GameStateMachine* Game::getStateMachine()
 	return stateMachine;
 }
 
-Game::~Game()
-{
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
-}
 Texture* Game::getTexture(enumTextures name) {
-	return textures[name];
+	return textures[(int)name];
 }
 void Game::initializeTextures() {
 	//Inicializa las texturas
@@ -125,4 +120,13 @@ void Game::initializeTextures() {
 		const textAtributes& atributes = GAME_TEXTURES[i];
 		textures[i]->Load(renderer, TEXT_PATHFILE + atributes.filename, atributes.row, atributes.col);
 	}
+}
+
+Game::~Game()
+{
+	renderer = nullptr;
+	window = nullptr;
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 }

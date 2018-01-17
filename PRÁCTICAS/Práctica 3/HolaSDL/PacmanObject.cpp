@@ -3,7 +3,7 @@
 
 
 
-PacmanObject::PacmanObject(Game* game) : GameObject(game)
+PacmanObject::PacmanObject(PlayState* playState) :playState(playState)
 {
 	
 }

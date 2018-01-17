@@ -14,12 +14,19 @@
 #include "FileFormatError.h"
 
 #include "GameStateMachine.h"
+#include "PauseState.h"
+#include "GameState.h"
 
 using namespace std;
 
 
-PlayState::PlayState(Game* game, SDL_Renderer* renderer) : GameState(game),renderer(renderer)
+PlayState::PlayState(Game* game, SDL_Renderer* renderer, bool loadingFile) : GameState(game),renderer(renderer)
 {	
+	if (!loadingFile) loadFile("levels\\level0" + to_string(1) + ".pac");
+	else {
+		int code =saveState();
+		loadFile("levels\\level0" + to_string(code) + ".pac");
+	}
 }
 
 // LECTURA Y ESCRITURA
@@ -32,6 +39,8 @@ void PlayState::loadFile(string filename) {
 	ifstream file;
 	int auxGhostType;
 
+	
+
 	map = new GameMap(this);
 
 	try {
@@ -40,7 +49,7 @@ void PlayState::loadFile(string filename) {
 		if (!file.good()) throw FileNotFoundError(filename);
 
 		map->loadFromFile(file);
-		map->initializeTextures(renderer);
+		//map->initializeTextures(renderer);
 
 		// Pacman se crea antes porque necesitarán su puntero
 		pacman = new Pacman(this, renderer, 0, 10);
@@ -133,11 +142,12 @@ void PlayState::saveToFile(string filename) {
 // BUCLE DEL JUEGO
 int PlayState::saveState() {
 	SDL_Event event;
+	bool savingGame = true;
 	int count = 0;
 	unsigned int code = 0;
-	while (savingState && !exit)
+	while (savingGame && !exit)
 	{
-	//	renderCode(count);
+		renderCode(count);
 		SDL_WaitEvent(&event);
 
 		if (event.type == SDL_QUIT) {
@@ -145,7 +155,7 @@ int PlayState::saveState() {
 		}
 		else if (event.key.keysym.sym == SDLK_RETURN)
 		{
-			savingState = false;
+			savingGame = false;
 		}
 		else if (event.type == SDL_KEYDOWN) {
 			if (count <= 9) {
@@ -158,7 +168,7 @@ int PlayState::saveState() {
 			}
 		}
 	}
-	if (!savingState) saveToFile("levels\\" + to_string(code) + ".pac");
+	saveToFile("levels\\" + to_string(code) + ".pac");
 	return code;
 }
 /*
@@ -195,12 +205,12 @@ void PlayState::run() {
 }*/
 void PlayState::handleEvents(SDL_Event& e)
 {
-     /* if(e.type == SDL_KEYDOWN)
+      if(e.type == SDL_KEYDOWN)
 	  {
 		  if (e.key.keysym.sym == SDLK_ESCAPE)
 			  game->getStateMachine()->pushState(new PauseState(game));
 			  
-	  }*/
+	  }
 
 	pacman->handleEvent(e);
 }
@@ -425,5 +435,4 @@ PlayState::~PlayState()
 		delete menuTextures[i];
 	}*/
 
-	renderer = nullptr;
 }

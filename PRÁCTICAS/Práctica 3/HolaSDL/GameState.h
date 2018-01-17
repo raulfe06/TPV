@@ -3,9 +3,6 @@
 #include "GameObject.h"
 #include "Game.h"
 
-//const int WIN_WIDTH = 800;
-//const int WIN_HEIGHT = 600;
-
 
 class GameState
 {
@@ -15,8 +12,8 @@ protected:
 	Game* game;
 public:
 	GameState(Game* game);
-
 	GameState();
+	void renderCode(const int& count);
 	~GameState() 
 	{
 		for (GameObject* obj : scene) delete obj;
@@ -33,7 +30,7 @@ public:
 
  		auto it = scene.begin();
 
-		while (it!= scene.end() && !handled)
+		while (!handled && it!= scene.end())
 		{
 			if ((*it)->handleEvent(e))
 				handled = true;
@@ -45,6 +42,11 @@ public:
 	virtual void render(SDL_Renderer* renderer)
 	{
 		for (GameObject* obj : scene) obj->render(renderer);
+	}
+
+	Texture* getTexture(enumTextures name)
+	{
+		return game->getTexture(name);
 	}
 };
 

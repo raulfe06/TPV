@@ -1,63 +1,31 @@
 #include "MainMenuState.h"
+#include "MenuButton.h"
 #include "GameStateMachine.h"
 #include "PlayState.h"
 
-
 MainMenuState::MainMenuState(Game* game) : GameState(game)
 {
+	SDL_Rect newGameButton, loadGameButton, exitGameButton;
 
-	
-	startGame = { WIN_WIDTH / 2 - 100, WIN_HEIGHT / 2 + 30 ,329 ,60 };
-	loadGame = { WIN_WIDTH / 2 - 200,WIN_HEIGHT / 2 + 120,329,60 };
-	exitGame = { WIN_WIDTH / 2 - 200,WIN_HEIGHT / 2 + 160,329,60 };
+	newGameButton = { 0, 0 ,329 ,60 };
+	loadGameButton = { 0,200,329,60 };
+	exitGameButton = { 0,300,329,60 };
 
-	scene.push_back(new MenuButton(game, startGame.x, startGame.y, startGame.w, startGame.h,game->getTexture(NewGameTex)));
+	scene.push_back(new MenuButton(game, newGameButton.x, newGameButton.y, newGameButton.w, newGameButton.h, game->getTexture(NewGameTex),newGame));
 
-	scene.push_back(new MenuButton(game, loadGame.x, loadGame.y, loadGame.w, loadGame.h,game->getTexture(LoadGameTex)));
+	//scene.push_back(new MenuButton(game, loadGameButton.x, loadGameButton.y, loadGameButton.w, loadGameButton.h, game->getTexture(LoadGameTex),test));
 
-	scene.push_back(new MenuButton(game, exitGame.x, exitGame.y, exitGame.w, exitGame.h,game->getTexture(ExitGameTex)));
+	//scene.push_back(new MenuButton(game, exitGameButton.x, exitGameButton.y, exitGameButton.w, exitGameButton.h, game->getTexture(ExitGameTex),test));
 
 }
 
-
-
-
+void MainMenuState::newGame(Game* game) {
+	game->getStateMachine()->pushState(new PlayState(game,game->getRenderer(),false));
+}
 // UI
-/*int MainMenuState::checkInsideRect(int x, int y, SDL_Rect rect)
-{
-
-	if (x >= rect.x && x < (rect.x + rect.w))
-	{
-		if (y >= rect.y && y < (rect.y + rect.h))
-		{
-			return 1;
-		}
-	}
-	return 0;
-}*/
-/*void MainMenuState::mousePress(SDL_MouseButtonEvent& b) {
-	if (b.button == SDL_BUTTON_LEFT) {
-
-		if (checkInsideRect(b.x, b.y, rectNG) == 1) {
-			level = 1;
-			menu = false;
-		}
-		else if (checkInsideRect(b.x, b.y, rectLG) == 1) {
-			loading = true;
-			menu = false;
-		}
-	}
-}
-
-void MainMenuState::renderCode(const int& count) {
-	SDL_Rect destRect;
-	destRect.h = 218; destRect.w = 419;
-	destRect.x = (WIN_WIDTH) / 2 - (destRect.w / 2); destRect.y = WIN_HEIGHT / 2 - (destRect.h / 2);
-	menuTextures[3]->renderFrame(renderer, destRect, 0, count, 1, 11);
-	SDL_RenderPresent(renderer);
-}
 
 
+/*
 void MainMenuState::renderMenu() {
 	SDL_Rect destRect1, destRect2, destRectFondo;
 

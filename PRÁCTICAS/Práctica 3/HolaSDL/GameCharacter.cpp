@@ -1,25 +1,25 @@
 #include "GameCharacter.h"
-
+#include"PlayState.h"
 #include <fstream>
 #include "FileFormatError.h"
 #include <iostream>
-
 
 using namespace std;
 GameCharacter::GameCharacter()
 {
 }
 
-// A) SE INICIALIZA A PARTIR DE <GameObject>, CREA LA TEXTURA DEL PERSONAJE Y OBTIENE LAS MEDIDAS DE SU RECTÁNGULO DESTINO
-GameCharacter::GameCharacter(Game* game, SDL_Renderer* renderer, int row, int col) : PacmanObject(game), textRow(row), textCol(col)
+// A) SE INICIALIZA A PARTIR DE <PacmanObject>, CREA LA TEXTURA DEL PERSONAJE Y OBTIENE LAS MEDIDAS DE SU RECTÁNGULO DESTINO
+GameCharacter::GameCharacter(PlayState* playState, SDL_Renderer* renderer, int row, int col) : PacmanObject(playState), textRow(row), textCol(col)
 {
 	// 1) Creamos la textura, cargándola del spritesheet de personajes
-	texture = new Texture();
-	texture->Load(renderer, "..\\images\\characters1.png", 4, 14);
+	//texture = new Texture();
+//	texture->Load(renderer, "..\\images\\characters1.png", 4, 14);
+	texture = playState->getTexture(CharactersText);
 
 	// 2) Obtenemos las medidas del rectángulo de destino, donde se pintará la textura cargada 
-	destRect.w = (WIN_WIDTH-OFFSET) / game->getCols();
-	destRect.h = (WIN_HEIGHT) / game->getFils();
+	destRect.w = (WIN_WIDTH-OFFSET) / playState->getCols();
+	destRect.h = (WIN_HEIGHT) / playState->getFils();
 }
 
 // B) PARTE COMÚN DE LA CARGA DE FICHERO -> OBTIENE POSICIONES Y DIRECCIÓN
@@ -80,6 +80,6 @@ void GameCharacter::render(SDL_Renderer* renderer)
 // DESTRUCTORA -> LIBERA LA TEXTURA
 GameCharacter::~GameCharacter()
 {
-
+	playState = nullptr;
 	texture->Free();
 }

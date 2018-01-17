@@ -1,13 +1,9 @@
 #include "GameObject.h"
-
+#include "PlayState.h"
 
 
 GameObject::GameObject()
 {
-}
-GameObject::GameObject(Game* game)
-{
-	this->game = game;
 }
 
 GameObject::~GameObject()

@@ -1,18 +1,31 @@
 #pragma once
-#include "Game.h"
+#include <fstream>
+#include "SDL.h"
 
-class GameObject 
+using namespace std;
+
+class PlayState;
+
+/*
+Clase GameObject: clase abstracta
+
+- Inicializa el puntero a <Game>
+
+- Heredan de ella: <GameCharacter> y <GameMap>
+
+*/
+class GameObject
 {
 protected:
-	Game* game;
-public:
+	//PlayState* game = nullptr;
 
-	virtual bool handleEvent(SDL_Event& e) {};
-	virtual void render(SDL_Renderer* renderer) = 0;
-	virtual void update() {};
-
-	GameObject(Game* game);
 	GameObject();
-	~GameObject();
-};
 
+	// Métodos virtuales puros -> Necesitan ser (re)definidos por las clases hijas
+
+public:
+	virtual void update() {};
+	virtual bool handleEvent(SDL_Event& e) { return true; };
+	virtual void render(SDL_Renderer* renderer) {};
+	virtual ~GameObject() = 0;
+};

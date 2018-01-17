@@ -11,7 +11,7 @@ Pacman::Pacman()
 }
 
 // A) CREA A PACMAN 
-Pacman::Pacman(PlayState* game, SDL_Renderer* renderer, int textRow, int textCol) : GameCharacter(game, renderer, textRow, textCol)
+Pacman::Pacman(PlayState* playState, SDL_Renderer* renderer, int textRow, int textCol) : GameCharacter(playState, renderer, textRow, textCol)
 {
 }
 

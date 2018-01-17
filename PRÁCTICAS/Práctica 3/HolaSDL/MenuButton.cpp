@@ -1,9 +1,10 @@
 #include "MenuButton.h"
+#include <iostream>
 
- MenuButton::MenuButton(Game* game, int x, int y, int w, int h,Texture* tex) : game(game), x(x), y(y), w(w), h(h),text(tex){
+ MenuButton::MenuButton(Game* game, int x, int y, int w, int h,Texture* tex, CallBackOnClick* callBack) : game(game), x(x), y(y), w(w), h(h),text(tex),cbOnClick(callBack){
 	 
 	 this->text = tex;
-
+	 
 		
 }
 void MenuButton::render(SDL_Renderer* renderer) {
@@ -20,6 +21,7 @@ bool MenuButton::handleEvent(SDL_Event& e) {
 
 		if (SDL_PointInRect(&mouse_position, &rect)) {
 			handled = true;
+			cbOnClick(game);
 		}
 	}
 	return handled;

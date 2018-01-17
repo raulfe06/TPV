@@ -1,22 +1,27 @@
 #pragma once
-#include <list>
 #include "GameCharacter.h"
 #include "GameMap.h"
-#include <iterator>
 
 class SmartGhost;
 class Pacman;
 class GameStateMachine;
 
+//*CONSTANTES GENERALES*
 const int WIN_WIDTH = 800;
 const int WIN_HEIGHT = 600;
 
-//*CONSTANTES GENERALES*
+const int FRAME_RATE = 160; // milliseconds per frame -> 6 frames/s
+
 //const int NUM_MENU_TEXT = 4;
 
-const int NUM_GAME_TEXTURES = 13;
+
 //CONSTANTES DE LOS PUNTOS
-enum enumTextures { EmptyTex, WallTex, FoodTex, VitaminsTex , NewGameTex,LoadGameTex,ExitGameTex,ResumeGameTex,PacmanText,GhostText,SmartGhostText,CodeTex,SaveGameTex };
+//const std::string TEXT_PATHFILE = "..\\images\\";
+//const std::string menuNames [NUM_MENU_TEXT] =  { "newGame.png","loadGame.png","menu.png","code.png" };
+
+const int NUM_GAME_TEXTURES = 12;
+//CONSTANTES DE LOS PUNTOS
+enum enumTextures { EmptyTex, WallTex, FoodTex, VitaminsTex, NewGameTex, LoadGameTex, ExitGameTex, ResumeGameTex, CharactersText, SaveGameTex,MainMenuText,CodeText };
 
 typedef struct {
 	// 1) Nombre del archivo de la imagen
@@ -27,8 +32,7 @@ typedef struct {
 } textAtributes;
 
 const textAtributes GAME_TEXTURES[NUM_GAME_TEXTURES] = { { "empty.png",1,1 },{ "wall.png", 1, 1 },{ "food.png", 1, 1 },{ "vitamin.png", 1, 1 },
-{ "newGame.png", 1, 1 },{ "loadGame.png", 1, 1 },{ "exitGame.png", 1, 1 },{ "resumeGame.png", 1, 1 },{ "characters.png", 1, 11 },{ "characters.png", 1, 1 }
-,{ "characters.png", 1, 9 },{ "saveGame.png", 1, 9 } };
+{ "newGame.png", 1, 1 },{ "loadGame.png", 1, 1 },{ "exitGame.png", 1, 1 },{ "resumeGame.png", 1, 1 },{ "characters.png", 4, 14 },{ "saveGame.png", 1, 1 },{ "mainMenu.png", 1, 1 },{ "code.png", 1, 1 } };
 
 const std::string TEXT_PATHFILE = "..\\images\\";
 //const std::string menuNames [NUM_MENU_TEXT] =  { "newGame.png","loadGame.png","menu.png","code.png" };
@@ -37,7 +41,6 @@ const std::string TEXT_PATHFILE = "..\\images\\";
 class Game
 {
 private:
-
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 
@@ -46,7 +49,7 @@ private:
 	int winY = winX;
 
 	// Texturas del menú
-//	Texture* menuTextures[NUM_MENU_TEXT];
+	Texture* textures[NUM_GAME_TEXTURES];
 
 	int delta;
 
@@ -54,11 +57,8 @@ private:
 	bool exit = false;
 
 	GameStateMachine* stateMachine;
-	PlayState* test;
+	MainMenuState* test;
 
-	void initializeTextures();
-
-	Texture* textures[NUM_GAME_TEXTURES];
 
 public:
 
@@ -67,15 +67,14 @@ public:
 	// Bucle del juego
 	void run();
 	void handleEvents();
-	void update();
 	void render();
-	Texture* getTexture(enumTextures name);
 
-	bool getExit() const { return exit; };
-	
-
-	SDL_Renderer* getRenderer() { return renderer; };
 	GameStateMachine* getStateMachine();
+
+	Texture* getTexture(enumTextures name);
+	SDL_Renderer* getRenderer() const { return renderer; };
+	void initializeTextures();
+	void EXIT() { exit = true; };
 
 	~Game();
 

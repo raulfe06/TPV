@@ -9,7 +9,7 @@ class PlayState;
 
 
 /*
-Clase GameObject: clase abstracta
+Clase PacmanObject: clase abstracta
 
 - Inicializa el puntero a <Game>
 
@@ -22,7 +22,7 @@ protected:
 
 	PlayState* playState;
 
-	PacmanObject(Game* game);
+	PacmanObject(PlayState* playState);
 	PacmanObject() {};
 
 	// Métodos virtuales puros -> Necesitan ser (re)definidos por las clases hijas 
