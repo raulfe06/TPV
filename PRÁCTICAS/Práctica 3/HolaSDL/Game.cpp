@@ -114,3 +114,15 @@ Game::~Game()
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }
+Texture* Game::getTexture(enumTextures name) {
+	return textures[name];
+}
+void Game::initializeTextures() {
+	//Inicializa las texturas
+	for (int i = 0; i < NUM_GAME_TEXTURES; i++)
+	{
+		textures[i] = new Texture();
+		const textAtributes& atributes = GAME_TEXTURES[i];
+		textures[i]->Load(renderer, TEXT_PATHFILE + atributes.filename, atributes.row, atributes.col);
+	}
+}

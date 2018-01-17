@@ -81,7 +81,7 @@ void Pacman::update()
 		timer();
 
 	// a) Con la dirección siguiente guardada, miramos si podemos avanzar en dicha dirección: 
-	if (game->nextCell(posX, posY, nextDirX, nextDirY, posX, posY))
+	if (playState->nextCell(posX, posY, nextDirX, nextDirY, posX, posY))
 	{
 		// 1) Si es posible, avanzamos y actualizamos la dirección actual:
 		dirX = nextDirX;
@@ -89,9 +89,9 @@ void Pacman::update()
 		// 2) Si no lo es, probamos con la dirección actual que llevábamos:
 	}
 	else // b) Miramos si con la dirección actual podemos avanzar -> Si podemos, avanza. Si no, se parará
-		game->nextCell(posX, posY, dirX, dirY, posX, posY);
+		playState->nextCell(posX, posY, dirX, dirY, posX, posY);
 
-	game->checkCapture();
+	playState->checkCapture();
 }
 
 // G) ACTUALIZA LA DIRECCIÓN SIGUENTE DE PACMAN SEGÚN LA TECLA DE DIRECCIÓN PULSADA
@@ -131,7 +131,7 @@ void Pacman::setDir(SDL_Event& event)
 bool Pacman::eat(int& foodX, int& foodY) 
 {
 	// 1) Comprobamos si ha alcanzado alguna casilla con comida: 
-	if (game->getCell(posX, posY) == mapCell::Food)
+	if (playState->getCell(posX, posY) == mapCell::Food)
 	{
 		// a) En ese caso, devolvemos la posición en la que se encuentra
 		foodX = posX;
@@ -140,7 +140,7 @@ bool Pacman::eat(int& foodX, int& foodY)
 		return true;
 	}
 	// 2) Si la posición alcanzada contenía una vitamina en su lugar: 
-	else if (game->getCell(posX, posY) == mapCell::Vitamins)
+	else if (playState->getCell(posX, posY) == mapCell::Vitamins)
 	{
 		// a) Devolvemos la posición en la que se encuentra igualmente
 		foodX = posX;

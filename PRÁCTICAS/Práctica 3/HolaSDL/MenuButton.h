@@ -12,11 +12,10 @@ private:
 	
 	Game* game;
 public:
-	MenuButton(Game* game,int x,int y,int w,int h) : game(game), x(x), y(y), w(w), h(h) {}; //Hay que pasarle la textura y darle valor a text
-	virtual void loadFromFile(ifstream& file);
-	virtual void saveToFile(ofstream& file);
+	MenuButton(Game* game,int x,int y,int w,int h,Texture* tex); 
 
-	void render();
+	bool handleEvent(SDL_Event& e);
+	 void render(SDL_Renderer* renderer);
 	~MenuButton();
 };
 

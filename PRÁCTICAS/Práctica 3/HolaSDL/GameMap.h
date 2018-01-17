@@ -1,12 +1,14 @@
 #pragma once
-#include "GameObject.h"
+#include "PacmanObject.h"
 #include "Texture.h"
 #include "SDL.h"
 class PlayState;
 
 // Tipos de celda para el mapa
 enum mapCell { Empty, Wall, Food, Vitamins };
+const int NUM_MAP_TEXTURES = 4; // Casilla vacía, Muro, Comida, Vitamina
 
+/*
 typedef struct {
 	// 1) Nombre del archivo de la imagen
 	string filename;
@@ -15,11 +17,10 @@ typedef struct {
 	int col = 0;
 } textAtributes;
 
-const int NUM_MAP_TEXTURES = 4; // Casilla vacía, Muro, Comida, Vitamina
 
 // Arrays con los atrubitos de cada textura del mapa
 const textAtributes TEXTURE_ATRIBUTES[NUM_MAP_TEXTURES] = { {"empty.png",1,1}, { "wall.png", 1, 1 },{ "food.png", 1, 1 },{ "vitamin.png", 1, 1 } };
-
+*/
 const int maxR = 50;
 const int maxC = 50;
 /*
@@ -33,7 +34,7 @@ Clase GameMap: crea la matriz, a partir de la cual se creará y actualizará el ni
 
 class Pacman;
 
-class GameMap : public GameObject
+class GameMap : public PacmanObject
 {
 private:
 	SDL_Rect destRect;

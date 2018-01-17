@@ -3,25 +3,26 @@
 #include "PlayState.h"
 #include <iostream>
 #include "FileFormatError.h"
+#include "GameStateMachine.h"
 using namespace std;
 
 // A) CONSTRUCTORA DEL MAPA: APUNTA A <Game>
-GameMap::GameMap(PlayState*game) : GameObject(game)
+GameMap::GameMap(PlayState*game) : PacmanObject(game)
 {
 }
 
 // B) CREA LAS TEXTURAS DEL MAPA
 void GameMap::initializeTextures(SDL_Renderer* renderer)
 {
-
+	/*
 	//Inicializa las texturas
-	for (int i = 0; i < NUM_MAP_TEXTURES; i++)
+	for (int i = 0; i < NUM_GAME_TEXTURES; i++)
 	{
 		textures[i] = new Texture();
-		const textAtributes& atributes = TEXTURE_ATRIBUTES[i];
+		const textAtributes& atributes = GAME_TEXTURES[i];
 		textures[i]->Load(renderer, TEXT_PATHFILE + atributes.filename, atributes.row, atributes.col);
 	}
-
+	*/
 
 }
 
@@ -37,11 +38,11 @@ void GameMap::loadFromFile(ifstream& file)
 			if (rows > maxR || cols > maxC) throw FileFormatError("El mapa supera los limites [ "
 				+ to_string(maxR) + ", " + to_string(maxC) + "]" );
 
-			this->game->setCols(this->cols);
-			this->game->setFils(this->rows);
+			this->playState->setCols(this->cols);
+			this->playState->setFils(this->rows);
 
-			destRect.w = (WIN_WIDTH - 200) / game->getCols();
-			destRect.h = (WIN_HEIGHT) / game->getFils();
+			//destRect.w = (WIN_WIDTH - 200) / game->getCols();
+			destRect.h = (WIN_HEIGHT) / playState->getFils();
 
 			map = new mapCell*[rows];
 			for (int i = 0; i < rows; i++)
@@ -61,7 +62,7 @@ void GameMap::loadFromFile(ifstream& file)
 					// ...y le damos el tipo de celda según el valor del mismo
 					setCell(i, j, (mapCell)cell);
 					if (cell == 2 || cell == 3)
-						this->game->modifyNumFood(1);
+						this->playState->modifyNumFood(1);
 				}
 			}
 		
@@ -105,7 +106,7 @@ void GameMap::render(SDL_Renderer* renderer)
 void GameMap::update()
 {
 	int foodX, foodY;
-	if (game->pacmanEat(foodX, foodY))
+	if (playState->pacmanEat(foodX, foodY))
 		setCell(foodY, foodX, Empty);
 }
 

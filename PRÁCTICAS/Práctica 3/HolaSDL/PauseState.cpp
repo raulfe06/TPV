@@ -8,9 +8,9 @@ PauseState::PauseState(Game* game) : GameState (game)
 	resumeButton = { WIN_WIDTH/2-100, WIN_HEIGHT/2+30 ,329 ,60 };
 	saveGameButton = { WIN_WIDTH /2-200,WIN_HEIGHT /2+120,329,60};
 
-	menuButtons.push_back(new MenuButton(game,resumeButton.x,resumeButton.y,resumeButton.w,resumeButton.h));
+	scene.push_back(new MenuButton(game,resumeButton.x,resumeButton.y,resumeButton.w,resumeButton.h,game->getTexture(ResumeGameTex)));
 
-	menuButtons.push_back(new MenuButton(game, saveGameButton.x, saveGameButton.y, saveGameButton.w, saveGameButton.h));
+	scene.push_back(new MenuButton(game, saveGameButton.x, saveGameButton.y, saveGameButton.w, saveGameButton.h,game->getTexture(SaveGameTex)));
 
 
 }

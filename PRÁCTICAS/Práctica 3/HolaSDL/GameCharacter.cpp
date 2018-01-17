@@ -1,8 +1,9 @@
 #include "GameCharacter.h"
-#include"PlayState.h"
+
 #include <fstream>
 #include "FileFormatError.h"
 #include <iostream>
+
 
 using namespace std;
 GameCharacter::GameCharacter()
@@ -10,7 +11,7 @@ GameCharacter::GameCharacter()
 }
 
 // A) SE INICIALIZA A PARTIR DE <GameObject>, CREA LA TEXTURA DEL PERSONAJE Y OBTIENE LAS MEDIDAS DE SU RECTÁNGULO DESTINO
-GameCharacter::GameCharacter(PlayState* game, SDL_Renderer* renderer, int row, int col) : GameObject(game), textRow(row), textCol(col)
+GameCharacter::GameCharacter(Game* game, SDL_Renderer* renderer, int row, int col) : PacmanObject(game), textRow(row), textCol(col)
 {
 	// 1) Creamos la textura, cargándola del spritesheet de personajes
 	texture = new Texture();
@@ -79,6 +80,6 @@ void GameCharacter::render(SDL_Renderer* renderer)
 // DESTRUCTORA -> LIBERA LA TEXTURA
 GameCharacter::~GameCharacter()
 {
-	game = nullptr;
+
 	texture->Free();
 }

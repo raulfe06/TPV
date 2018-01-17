@@ -24,7 +24,7 @@ const int INTELLI_GHOST_POINTS = 100;
 
 const int NUM_TOTAL_LEVELS = 3;
 const int FRAME_RATE = 160; // milliseconds per frame -> 6 frames/s
-const std::string TEXT_PATHFILE = "..\\images\\";
+//const std::string TEXT_PATHFILE = "..\\images\\";
 //const std::string menuNames[NUM_MENU_TEXT] = { "newGame.png","loadGame.png","menu.png","code.png" };
 
 

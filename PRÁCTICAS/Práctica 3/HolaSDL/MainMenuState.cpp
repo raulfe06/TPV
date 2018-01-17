@@ -11,45 +11,19 @@ MainMenuState::MainMenuState(Game* game) : GameState(game)
 	loadGame = { WIN_WIDTH / 2 - 200,WIN_HEIGHT / 2 + 120,329,60 };
 	exitGame = { WIN_WIDTH / 2 - 200,WIN_HEIGHT / 2 + 160,329,60 };
 
-	scene.push_back(new MenuButton(game, startGame.x, startGame.y, startGame.w, startGame.h));
+	scene.push_back(new MenuButton(game, startGame.x, startGame.y, startGame.w, startGame.h,game->getTexture(NewGameTex)));
 
-	scene.push_back(new MenuButton(game, loadGame.x, loadGame.y, loadGame.w, loadGame.h));
+	scene.push_back(new MenuButton(game, loadGame.x, loadGame.y, loadGame.w, loadGame.h,game->getTexture(LoadGameTex)));
 
-	scene.push_back(new MenuButton(game, exitGame.x, exitGame.y, exitGame.w, exitGame.h));
+	scene.push_back(new MenuButton(game, exitGame.x, exitGame.y, exitGame.w, exitGame.h,game->getTexture(ExitGameTex)));
 
-//Hay que pasarle las texturas que deberian estar en le game al hacer el new Button 	
-
-	/*for (int i = 0; i < NUM_MENU_TEXT; i++)
-	{
-		/*menuTextures[i] = new Texture();
-//		menuTextures[i]->Load(renderer, TEXT_PATHFILE + menuNames[i], 1, 1);
-	}*/
 }
 
-void MainMenuState::handleEvent(SDL_Event& e) {
 
-	if (e.type == SDL_MOUSEBUTTONDOWN)
-	{
-		SDL_Point* mouse_position;
-		SDL_GetMouseState(&mouse_position->x, &mouse_position->y);
-		
-		if (SDL_PointInRect(mouse_position, &startGame)) { //SDL_Rect* imagino que pasando la direccion de memoria(si se pasaba asi) deberia funcionar
-			
-			//game->getStateMachine()->changeState(new PlayState(game));
-		}
-		else if (SDL_PointInRect(mouse_position, &loadGame)) { //SDL_Rect* imagino que pasando la direccion de memoria(si se pasaba asi) deberia funcionar
-
-			//game->getStateMachine()->changeState(new PlayState(game));
-		}
-		else if (SDL_PointInRect(mouse_position, &exitGame)) {
-
-		}
-	}
-}
 
 
 // UI
-int MainMenuState::checkInsideRect(int x, int y, SDL_Rect rect)
+/*int MainMenuState::checkInsideRect(int x, int y, SDL_Rect rect)
 {
 
 	if (x >= rect.x && x < (rect.x + rect.w))
@@ -60,7 +34,7 @@ int MainMenuState::checkInsideRect(int x, int y, SDL_Rect rect)
 		}
 	}
 	return 0;
-}
+}*/
 /*void MainMenuState::mousePress(SDL_MouseButtonEvent& b) {
 	if (b.button == SDL_BUTTON_LEFT) {
 

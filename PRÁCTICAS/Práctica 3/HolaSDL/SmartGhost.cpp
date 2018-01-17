@@ -58,11 +58,11 @@ void SmartGhost::render(SDL_Renderer* renderer)
 void SmartGhost::setAnimation()
 {
 	// 1) Calculamos el tamaño del rectángulo base, así como la distancia al centro
-	double width = ((WIN_WIDTH - OFFSET) / game->getCols());
-	double height = (WIN_HEIGHT / game->getFils());
+	double width = ((WIN_WIDTH - OFFSET) / playState->getCols());
+	double height = (WIN_HEIGHT / playState->getFils());
 
-	double centerX = ((WIN_WIDTH - OFFSET) / game->getCols()) / 2;
-	double centerY = (WIN_HEIGHT / game->getFils()) / 2;
+	double centerX = ((WIN_WIDTH - OFFSET) / playState->getCols()) / 2;
+	double centerY = (WIN_HEIGHT / playState->getFils()) / 2;
 
 	double scale = 1;
 
@@ -125,16 +125,16 @@ void SmartGhost::smartMovement()
 	// 1) Elegimos una dirección y movemos al fantasma
 	chooseDir();
 
-	game->nextCell(posX, posY, dirX, dirY, posX, posY);
+	playState->nextCell(posX, posY, dirX, dirY, posX, posY);
 
 	// 2) Si en dicha posición hay un fantasma inteligente adulto, y tenemos el cooldown a '0'...
-	game->existGhost(this, posX, posY, isAdult(), spawnGhost);
+	playState->existGhost(this, posX, posY, isAdult(), spawnGhost);
 	if (spawnGhost  && cooldown == 0)
 	{
 		// ...reiniciamos el cooldown...
 		cooldown = COOLDOWN;
 		// ... y spawneamos un fantasma
-		game->spawnGhost(posX, posY);
+		playState->spawnGhost(posX, posY);
 	}
 }
 
@@ -151,7 +151,7 @@ void SmartGhost::possibleDirs(int& numDirs)
 	// 2) Comprobamos para cada dirección si el fantasma puede moverse. Es decir, si no hay muro ni hay otro fantasma:
 	for (int i = 0; i < NUM_DIRS; i++)
 	{
-		if (game->nextCell(posX, posY, AllDirs[i].x, AllDirs[i].y, nextPosX, nextPosY) && (!game->existGhost(this, nextPosX, nextPosY, isAdult(), spawnGhost)) || spawnGhost)
+		if (playState->nextCell(posX, posY, AllDirs[i].x, AllDirs[i].y, nextPosX, nextPosY) && (!playState->existGhost(this, nextPosX, nextPosY, isAdult(), spawnGhost)) || spawnGhost)
 		{
 			// En caso de ser accesible la posición, añadimos la dirección en el vector
 			dir.x = AllDirs[i].x;
