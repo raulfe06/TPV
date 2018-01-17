@@ -1,7 +1,7 @@
 #pragma once
 #include "SDL.h"
 #include "Texture.h"
-#include "GameObject.h"
+#include "PacmanObject.h"
 
 //class Game;
 
@@ -15,7 +15,7 @@ Clase GameCharacter: base para los personajes del juego, conteniendo todo lo com
 - Heredan de ella: <Pacman> y <Ghost>
 
 */
-class GameCharacter : public GameObject
+class GameCharacter : public PacmanObject
 {
 protected:
 

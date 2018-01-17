@@ -17,16 +17,11 @@ Clase GameObject: clase abstracta
 class GameObject
 {
 protected:
-	PlayState* game = nullptr;
+	//PlayState* game = nullptr;
 
-	GameObject(PlayState* game);
 	GameObject();
 
-	// Métodos virtuales puros -> Necesitan ser (re)definidos por las clases hijas 
-	
-
-	virtual void loadFromFile(ifstream& file) = 0;
-	virtual void saveToFile(ofstream& file) = 0;
+	// Métodos virtuales puros -> Necesitan ser (re)definidos por las clases hijas
 
 public:
 	virtual void update() {};

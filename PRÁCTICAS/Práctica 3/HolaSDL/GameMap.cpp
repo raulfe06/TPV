@@ -6,7 +6,7 @@
 using namespace std;
 
 // A) CONSTRUCTORA DEL MAPA: APUNTA A <Game>
-GameMap::GameMap(PlayState*game) : GameObject(game)
+GameMap::GameMap(PlayState*game) : PacmanObject(game)
 {
 }
 
@@ -39,6 +39,7 @@ void GameMap::loadFromFile(ifstream& file)
 
 			this->game->setCols(this->cols);
 			this->game->setFils(this->rows);
+
 
 			destRect.w = (WIN_WIDTH - 200) / game->getCols();
 			destRect.h = (WIN_HEIGHT) / game->getFils();

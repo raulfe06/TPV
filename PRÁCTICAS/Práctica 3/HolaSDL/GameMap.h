@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "PacmanObject.h"
 #include "Texture.h"
 #include "SDL.h"
 class PlayState;
@@ -33,7 +33,7 @@ Clase GameMap: crea la matriz, a partir de la cual se creará y actualizará el ni
 
 class Pacman;
 
-class GameMap : public GameObject
+class GameMap : public PacmanObject
 {
 private:
 	SDL_Rect destRect;
