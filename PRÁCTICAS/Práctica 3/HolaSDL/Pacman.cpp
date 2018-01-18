@@ -16,7 +16,8 @@ Pacman::Pacman(PlayState* playState, SDL_Renderer* renderer, int textRow, int te
 }
 
 // B) REDEFINE EL MÉTODO DEL PADRE PARA OBTENER LAS VIDAS
-void Pacman::loadFromFile(ifstream& file) {
+void Pacman::loadFromFile(ifstream& file)
+{
 
 	GameCharacter::loadFromFile(file);
 	this->lives = 3;
