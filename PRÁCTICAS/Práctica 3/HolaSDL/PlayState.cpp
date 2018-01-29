@@ -23,12 +23,18 @@ using namespace std;
 
 PlayState::PlayState(Game* game, SDL_Renderer* renderer, bool loadingFile) : GameState(game),renderer(renderer)
 {	
+	
 	setBackName(PlayStateBACK);
 
 	if (!loadingFile) loadFile("levels\\level0" + to_string(level) + ".pac");
 	else {
 		int code =saveState(loadingFile);
 		loadFile("levels\\" + to_string(code) + ".pac");
+	}
+
+	for (size_t i = 0; i < NUM_HUD_TEXT; i++)
+	{
+		HUD[i] = new Texture();
 	}
 }
 
@@ -146,6 +152,7 @@ int PlayState::saveState(bool loadingGame) {
 	unsigned int code = 0;
 	while (savingGame)
 	{
+		
 		renderCode(count);
 		SDL_WaitEvent(&event);
 
@@ -376,28 +383,25 @@ void PlayState::createLevelText() {
 	SDL_Rect destRect;
 	destRect.x = 625; destRect.y = 75; destRect.h = 35;  destRect.w = 135;
 	Font font = Font("arial.ttf", 12);
-	Texture* texture = new Texture();
 	SDL_Color fg = { 255,250,65 };
-	texture->loadFromText(renderer, "Level: " + to_string(level), font, fg);
-	texture->Render(renderer, destRect);
+	HUD[0]->loadFromText(renderer, "Level: " + to_string(level), font, fg);
+	HUD[0]->Render(renderer, destRect);
 }
 void PlayState::createScoreText() {
 	SDL_Rect destRect;
 	destRect.x = 625; destRect.y = 300; destRect.h = 35;  destRect.w = 150;
 	Font font = Font("arial.ttf", 12);
-	Texture* texture = new Texture();
 	SDL_Color fg = { 255,0,0 };
-	texture->loadFromText(renderer, "Score: " + to_string(score), font, fg);
-	texture->Render(renderer, destRect);
+	HUD[1]->loadFromText(renderer, "Score: " + to_string(score), font, fg);
+	HUD[1]->Render(renderer, destRect);
 }
 void PlayState::createLivesText() {
 	SDL_Rect destRect;
 	destRect.x = 625; destRect.y = 500; destRect.h = 35;  destRect.w = 135;
 	Font font = Font("arial.ttf", 12);
-	Texture* texture = new Texture();
 	SDL_Color fg = { 239,6,255 };
-	texture->loadFromText(renderer, "Lives: " + to_string(pacman->getLives()), font, fg);
-	texture->Render(renderer, destRect);
+	HUD[2]->loadFromText(renderer, "Lives: " + to_string(pacman->getLives()), font, fg);
+	HUD[2]->Render(renderer, destRect);
 }
 void PlayState::renderTexts() {
 	createLevelText();
@@ -408,5 +412,8 @@ void PlayState::renderTexts() {
 
 PlayState::~PlayState()
 {
-	delete map;
+	for (size_t i = 0; i < NUM_HUD_TEXT; i++)
+	{
+		delete HUD[i];
+	}
 }

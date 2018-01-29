@@ -39,9 +39,5 @@ void MainMenuState::exitGame(Game* game)
 
 MainMenuState::~MainMenuState()
 {
-	for (int i = 0; i < NUM_MENU_TEXT; i++)
-	{
-		menuTextures[i]->Free();
-		delete menuTextures[i];
-	}
+
 }

@@ -11,11 +11,13 @@ protected:
 	list<GameObject*> scene;
 	enumTextures backGroundName;
 	Game* game;
+
+	Texture* tex = nullptr;
 public:
 	GameState(Game* game);
 	GameState();
 	void renderCode(const int& count);
-	~GameState() 
+virtual	~GameState() 
 	{
 		for (GameObject* obj : scene) delete obj;
 	};

@@ -24,8 +24,8 @@ const int NORMAL_GHOST_POINTS = 50;
 const int INTELLI_GHOST_POINTS = 100;
 
 const int NUM_TOTAL_LEVELS = 3;
-//const std::string TEXT_PATHFILE = "..\\images\\";
-//const std::string menuNames[NUM_MENU_TEXT] = { "newGame.png","loadGame.png","menu.png","code.png" };
+
+const int NUM_HUD_TEXT = 3;
 
 
 class PlayState : public GameState
@@ -42,6 +42,8 @@ private:
 
 	// Puntero al mapa del juego
 	GameMap* map;
+
+	Texture* HUD[NUM_HUD_TEXT];
 
 
 	int rows, cols;
@@ -111,6 +113,6 @@ public:
 	void createScoreText();
 	void createLivesText();
 
-	~PlayState();
+	virtual ~PlayState();
 };
 
