@@ -11,7 +11,7 @@ private:
 	PlayState* playState;
 public:
 	PauseState(Game* game);
-	~PauseState();
+	virtual ~PauseState();
 	static void resume(Game* game);
 	static void saveGame(Game* game);
 	static void goToMenu(Game* game);

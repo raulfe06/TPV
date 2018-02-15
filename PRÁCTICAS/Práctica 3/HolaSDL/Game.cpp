@@ -121,10 +121,14 @@ void Game::initializeTextures() {
 
 Game::~Game()
 {
-	for (Texture* tex : textures) tex->Free();
+	getStateMachine()->popState();
+
+	for (Texture* tex : textures) delete tex;
 
 	renderer = nullptr;
 	window = nullptr;
+
+	delete stateMachine;
 
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);

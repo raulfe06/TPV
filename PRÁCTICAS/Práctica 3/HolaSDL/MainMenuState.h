@@ -26,6 +26,6 @@ public:
 	static void newGame(Game* game);
 	static void loadGame(Game* game);
 	static void exitGame(Game* game);
-	~MainMenuState();
+	virtual ~MainMenuState();
 };
 

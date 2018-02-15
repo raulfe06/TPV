@@ -23,4 +23,5 @@ void EndState::goToMenu(Game* game) {
 
 EndState::~EndState()
 {
+
 }

@@ -10,7 +10,6 @@ GameMap::GameMap(PlayState*playState) : PacmanObject(playState)
 {
 	for (size_t i = 0; i < NUM_MAP_TEXTURES; i++)
 	{
-		//textures[i] = new Texture();
 		textures[i] = playState->getTexture((enumTextures)i);
 	}
 }

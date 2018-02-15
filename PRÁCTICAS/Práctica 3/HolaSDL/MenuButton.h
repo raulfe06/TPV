@@ -25,6 +25,6 @@ public:
 
 	bool handleEvent(SDL_Event& e);
 	 void render(SDL_Renderer* renderer);
-	~MenuButton();
+	virtual ~MenuButton();
 };
 
