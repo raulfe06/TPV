@@ -6,7 +6,7 @@
 //*CONSTANTES GENERALES*
 const int NUM_MENU_TEXT = 4;
 
-//const std::string TEXT_PATHFILE = "..\\images\\";
+
 const std::string menuNames [NUM_MENU_TEXT] =  { "newGame.png","loadGame.png","menu.png","code.png" };
 
 

@@ -191,6 +191,7 @@ void PlayState::update()
 {
 	GameState::update();
 	checkCapture();
+	endLevel();
 }
 
 void PlayState::render(SDL_Renderer* renderer)

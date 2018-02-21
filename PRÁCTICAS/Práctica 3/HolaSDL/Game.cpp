@@ -58,10 +58,7 @@ Game::Game()
 
 	stateMachine = new GameStateMachine();
 
-	test = new MainMenuState(this);
-	stateMachine->pushState(test);
-	//test->loadFile("levels\\level0" + to_string(1) + ".pac");
-
+	stateMachine->pushState(new MainMenuState(this));
 }
 
 void Game::run() 
@@ -124,10 +121,11 @@ void Game::initializeTextures() {
 
 Game::~Game()
 {
-
 	for (Texture* tex : textures) tex->Free();
+
 	renderer = nullptr;
 	window = nullptr;
+
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();

@@ -9,17 +9,6 @@ class PlayState;
 // Tipos de celda para el mapa
 enum mapCell { Empty, Wall, Food, Vitamins };
 
-/*typedef struct {
-	// 1) Nombre del archivo de la imagen
-	string filename;
-	// 2) Fila y columna de la textura (por si estuviera dividida como un sprite sheet)
-	int row = 0;
-	int col = 0;
-} textAtributes;
-
-// Arrays con los atrubitos de cada textura del mapa
-const textAtributes TEXTURE_ATRIBUTES[NUM_MAP_TEXTURES] = { {"empty.png",1,1}, { "wall.png", 1, 1 },{ "food.png", 1, 1 },{ "vitamin.png", 1, 1 } };
-*/
 
 const int NUM_MAP_TEXTURES = 4; // Casilla vacía, Muro, Comida, Vitamina
 

@@ -54,8 +54,6 @@ private:
 	bool exit = false;
 
 	GameStateMachine* stateMachine;
-	MainMenuState* test;
-
 
 public:
 
