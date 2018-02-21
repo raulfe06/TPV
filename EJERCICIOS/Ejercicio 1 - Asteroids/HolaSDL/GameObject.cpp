@@ -4,6 +4,10 @@ GameObject::GameObject(SDLGame* game) :
 		game_(game), active_(true), width_(), height_(), position_(),  direction_(1,0), velocity_() {
 }
 
+GameObject::GameObject()
+{
+}
+
 GameObject::~GameObject() {
 }
 

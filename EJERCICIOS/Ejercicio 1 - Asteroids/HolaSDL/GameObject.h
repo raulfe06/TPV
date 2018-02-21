@@ -8,6 +8,7 @@ class GameObject {
 
 public:
 	GameObject(SDLGame* game);
+	GameObject();
 	virtual ~GameObject();
 
 	SDLGame* getGame() const;
