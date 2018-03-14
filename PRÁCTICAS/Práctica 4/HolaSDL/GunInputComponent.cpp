@@ -3,7 +3,7 @@
 
 using namespace std;
 
-GunInputComponent::GunInputComponent(BulletsManager* bulletsManager_, SDL_Keycode shootKey_, Uint8 shotsPerInterval, Uint32 timeInterval_) 
+GunInputComponent::GunInputComponent(Observer* bulletsManager_, SDL_Keycode shootKey_, Uint8 shotsPerInterval, Uint32 timeInterval_) 
  : bulletsManager_(bulletsManager_),shootKey_(shootKey_),shotsPerInterval_(shotsPerInterval),timeInterval_(timeInterval_), tiempoDisparo_(0)
 {
 
@@ -38,7 +38,7 @@ void GunInputComponent::handleInput(GameObject * o, Uint32 time, const SDL_Event
 		if (event.key.keysym.sym == shootKey_ && time > tiempoDisparo_+timeInterval_)
 		{
 			tiempoDisparo_ = time;
-			bulletsManager_->shoot(o, auxPos, auxVel);
+			//bulletsManager_->shoot(o, auxPos, auxVel); //CAMBIAR POR MENSAJE
 		}
 	}
 	

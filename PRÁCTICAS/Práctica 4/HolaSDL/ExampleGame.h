@@ -6,10 +6,15 @@
 #include "SDLGame.h"
 #include "GameObject.h"
 #include "GameComponent.h"
-#include "StarWarsBulletsManager.h"
+#include "StarTrekBulletManager.h"
+#include "FightersManager.h"
+#include "AsteroidsManager.h"
+#include "CollisionsManager.h"
+#include "GameManager.h"
+#include "SoundManager.h"
 
 class ExampleGame: public SDLGame {
-
+	
 public:
 	ExampleGame();
 	virtual ~ExampleGame();
@@ -44,7 +49,12 @@ private:
 	InputComponent* acelerationComp_;
 	InputComponent* gunInputComp_;
 
-	StarWarsBulletsManager* starWarsManager_;
+	StarTrekBulletManager bulletsManager_;
+	FightersManager fightersManager_;
+	AsteroidsManager astroidsManager_;
+	CollisionsManager collisionManager_;
+	GameManager gameManager_;
+	SoundManager soundManager_;
 };
 
 #endif /* EXAMPLEGAME_H_ */

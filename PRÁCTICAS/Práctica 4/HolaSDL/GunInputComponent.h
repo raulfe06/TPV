@@ -5,11 +5,11 @@ class GunInputComponent :
 	public InputComponent
 {
 public:
-	GunInputComponent(BulletsManager* bulletsManager_, SDL_Keycode shootKey_,Uint8 shotsPerInterval, Uint32 timeInterval_);
+	GunInputComponent(Observer* bulletsManager_, SDL_Keycode shootKey_,Uint8 shotsPerInterval, Uint32 timeInterval_);
 	~GunInputComponent();
 	void handleInput(GameObject* o, Uint32 time, const SDL_Event& event);
 private:
-	BulletsManager * bulletsManager_;
+	Observer* bulletsManager_;
 	SDL_Keycode shootKey_;
 	Uint8 shotsPerInterval_;
 	Uint32 timeInterval_;

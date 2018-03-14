@@ -19,3 +19,12 @@ void Observable::send(Message* msg) {
 void Observable::registerObserver(Observer* o) {
 	observers_.push_back(o);
 }
+
+void Observable::removeObserver(Observer * o)
+{
+	auto it =  observers_.begin();
+	while (it != observers_.end() && *it != o) {
+		it++;
+	}
+	if (it != observers_.end()) observers_.erase(it);
+}

@@ -19,14 +19,14 @@ void AsteroidsManager::handleInput(Uint32 time, const SDL_Event & event)
 
 void AsteroidsManager::update(Uint32 time)
 {
-	for (Asteroid* a : asteroids_) {
+	for (Asteroid* a : objs_) {
 		if(a->isActive()) a->update(time);
 	}
 }
 
 void AsteroidsManager::render(Uint32 time)
 {
-	for (Asteroid* a : asteroids_) {
+	for (Asteroid* a : objs_) {
 		if (a->isActive()) a->render(time);
 	}
 }

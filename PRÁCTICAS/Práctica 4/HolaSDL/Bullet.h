@@ -4,6 +4,7 @@ class Bullet :
 	public Container
 {
 public:
+	Bullet(){};
 	Bullet(SDLGame* game);
 	virtual ~Bullet();
 	void setFighterId(int id);

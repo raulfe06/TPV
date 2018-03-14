@@ -14,6 +14,7 @@ public:
 	virtual ~Observable();
 	virtual void send(Message* msg);
 	virtual void registerObserver(Observer* o);
+	virtual void removeObserver(Observer* o);
 private:
 	std::vector<Observer*> observers_;
 };
