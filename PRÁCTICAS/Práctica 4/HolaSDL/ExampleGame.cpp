@@ -25,9 +25,14 @@ ExampleGame::~ExampleGame() {
 void ExampleGame::initGame() {
 
 
+	collisionManager_.registerObserver(&gameManager_);
 
 
-
+	actors_.push_back(&bulletsManager_);
+	actors_.push_back(&fightersManager_);
+	actors_.push_back(&astroidsManager_);
+	actors_.push_back(&collisionManager_);
+	actors_.push_back(&gameManager_);
 
 	// hide cursor
 	//SDL_ShowCursor(0);

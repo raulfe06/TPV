@@ -2,7 +2,7 @@
 #define SRC_OMANAGER_H_
 
 #include <vector>
-
+#include "SDLGame.h"
 /*
  *
  */
@@ -17,14 +17,14 @@ public:
 			delete o;
 		}
 	}
-	T* getObject();
+	T* getObject(SDLGame* game);
 	virtual void initializeObject(T* o) = 0;
 protected:
 	std::vector<T*> objs_;
 };
 
 template<typename T>
-inline T* OManager<T>::getObject() {
+inline T* OManager<T>::getObject(SDLGame* game) { //DIJO EL BUEN SAMIR QUE LO PUSIERAMOS PARA PASARSELO AL CREAR NUEVOS OBJETOS
 	typename std::vector<T*>::iterator it = objs_.begin();
 	while ( it != objs_.end() && (*it)->isActive() ) {
 		it++;

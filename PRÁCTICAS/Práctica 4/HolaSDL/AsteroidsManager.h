@@ -26,5 +26,6 @@ private:
 	CircularMotionPhysics circularPhysics_;
 	RotationPhysics rotationPhysics_;
 	int numOfasteroids_;
+	void addAsteroid();
 };
 

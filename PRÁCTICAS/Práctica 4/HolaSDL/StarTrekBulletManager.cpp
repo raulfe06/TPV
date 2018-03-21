@@ -13,5 +13,5 @@ StarTrekBulletManager::~StarTrekBulletManager()
 
 Bullet * StarTrekBulletManager::getBullet()
 {
-	return getObject();
+	return getObject(game_);
 }

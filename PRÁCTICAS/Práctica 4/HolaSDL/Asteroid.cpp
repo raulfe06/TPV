@@ -4,6 +4,7 @@
 
 Asteroid::Asteroid(SDLGame* game) : Container(game)
 {
+
 }
 
 
