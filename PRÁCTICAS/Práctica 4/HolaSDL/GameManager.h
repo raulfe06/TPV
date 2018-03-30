@@ -8,10 +8,12 @@
 #include "GameMsgRenderer.h"
 #include "BadgeTimer.h"
 
-const int defCount = 2;
+const int defCount = 10;
 class GameManager :
 	public Container , public Observable,public Observer
 {
+
+	const string CONTINUE_TEXT = "PRESS SPACE TO CONTINUE";
 public:
 	GameManager(SDLGame* game);
 	virtual ~GameManager();
@@ -23,6 +25,7 @@ public:
 	void setBadge(bool b);
 	void resetCount();
 	void receive(Message* msg);
+	void restartGame();
 
 	virtual void handleInput(Uint32 time, const SDL_Event& event);
 

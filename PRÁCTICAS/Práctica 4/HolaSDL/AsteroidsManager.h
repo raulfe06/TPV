@@ -10,6 +10,7 @@
 const double ROTATION_ANGLE = 5;
 class AsteroidsManager : public GameObject,public Observer, public Observable,public OManager<Asteroid>
 {
+	const int ASTEROIDS_NUM = 5;
 public:
 	AsteroidsManager(SDLGame* game);
 	virtual ~AsteroidsManager();
@@ -28,5 +29,6 @@ private:
 	RotationPhysics rotationPhysics_;
 	int numOfasteroids_;
 	void addAsteroid();
+	Vector2D getRandomVelocity();
 };
 

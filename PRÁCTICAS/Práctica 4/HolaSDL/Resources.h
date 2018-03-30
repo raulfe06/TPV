@@ -41,14 +41,14 @@ public:
 	// Music -- each file is loaded as an instance of Music
 	//
 	enum MusicId {
-		Beat, Cheer, Boooo
+		ImperialMarch, Cheer, Boooo
 	};
 
 
 	// Sound Effects -- each file is loaded as an instance of SoundEffect
 	//
 	enum SoundEffectId {
-		Wall_Hit, Paddle_Hit
+		Explosion, GunShot
 	};
 
 private:

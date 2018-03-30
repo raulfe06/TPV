@@ -5,7 +5,7 @@
 BadgeRenderer::BadgeRenderer(SDLGame* game)
 {
 	badgeIMG_ = game->getResources()->getImageTexture(Resources::Badge);
-	destRect_ = { game->getWindowWidth() - 128, 0, 128, 128 };
+	destRect_ = { game->getWindowWidth() - BADGE_SIZE, 0, BADGE_SIZE, BADGE_SIZE };
 
 }
 

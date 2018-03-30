@@ -40,6 +40,7 @@ void CollisionsManager::update(Uint32 time)
 	exit = false;
 
 	while (b != bullets.end() && !exit) {
+		a = astroids.begin();
 		while (a != astroids.end() && !exit) {
 			if ((*b)->isActive() && (*a)->isActive() && Collisions::collidesWithRotation(*b, *a)) {
 				BulletAstroidCollision m = BulletAstroidCollision(*b, *a);

@@ -15,11 +15,11 @@ std::vector<Resources::TextMsgInfo> Resources::textMsgs_ { { "Hello World", {
 		COLOR(0xaaffbbff) }, Resources::ARIAL24 }, { "Game Over", { COLOR(
 		0xffffbbff) }, Resources::ARIAL24 } };
 
-std::vector<std::string> Resources::musicFiles_ { "sound/beat.wav",
+std::vector<std::string> Resources::musicFiles_ { "sound/imperial_march.wav",
 		"sound/cheer.wav", "sound/boooo.wav" };
 
-std::vector<std::string> Resources::soundEffectFiles_ { "sound/wall_hit.wav",
-		"sound/paddle_hit.wav" };
+std::vector<std::string> Resources::soundEffectFiles_ { "sound/explosion.wav",
+		"sound/GunShot.wav" };
 
 #include <iostream>
 

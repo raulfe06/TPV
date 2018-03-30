@@ -3,6 +3,8 @@
 class BadgeRenderer :
 	public RenderComponent
 {
+	const int BADGE_SIZE = 40;
+
 public:
 	BadgeRenderer(SDLGame* game);
 	~BadgeRenderer();

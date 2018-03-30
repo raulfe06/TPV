@@ -70,14 +70,11 @@ void AsteroidsManager::receive(Message * msg)
 				x->setWidth(x->getWidth() / 2);
  				x->setHeight(x->getHeight() / 2);
 
-
-
-			//	objs_.push_back(x); YA SE HACE EN EL 'getAsteroid()'
 				numOfasteroids_++;
 			}
 		}
 		if (numOfasteroids_ <= 0) {
-			Message m = ROUND_OVER;
+			Message m = NO_MORE_ATROIDS;
 			send(&m);
 		}
 		break;
@@ -106,6 +103,7 @@ Asteroid * AsteroidsManager::getAsteroid()
 
 void AsteroidsManager::initAsteroids()
 {
+	numOfasteroids_ = 0;
 	for (Asteroid* a : objs_)
 	{
 		a->setWidth(defWidth);
@@ -113,7 +111,7 @@ void AsteroidsManager::initAsteroids()
 
 		a->setActive(false);
 	}
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < ASTEROIDS_NUM; i++)
 		addAsteroid();
 }
 
@@ -122,41 +120,80 @@ void AsteroidsManager::addAsteroid()
 	/*Asteroid* a = new Asteroid(game_);*/
 	double x, y;
 
-	//switch (rand() % 3 + 0)
-	//{
-	//case 0: //Arriba
-	//	x = rand() % game_->getWindowWidth() + 0;
-	//	y = 0;
-	//	break;
-	//case 1: // Abajo
-	//	x = rand() % game_->getWindowWidth() + 0;
-	//	y = game_->getWindowHeight();
+	switch (rand() % 3 + 0)
+	{
+	case 0: //Arriba
+		x = rand() % game_->getWindowWidth() + 0;
+		y = 0;
+		break;
+	case 1: // Abajo
+		x = rand() % game_->getWindowWidth() + 0;
+		y = game_->getWindowHeight();
 
-	//	break;
-	//case 2: //Izquierda
-	//	x = 0;
-	//	y = rand() % game_->getWindowHeight() + 0;
+		break;
+	case 2: //Izquierda
+		x = 0;
+		y = rand() % game_->getWindowHeight() + 0;
 
-	//	break;
-	//case 3: //Derecha
-	//	x = game_->getWindowWidth();
-	//	y = rand() % game_->getWindowHeight() + 0;
-	//	break;
-	//}
-	x = game_->getWindowWidth();
-	y = rand() % game_->getWindowHeight() + 0;
+		break;
+	case 3: //Derecha
+		x = game_->getWindowWidth();
+		y = rand() % game_->getWindowHeight() + 0;
+		break;
+	}
+	
 	Asteroid* a = getAsteroid();
 	a->setActive(true);
 	a->setPosition(Vector2D(x, y));
-	a->setVelocity(Vector2D(-1, 0));
+	a->setVelocity(getRandomVelocity());
 
 	int randomNumber = rand() % ((3 - 1) + 1) + 1; //Random entre 1 y 3 
 	a->setGenerations(randomNumber);
 	
 	numOfasteroids_++;
-	//initializeObject(a);
-	//objs_.push_back(a);
 
+}
+
+Vector2D AsteroidsManager::getRandomVelocity()
+{
+	int x, y;
+	int randomNum = rand() % 7 + 1;
+	switch (randomNum)
+	{
+	case 1:
+		x = -1;
+		y = 0;
+		break;
+	case 2:
+		x = 1;
+		y = 0;
+		break;
+	case 3:
+		x = 0;
+		y = 1;
+		break;
+	case 4:
+		x = 0;
+		y = -1;
+		break;
+	case 5:
+		x = 1;
+		y = 1;
+		break;
+	case 6:
+		x = -1;
+		y = -1;
+		break;
+	case 7:
+		x = -1;
+		y = 1;
+		break;
+	case 8:
+		x = 1;
+		y = -1;
+		break;
+	}
+	return Vector2D(x,y);
 }
 
 

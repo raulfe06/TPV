@@ -8,6 +8,7 @@ rotationComp_(5,SDLK_a,SDLK_d),
 
 gunComp1_(bulletsManager,SDLK_SPACE,0,500),gunComp2_(bulletsManager, SDLK_SPACE, 0, 100),badgeRenderer_(game)
 {
+	fighter_.setActive(false);
 	fighter_.setPosition(Vector2D(game->getWindowWidth() / 2, game->getWindowHeight() / 2));
 	fighter_.addInputComponent(&gunComp1_);
 	gunComp1_.registerObserver(bulletsManager);
