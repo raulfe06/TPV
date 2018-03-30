@@ -60,21 +60,22 @@ void FightersManager::receive(Message * msg)
 		fighter_.setActive(true);
 		fighter_.setPosition(Vector2D(game_->getWindowWidth() / 2
 			, game_->getWindowHeight() / 2));
-			break;
+		break;
 	case ROUND_OVER:
 		fighter_.setActive(false);
 		fighter_.setVelocity(Vector2D(0, 0));
-			break;
+		fighter_.setDirection(Vector2D(1, 0));
+		break;
 	case BADGE_ON:
 		fighter_.delInputComponent(&gunComp1_);
 		fighter_.addInputComponent(&gunComp2_);
 		fighter_.addRenderComponent(&badgeRenderer_);
-			break;
+		break;
 	case BADGE_OFF:
 		fighter_.delInputComponent(&gunComp2_);
 		fighter_.addInputComponent(&gunComp1_);
 		fighter_.delRenderComponent(&badgeRenderer_);
-			break;
-		
+		break;
+
 	}
 }
