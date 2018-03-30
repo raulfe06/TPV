@@ -14,10 +14,12 @@ BadgeTimer::~BadgeTimer()
 void BadgeTimer::update(GameObject * o, Uint32 time)
 {
 	GameManager* gm = static_cast<GameManager*>(o);
-	if (on_ && (timeOn_ + timeInterval_) > time)
+	if (on_ && (timeOn_ + timeInterval_) < time)
 		{
 			gm->setBadge(false);
 			on_ = false;
+
+			gm->resetCount();
 		}
 	
 }

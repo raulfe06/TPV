@@ -2,7 +2,7 @@
 
 
 
-GameManager::GameManager(SDLGame* game) : Container(game), livesRenderer_(game),lives_(3)
+GameManager::GameManager(SDLGame* game) : Container(game), livesRenderer_(game),lives_(3), killCount_(defCount)
 {
 	
 	addPhysicsComponent(&badgeTimer_);
@@ -55,6 +55,12 @@ void GameManager::setBadge(bool b)
 	badge_ = b;
 }
 
+void GameManager::resetCount()
+{
+		killCount_ = defCount;
+		send(&Message(BADGE_OFF));
+}
+
 void GameManager::receive(Message * msg)
 {
 	switch (msg->id_) {
@@ -70,8 +76,12 @@ void GameManager::receive(Message * msg)
 			break;
 	case BULLET_ASTROID_COLLISION:
 		score_++;
-		send(&Message(BADGE_ON));
-		badgeTimer_.start(2000);
+		killCount_--;
+       		if (killCount_ == 0)
+		{
+       			send(&Message(BADGE_ON));
+ 			badgeTimer_.start(5000);
+		}
 			break;
 	case NO_MORE_ATROIDS:
 		if (badge_) setBadge(false);

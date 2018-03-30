@@ -8,6 +8,7 @@
 #include "GameMsgRenderer.h"
 #include "BadgeTimer.h"
 
+const int defCount = 2;
 class GameManager :
 	public Container , public Observable,public Observer
 {
@@ -20,6 +21,7 @@ public:
 	void setRunning(bool running);
 	int getScore() const;
 	void setBadge(bool b);
+	void resetCount();
 	void receive(Message* msg);
 
 	virtual void handleInput(Uint32 time, const SDL_Event& event);
@@ -27,6 +29,7 @@ public:
 private:
 	int lives_;
 	int score_;
+	int killCount_;
 	bool badge_;
 	bool running_;
 	bool gameOver_;
