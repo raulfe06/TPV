@@ -32,7 +32,7 @@ inline T* OManager<T>::getObject(SDLGame* game) { //DIJO EL BUEN SAMIR QUE LO PU
 
 	T* a = nullptr;
 	if ( it == objs_.end() ) {
-		a = new T();
+		a = new T(game);
 		initializeObject(a);
 		objs_.push_back(a);
 	} else {

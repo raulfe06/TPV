@@ -21,10 +21,12 @@ void CollisionsManager::update(Uint32 time)
 
 	// fighter with asteroids
 	auto it = astroids.begin();
+
+	//vector<Asteroid*>::iterator it = astroids.begin();
 	bool exit = false;
 
 	while (it != astroids.end() && !exit) {
-		if (Collisions::collidesWithRotation(fighter, *it)) {
+		if (fighter->isActive() && (*it)->isActive() && Collisions::collidesWithRotation(fighter, *it)) {
 			Message m = AstroidFighterCollision(*it, fighter);
 			send(&m);
 			exit = true;
@@ -37,16 +39,16 @@ void CollisionsManager::update(Uint32 time)
 	auto b = bullets.begin();
 	exit = false;
 
-	while (a != astroids.end() && !exit) {
-		while (b != bullets.end() && !exit) {
-			if (Collisions::collidesWithRotation(*b, *a)) {
-				Message m = BulletAstroidCollision(*b, *a);
+	while (b != bullets.end() && !exit) {
+		while (a != astroids.end() && !exit) {
+			if ((*b)->isActive() && (*a)->isActive() && Collisions::collidesWithRotation(*b, *a)) {
+				BulletAstroidCollision m = BulletAstroidCollision(*b, *a);
 				send(&m);
 				exit = true;
 			}
-			else b++;
+			else a++;
 		}
-		a++;
+		b++;
 	}
 
 }

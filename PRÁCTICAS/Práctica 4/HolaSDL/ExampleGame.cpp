@@ -11,8 +11,9 @@
 #include "GunInputComponent.h"
 
 ExampleGame::ExampleGame() :
-		SDLGame("Example Game", _WINDOW_WIDTH_, _WINDOW_HEIGHT_),fightersManager_(this,&bulletsManager_),astroidsManager_(this),
-	collisionManager_(this,&bulletsManager_,&astroidsManager_,&fightersManager_),gameManager_(this),soundManager_(this){
+		SDLGame("Example Game", _WINDOW_WIDTH_, _WINDOW_HEIGHT_), bulletsManager_(this),fightersManager_(this,&bulletsManager_),astroidsManager_(this),
+	collisionManager_(this,&bulletsManager_,&astroidsManager_,&fightersManager_),gameManager_(this),soundManager_(this)
+{
 
 	initGame();
 	exit_ = false;
@@ -24,18 +25,32 @@ ExampleGame::~ExampleGame() {
 
 void ExampleGame::initGame() {
 
+	SDL_ShowCursor(0);
 
+	bulletsManager_.registerObserver(&gameManager_);
+	bulletsManager_.registerObserver(&fightersManager_);
+	bulletsManager_.registerObserver(&astroidsManager_);
+
+	astroidsManager_.registerObserver(&bulletsManager_);
+	astroidsManager_.registerObserver(&gameManager_);
+	astroidsManager_.registerObserver(&fightersManager_);
+
+	collisionManager_.registerObserver(&astroidsManager_);
 	collisionManager_.registerObserver(&gameManager_);
+	collisionManager_.registerObserver(&bulletsManager_);
+	collisionManager_.registerObserver(&fightersManager_);
 
+	gameManager_.registerObserver(&astroidsManager_);
+	gameManager_.registerObserver(&fightersManager_);
+	gameManager_.registerObserver(&bulletsManager_);
 
 	actors_.push_back(&bulletsManager_);
 	actors_.push_back(&fightersManager_);
-	actors_.push_back(&astroidsManager_);
+
 	actors_.push_back(&collisionManager_);
 	actors_.push_back(&gameManager_);
+	actors_.push_back(&astroidsManager_);
 
-	// hide cursor
-	//SDL_ShowCursor(0);
 
 	//// normal game object
 	//demoObj_ = new DemoActor(this);

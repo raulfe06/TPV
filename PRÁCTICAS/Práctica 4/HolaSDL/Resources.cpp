@@ -3,7 +3,7 @@
 #include "Resources.h"
 
 std::vector<std::string> Resources::imageFiles_ { "images/spaceships.png", "images/airplanes.png",
-		"images/astroid.png" };
+		"images/astroid.png","images/gun2Badge.png","images/life.png" };
 
 std::vector<Resources::FontInfo> Resources::fontFiles_ {
 		{ "fonts/ARIAL.ttf", 16 }, { "fonts/ARIAL.ttf", 24 }, {

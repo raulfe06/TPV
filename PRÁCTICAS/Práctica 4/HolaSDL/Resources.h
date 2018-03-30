@@ -21,6 +21,8 @@ public:
 		SpaceShips,
 		Airplanes,
 		Asteroid,
+		Badge,
+		Life,
 	};
 
 	// Text Messages - each is loaded as an instance of a texture

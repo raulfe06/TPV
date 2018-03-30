@@ -7,7 +7,7 @@ class Fighter :
 public:
 	Fighter(SDLGame* game, int id);
 	virtual ~Fighter();
-	int getId();
+	int getId() const { return id_; };
 private:
 	int id_;
 };

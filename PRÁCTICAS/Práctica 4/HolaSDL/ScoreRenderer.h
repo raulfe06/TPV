@@ -6,6 +6,6 @@ class ScoreRenderer :
 public:
 	ScoreRenderer();
 	~ScoreRenderer();
-	virtual void render(GameObject* o, Uint32 time) {};
+	virtual void render(GameObject* o, Uint32 time);
 };
 

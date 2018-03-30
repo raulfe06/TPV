@@ -13,7 +13,7 @@ class AsteroidsManager : public GameObject,public Observer, public Observable,pu
 public:
 	AsteroidsManager(SDLGame* game);
 	virtual ~AsteroidsManager();
-	virtual void handleInput(Uint32 time, const SDL_Event& event);
+	virtual void handleInput(Uint32 time, const SDL_Event& event) {}; //No hace nada
 	virtual void update(Uint32 time);
 	virtual void render(Uint32 time);
 	virtual vector<Asteroid*>& getAsteroids() { return objs_; };
@@ -22,6 +22,7 @@ private:
 	void initializeObject(Asteroid* o);
 	Asteroid* getAsteroid();
 	void initAsteroids();
+
 	ImageRenderer asteroidImage_;
 	CircularMotionPhysics circularPhysics_;
 	RotationPhysics rotationPhysics_;

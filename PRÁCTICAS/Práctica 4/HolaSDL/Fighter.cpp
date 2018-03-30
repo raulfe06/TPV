@@ -4,6 +4,8 @@
 
 Fighter::Fighter(SDLGame* game, int id) : Container(game)
 {
+	setWidth(50);
+	setHeight(50);
 }
 
 

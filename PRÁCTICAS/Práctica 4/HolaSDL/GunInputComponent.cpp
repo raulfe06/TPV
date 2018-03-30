@@ -16,7 +16,10 @@ GunInputComponent::~GunInputComponent()
 
 void GunInputComponent::handleInput(GameObject * o, Uint32 time, const SDL_Event & event)
 {
-	Vector2D p, v,d;
+
+	Fighter* f = static_cast<Fighter*>(o);
+
+	Vector2D p, v, d;
 	double w, h;
 
 	w = o->getWidth();
@@ -26,21 +29,18 @@ void GunInputComponent::handleInput(GameObject * o, Uint32 time, const SDL_Event
 	p = o->getPosition();
 	Vector2D auxPos{ w / 2, h / 2 };
 	auxPos = p + auxPos + d * (h / 2);
-	
+
 	Vector2D auxVel(d*max(v.magnitude() * 5, 2.0));
 
-	
-	
-
-	if (event.type == SDL_KEYDOWN ) 
+	if (event.type == SDL_KEYDOWN)
 	{// time + timeInterval_ < timeInterval_ + tiempoDisparo_
 
-		if (event.key.keysym.sym == shootKey_ && time > tiempoDisparo_+timeInterval_)
+		if (event.key.keysym.sym == shootKey_ && time > tiempoDisparo_ + timeInterval_)
 		{
 			tiempoDisparo_ = time;
-			//bulletsManager_->shoot(o, auxPos, auxVel); //CAMBIAR POR MENSAJE
+			send(&FighterIsShooting(f, auxPos, auxVel));
 		}
 	}
-	
-	
+
+
 }

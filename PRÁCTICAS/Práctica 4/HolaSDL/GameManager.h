@@ -22,6 +22,12 @@ public:
 	void setBadge(bool b);
 	void receive(Message* msg);
 private:
+	int lives_;
+	int score_;
+	bool badge_;
+	bool running_;
+	bool gameOver_;
+
 	ScoreRenderer scoreRenderer_;
 	LiveRenderer livesRenderer_;
 	GameCtrlInputComponent gameCtrl_;

@@ -1,8 +1,10 @@
 #pragma once
 #include "InputComponent.h"
 #include "BulletsManager.h"
+#include "Observable.h"
+
 class GunInputComponent :
-	public InputComponent
+	public InputComponent, public Observable
 {
 public:
 	GunInputComponent(Observer* bulletsManager_, SDL_Keycode shootKey_,Uint8 shotsPerInterval, Uint32 timeInterval_);

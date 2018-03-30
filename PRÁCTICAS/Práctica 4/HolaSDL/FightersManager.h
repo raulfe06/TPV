@@ -7,6 +7,7 @@
 #include "RotationInputComponent.h"
 #include "GunInputComponent.h"
 #include "BadgeRenderer.h"
+#include "BasicMotionPhysics.h"
 
 class FightersManager : public GameObject,public Observer
 {
@@ -27,5 +28,6 @@ private:
 	GunInputComponent gunComp1_;
 	GunInputComponent gunComp2_;
 	BadgeRenderer badgeRenderer_;
+	BasicMotionPhysics basicMotionComp_;
 };
 
