@@ -1,5 +1,9 @@
 #pragma once
 #include "Container.h"
+
+const int defWidth = 30;
+const int defHeight = 30;
+
 class Asteroid :
 	public Container
 {

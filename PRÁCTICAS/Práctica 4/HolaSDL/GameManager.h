@@ -21,6 +21,9 @@ public:
 	int getScore() const;
 	void setBadge(bool b);
 	void receive(Message* msg);
+
+	virtual void handleInput(Uint32 time, const SDL_Event& event);
+
 private:
 	int lives_;
 	int score_;

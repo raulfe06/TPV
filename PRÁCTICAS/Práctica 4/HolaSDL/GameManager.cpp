@@ -10,7 +10,7 @@ GameManager::GameManager(SDLGame* game) : Container(game), livesRenderer_(game),
 	addRenderComponent(&livesRenderer_);
 	addInputComponent(&gameCtrl_);
 	addRenderComponent(&gameMsg_);
-	send(&Message(ROUND_START));
+	setRunning(true);
 }
 
 
@@ -60,7 +60,8 @@ void GameManager::receive(Message * msg)
 	switch (msg->id_) {
 	case ASTROID_FIGHTER_COLLISION:
 		lives_--;
-		send(&Message(ROUND_OVER));
+		//send(&Message(ROUND_OVER)); Quizá no es necesario con el setRunning()
+		setRunning(false);
 		setBadge(false);
 		if (lives_ <= 0) {
 			send(&Message(GAME_OVER));
@@ -78,5 +79,22 @@ void GameManager::receive(Message * msg)
 		send(&Message(GAME_OVER));
 			break;
 		
+	}
+}
+
+void GameManager::handleInput(Uint32 time, const SDL_Event & event)
+{
+	if (!isRunning())
+	{
+		if (event.type == SDL_KEYDOWN)
+		{
+			switch (event.key.keysym.sym)
+			{
+			case SDLK_SPACE:
+				setRunning(true);
+				break;
+			}
+		}
+		Container::handleInput(time, event);
 	}
 }

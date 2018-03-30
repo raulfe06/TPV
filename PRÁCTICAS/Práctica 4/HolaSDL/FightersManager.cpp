@@ -63,6 +63,7 @@ void FightersManager::receive(Message * msg)
 			break;
 	case ROUND_OVER:
 		fighter_.setActive(false);
+		fighter_.setVelocity(Vector2D(0, 0));
 			break;
 	case BADGE_ON:
 		fighter_.delInputComponent(&gunComp1_);

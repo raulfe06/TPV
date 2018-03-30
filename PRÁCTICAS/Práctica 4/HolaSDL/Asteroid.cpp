@@ -5,8 +5,8 @@
 Asteroid::Asteroid(SDLGame* game) : Container(game)
 {
 	setActive(true);
-	setWidth(30);
-	setHeight(30);
+	setWidth(defWidth);
+	setHeight(defHeight);
 }
 
 

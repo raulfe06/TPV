@@ -106,12 +106,15 @@ Asteroid * AsteroidsManager::getAsteroid()
 
 void AsteroidsManager::initAsteroids()
 {
-	for (Asteroid* a : objs_) {
+	for (Asteroid* a : objs_)
+	{
+		a->setWidth(defWidth);
+		a->setHeight(defHeight);
+
 		a->setActive(false);
 	}
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 5; i++)
 		addAsteroid();
-	}
 }
 
 void AsteroidsManager::addAsteroid()
@@ -143,6 +146,7 @@ void AsteroidsManager::addAsteroid()
 	x = game_->getWindowWidth();
 	y = rand() % game_->getWindowHeight() + 0;
 	Asteroid* a = getAsteroid();
+	a->setActive(true);
 	a->setPosition(Vector2D(x, y));
 	a->setVelocity(Vector2D(-1, 0));
 
