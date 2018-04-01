@@ -65,7 +65,8 @@ void SDLGame::initResources() {
 }
 
 void SDLGame::closeResources() {
-	resources_->~Resources();
+	//resources_->~Resources();
+	delete resources_;
 }
 
 SDL_Window* SDLGame::getWindow() const {

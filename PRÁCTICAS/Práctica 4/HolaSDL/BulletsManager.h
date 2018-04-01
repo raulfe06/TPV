@@ -9,7 +9,7 @@ class BulletsManager : public Observer, public Observable, public OManager<Bulle
 {
 public:
 	BulletsManager();
-	~BulletsManager();
+	virtual ~BulletsManager();
 	virtual std::vector<Bullet*>& getBullets() = 0;
 
 };

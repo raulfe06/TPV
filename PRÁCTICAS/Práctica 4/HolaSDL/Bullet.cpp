@@ -4,6 +4,8 @@
 Bullet::Bullet(SDLGame* game) : Container(game)
 {
 	setActive(true);
+	setWidth(defBWidth);
+	setHeight(defBHeight);
 }
 
 

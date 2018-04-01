@@ -66,8 +66,8 @@ void AsteroidsManager::receive(Message * msg)
 				x->setPosition(auxPosition);
 				x->setVelocity(auxVelocity);
 
-				x->setWidth(x->getWidth() / 2);
- 				x->setHeight(x->getHeight() / 2);
+				x->setWidth(x->getWidth() * 2/ 3);
+ 				x->setHeight(x->getHeight() * 2/ 3);
 
 				numOfasteroids_++;
 			}
@@ -105,8 +105,8 @@ void AsteroidsManager::initAsteroids()
 	numOfasteroids_ = 0;
 	for (Asteroid* a : objs_)
 	{
-		a->setWidth(defWidth);
-		a->setHeight(defHeight);
+		a->setWidth(defAWidth);
+		a->setHeight(defAHeight);
 
 		a->setActive(false);
 	}

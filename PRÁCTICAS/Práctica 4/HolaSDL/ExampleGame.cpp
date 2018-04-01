@@ -59,7 +59,6 @@ void ExampleGame::initGame() {
 
 void ExampleGame::closeGame() {
 	
-	
 }
 
 void ExampleGame::start() {

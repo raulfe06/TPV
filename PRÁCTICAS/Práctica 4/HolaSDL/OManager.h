@@ -14,10 +14,10 @@ public:
 	OManager() :
 			objs_() {
 	}
-	virtual ~OManager() {
-		for( T* o : objs_ ) {
+	virtual ~OManager() 
+	{
+		for( T* o : objs_ )
 			delete o;
-		}
 	}
 	T* getObject(SDLGame* game);
 	virtual void initializeObject(T* o) = 0;

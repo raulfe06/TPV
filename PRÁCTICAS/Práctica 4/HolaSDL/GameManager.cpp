@@ -79,6 +79,7 @@ void GameManager::receive(Message * msg)
 		if (lives_ <= 0) {
 			send(&Message(GAME_OVER));
 			gameOver_ = true;
+			game_->stop(); // PARA ACABAR EL JUEGO
 		}
 		if (badge_) setBadge(false);
 		break;
@@ -96,6 +97,7 @@ void GameManager::receive(Message * msg)
 		send(&Message(ROUND_OVER));
 		send(&Message(GAME_OVER));
 		gameOver_ = true;
+		game_->stop(); // PARA ACABAR EL JUEGO
 		setRunning(false);
 		break;
 

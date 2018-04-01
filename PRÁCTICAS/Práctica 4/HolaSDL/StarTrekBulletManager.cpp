@@ -41,8 +41,8 @@ void StarTrekBulletManager::initializeObject(Bullet * o)
 	SDL_Color color = { 255,165,0 };
 	o->addRenderComponent(&bulletRenderer_);
 	o->addPhysicsComponent(&bulletPhysics_);
-	o->setHeight(10);
-	o->setWidth(10);
+	//o->setHeight(10);
+	//o->setWidth(10);
 }
 
 void StarTrekBulletManager::receive(Message * msg)

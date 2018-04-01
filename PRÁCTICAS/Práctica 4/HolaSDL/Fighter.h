@@ -1,6 +1,9 @@
 #pragma once
 #include "Container.h"
 
+const int defFWidth = 20;
+const int defFHeight = 20;
+
 class Fighter :
 	public Container
 {

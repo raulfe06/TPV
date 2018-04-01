@@ -1,5 +1,9 @@
 #pragma once
 #include "Container.h"
+
+const int defBWidth = 5;
+const int defBHeight = 5;
+
 class Bullet :
 	public Container
 {

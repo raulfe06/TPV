@@ -8,7 +8,8 @@ GameObject::GameObject()
 {
 }
 
-GameObject::~GameObject() {
+GameObject::~GameObject()
+{
 }
 
 SDLGame* GameObject::getGame() const {
