@@ -6,6 +6,8 @@
 #include "CircularMotionPhysics.h"
 #include "RotationPhysics.h"
 #include "OManager.h"
+#include "BasicMotionPhysics.h"
+
 
 const double ROTATION_ANGLE = 5;
 class AsteroidsManager : public GameObject,public Observer, public Observable,public OManager<Asteroid>
@@ -27,6 +29,7 @@ private:
 	ImageRenderer asteroidImage_;
 	CircularMotionPhysics circularPhysics_;
 	RotationPhysics rotationPhysics_;
+	BasicMotionPhysics posPhysics_;
 	int numOfasteroids_;
 	void addAsteroid();
 	Vector2D getRandomVelocity();

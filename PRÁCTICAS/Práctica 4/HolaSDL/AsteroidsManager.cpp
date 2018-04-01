@@ -1,5 +1,4 @@
 #include "AsteroidsManager.h"
-#include "BasicMotionPhysics.h"
 
 
 AsteroidsManager::AsteroidsManager(SDLGame* game) : GameObject(game),
@@ -93,7 +92,7 @@ void AsteroidsManager::initializeObject(Asteroid * o)
 	o->addPhysicsComponent(&circularPhysics_);
 	o->addRenderComponent(&asteroidImage_);
 	o->addPhysicsComponent(&rotationPhysics_);
-	o->addPhysicsComponent(new BasicMotionPhysics());
+	o->addPhysicsComponent(&posPhysics_);
 }
 
 Asteroid * AsteroidsManager::getAsteroid()
@@ -117,7 +116,7 @@ void AsteroidsManager::initAsteroids()
 
 void AsteroidsManager::addAsteroid()
 {
-	/*Asteroid* a = new Asteroid(game_);*/
+	
 	double x, y;
 
 	switch (rand() % 3 + 0)

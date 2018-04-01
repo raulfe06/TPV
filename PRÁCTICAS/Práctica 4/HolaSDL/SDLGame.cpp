@@ -1,5 +1,6 @@
 #include "SDLGame.h"
 #include <time.h>
+#include "checkML.h"
 
 
 SDLGame::SDLGame(std::string windowTitle, int width, int height) :
@@ -64,7 +65,7 @@ void SDLGame::initResources() {
 }
 
 void SDLGame::closeResources() {
-	delete resources_;
+	resources_->~Resources();
 }
 
 SDL_Window* SDLGame::getWindow() const {

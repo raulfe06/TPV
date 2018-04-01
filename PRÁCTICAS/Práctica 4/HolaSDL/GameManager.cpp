@@ -16,6 +16,7 @@ gameMsg_(game, CONTINUE_TEXT)
 
 GameManager::~GameManager()
 {
+	
 }
 
 bool GameManager::isGameOver() const
@@ -38,7 +39,7 @@ void GameManager::setRunning(bool running)
 	if (running_ != running) {
 		running_ = running;
 		Message m = { running ? ROUND_START : ROUND_OVER };
-		if (!running) addRenderComponent(&gameMsg_);
+		if (!running && !gameOver_) addRenderComponent(&gameMsg_);
 		else delRenderComponent(&gameMsg_);
 		send(&m);
 		if (gameOver_ && running)
@@ -109,6 +110,7 @@ void GameManager::restartGame()
 	badge_ = false;
 	running_ = true;
 	gameOver_ = false;
+	delRenderComponent(&gameMsg_);
 	send(&Message(ROUND_START));
 }
 

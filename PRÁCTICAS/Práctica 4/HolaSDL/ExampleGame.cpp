@@ -23,6 +23,7 @@ ExampleGame::~ExampleGame() {
 	closeGame();
 }
 
+
 void ExampleGame::initGame() {
 
 	SDL_ShowCursor(0);
@@ -57,16 +58,8 @@ void ExampleGame::initGame() {
 }
 
 void ExampleGame::closeGame() {
-	if (demoObj_ != nullptr)
-		delete demoObj_;
-	if (demoComp_ != nullptr)
-		delete demoComp_;
-	if (inputComp_ != nullptr)
-		delete inputComp_;
-	if (physicsComp_ != nullptr)
-		delete physicsComp_;
-	if (renderComp_ != nullptr)
-		delete renderComp_;
+	
+	
 }
 
 void ExampleGame::start() {
@@ -80,6 +73,8 @@ void ExampleGame::start() {
 		if (frameTime < 10)
 			SDL_Delay(10 - frameTime);
 	}
+	
+	
 }
 
 void ExampleGame::stop() {

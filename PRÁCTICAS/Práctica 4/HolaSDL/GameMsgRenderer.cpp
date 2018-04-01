@@ -1,6 +1,6 @@
 #include "GameMsgRenderer.h"
 #include <string>
-
+#include "checkML.h"
 
 GameMsgRenderer::GameMsgRenderer(SDLGame * game, std::string text) : game_(game)
 {
@@ -10,6 +10,7 @@ GameMsgRenderer::GameMsgRenderer(SDLGame * game, std::string text) : game_(game)
 
 GameMsgRenderer::~GameMsgRenderer()
 {
+	
 }
 
 void GameMsgRenderer::render(GameObject * o, Uint32 time)
