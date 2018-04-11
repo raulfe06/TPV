@@ -3,7 +3,7 @@
 
 
 StarTrekBulletManager::StarTrekBulletManager(SDLGame* game) : GameObject(game),bulletRenderer_(SDL_Color{ 255,165,0 }),
-bulletPhysics_()
+bulletPhysics_(),superBullets(false)
 {
 	
 }
@@ -48,6 +48,7 @@ void StarTrekBulletManager::initializeObject(Bullet * o)
 void StarTrekBulletManager::receive(Message * msg)
 {
 	Fighter* auxFighter;
+
 	switch (msg->id_) {
 	case ROUND_START:
 		makeBulletsInactive();
@@ -56,16 +57,24 @@ void StarTrekBulletManager::receive(Message * msg)
 		makeBulletsInactive();
 		break;
 	case BULLET_ASTROID_COLLISION:
+ 		if(!superBullets)
 		static_cast<BulletAstroidCollision*>(msg)->bullet_->setActive(false);
 		break;
 	case BULLET_FIGHTER_COLLISION:
 		static_cast<BulletFighterCollision*>(msg)->bullet_->setActive(false);
+		break;
+	case SUPERBULLETS_ON:
+		switchSuperBullets(true);
+		break;
+	case SUPERBULLETS_OFF:
+		switchSuperBullets(false);
 		break;
 	case FIGHTER_SHOOT:
 		FighterIsShooting * m = static_cast<FighterIsShooting*>(msg);
 		shoot(m->fighter_, m->bulletPosition_, m->bulletVelocity_);
 		send(&Message(BULLET_CREATED));
 		break;
+	
 	}
 }
 

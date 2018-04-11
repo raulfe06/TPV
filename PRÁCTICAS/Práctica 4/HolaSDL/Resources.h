@@ -8,6 +8,8 @@
 #include <vector>
 #include <tuple>
 
+const int NUM_BADGES = 3;
+
 class SDLGame;
 class Resources {
 public:
@@ -18,11 +20,14 @@ public:
 	// Images -- each image file is loaded as an instance of Texture
 	//
 	enum ImageId {
+		Badge,
+		SuperBulletsBadge,
+		MultiBulletsGunBadge,
 		SpaceShips,
 		Airplanes,
 		Asteroid,
-		Badge,
-		Life,
+		Life
+	
 	};
 
 	// Text Messages - each is loaded as an instance of a texture
@@ -65,6 +70,7 @@ private:
 	};
 
 	static std::vector<std::string> imageFiles_; // initialized in .cpp
+	static std::vector<std::string> badgeFiles_; // initialized in .cpp
 	static std::vector<TextMsgInfo> textMsgs_; // initialized in .cpp
 	static std::vector<FontInfo> fontFiles_; // initialized in .cpp
 	static std::vector<std::string> musicFiles_; // initialized in .cpp

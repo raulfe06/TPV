@@ -35,19 +35,7 @@ private:
 	bool exit_;
 	std::vector<GameObject*> actors_;
 
-	GameObject* demoObj_;
-	GameObject* plane_;
-	GameComponent* demoComp_;
-	GameComponent* planeComp_;
-	RenderComponent* renderPlane_;
-	InputComponent* inputPlane_;
-	InputComponent* rotateComp_;
-	PhysicsComponent* circularComp_;
-	InputComponent* inputComp_;
-	PhysicsComponent* physicsComp_;
-	RenderComponent* renderComp_;
-	InputComponent* acelerationComp_;
-	InputComponent* gunInputComp_;
+
 
 	StarTrekBulletManager bulletsManager_;
 	FightersManager fightersManager_;

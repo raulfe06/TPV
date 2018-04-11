@@ -4,8 +4,10 @@
 #include "checkML.h"
 
 
-std::vector<std::string> Resources::imageFiles_ { "images/spaceships.png", "images/airplanes.png",
-		"images/astroid.png","images/gun2Badge.png","images/life.png" };
+std::vector<std::string> Resources::imageFiles_ { "images/gun2Badge.png","images/superBullets.png","images/multiBullets.png",
+"images/spaceships.png", "images/airplanes.png","images/astroid.png","images/life.png" };
+
+//std::vector<std::string> Resources::badgeFiles_{ "images/gun2Badge.png","images/superBullets.png","images/multiBullets.png" };
 
 std::vector<Resources::FontInfo> Resources::fontFiles_ {
 		{ "fonts/ARIAL.ttf", 16 }, { "fonts/ARIAL.ttf", 24 }, {

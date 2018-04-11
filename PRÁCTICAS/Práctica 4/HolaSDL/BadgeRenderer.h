@@ -6,7 +6,7 @@ class BadgeRenderer :
 	const int BADGE_SIZE = 40;
 
 public:
-	BadgeRenderer(SDLGame* game);
+	BadgeRenderer(SDLGame* game, Resources::ImageId badgeImage);
 	~BadgeRenderer();
 	virtual void render(GameObject* o, Uint32 time);
 private:

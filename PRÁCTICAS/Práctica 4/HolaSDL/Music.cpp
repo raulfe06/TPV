@@ -20,6 +20,11 @@ bool Music::load(std::string fileName) {
 }
 
 void Music::play(int repetitions) {
+	if (Mix_PausedMusic())
+	{
+		Mix_RewindMusic();
+		Mix_ResumeMusic();
+	}
 	Mix_PlayMusic(music_, repetitions);
 }
 

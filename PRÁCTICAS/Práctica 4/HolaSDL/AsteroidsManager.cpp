@@ -40,38 +40,42 @@ void AsteroidsManager::receive(Message * msg)
 	{
 	case BULLET_ASTROID_COLLISION:
 		 x = static_cast<BulletAstroidCollision*>(msg)->astroid_;
-		 static_cast<BulletAstroidCollision*>(msg)->bullet_->setActive(false);
-		 x->setActive(false);
+		 //static_cast<BulletAstroidCollision*>(msg)->bullet_->setActive(false);
+		
 		 numOfasteroids_--;
 		
-		if (int numgen = x->getGenerations() > 0) 
+		if ( x->getGenerations() > 0) 
 		{
 			auxVelocity = x->getVelocity();
 			auxDirection = x->getDirection();
 			auxPosition = x->getPosition();
 
-			int randomNumber = rand() % 2 + 2; //Random entre 2 y 4 
+			
+
+			int randomNumber = rand() % 3 + 2; //Random entre 2 y 4 
 
 			for (int i = 0; i < randomNumber; i++)
 			{
-				x = getAsteroid();
+				Asteroid* a = getAsteroid();
 
-				x->setActive(true);
-				x->setGenerations(numgen - 1);
+				a->setActive(true);
+				a->setGenerations(x->getGenerations() - 1);
 				
 
 				auxVelocity.rotate(i * 30);
 
-				x->setDirection(auxDirection);
-				x->setPosition(auxPosition);
-				x->setVelocity(auxVelocity);
+				a->setDirection(auxDirection);
+				a->setPosition(auxPosition);
+				a->setVelocity(auxVelocity);
 
-				x->setWidth(x->getWidth() * 2/ 3);
- 				x->setHeight(x->getHeight() * 2/ 3);
+				a->setWidth(x->getWidth() * 3/ 4);
+ 				a->setHeight(x->getHeight() * 3/ 4);
 
 				numOfasteroids_++;
 			}
 		}
+		x->setActive(false);
+
 		if (numOfasteroids_ <= 0) {
 			Message m = NO_MORE_ATROIDS;
 			send(&m);
@@ -88,7 +92,7 @@ void AsteroidsManager::initializeObject(Asteroid * o)
 {
 
 	o->setActive(true);
-	o->setGenerations(4);
+	//o->setGenerations(4);
 	o->addPhysicsComponent(&circularPhysics_);
 	o->addRenderComponent(&asteroidImage_);
 	o->addPhysicsComponent(&rotationPhysics_);
@@ -144,9 +148,9 @@ void AsteroidsManager::addAsteroid()
 	Asteroid* a = getAsteroid();
 	a->setActive(true);
 	a->setPosition(Vector2D(x, y));
-	a->setVelocity(getRandomVelocity());
+	a->setVelocity(getRandomVelocity()*0.1);
 
-	int randomNumber = rand() % ((3 - 1) + 1) + 1; //Random entre 1 y 3 
+	int randomNumber = rand() % 3 + 1; //Random entre 1 y 3 
 	a->setGenerations(randomNumber);
 	
 	numOfasteroids_++;
@@ -156,7 +160,7 @@ void AsteroidsManager::addAsteroid()
 Vector2D AsteroidsManager::getRandomVelocity()
 {
 	int x, y;
-	int randomNum = rand() % 7 + 1;
+	int randomNum = rand() % 8 + 1;
 	switch (randomNum)
 	{
 	case 1:

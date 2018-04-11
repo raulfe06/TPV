@@ -2,12 +2,14 @@
 
 
 
+
 FightersManager::FightersManager(SDLGame* game, Observer* bulletsManager) : GameObject(game), fighter_(game,0),
-accelerationComp_(SDLK_s,SDLK_w,1,5,0.5),renderComp_(game->getResources()->getImageTexture(Resources::Airplanes), RECT(47, 90, 207, 247)),
+accelerationComp_(SDLK_s,SDLK_w,0.3,3,0.5),renderComp_(game->getResources()->getImageTexture(Resources::Airplanes), RECT(47, 90, 207, 247)),
 rotationComp_(5,SDLK_a,SDLK_d), 
 
-gunComp1_(bulletsManager,SDLK_SPACE,0,500),gunComp2_(bulletsManager, SDLK_SPACE, 0, 100),badgeRenderer_(game)
+gunComp1_(bulletsManager,SDLK_SPACE,0,500),gunComp2_(bulletsManager, SDLK_SPACE, 0, 100)
 {
+	initializeBadges();
 	fighter_.setActive(false);
 	fighter_.setPosition(Vector2D(game->getWindowWidth() / 2, game->getWindowHeight() / 2));
 	fighter_.addInputComponent(&gunComp1_);
@@ -70,13 +72,32 @@ void FightersManager::receive(Message * msg)
 	case BADGE_ON:
 		fighter_.delInputComponent(&gunComp1_);
 		fighter_.addInputComponent(&gunComp2_);
-		fighter_.addRenderComponent(&badgeRenderer_);
+		fighter_.addRenderComponent(&badges_[FasterBulletsBadge]);
 		break;
 	case BADGE_OFF:
 		fighter_.delInputComponent(&gunComp2_);
 		fighter_.addInputComponent(&gunComp1_);
-		fighter_.delRenderComponent(&badgeRenderer_);
+		fighter_.delRenderComponent(&badges_[FasterBulletsBadge]);
+		break;
+	case SUPERBULLETS_ON:
+		fighter_.addRenderComponent(&badges_[SuperBulletBadge]);
+		break;
+	case SUPERBULLETS_OFF:
+		fighter_.delRenderComponent(&badges_[SuperBulletBadge]);
+		break;
+	case MULTIBULLETS_ON:
+		
+		break;
+	case MULTIBULLETS_OFF:
+		
 		break;
 
+	}
+}
+
+void FightersManager::initializeBadges()
+{
+	for (int i = 0; i < NUM_BADGES; i++) {
+		badges_.push_back(BadgeRenderer(game_,(Resources::ImageId)i));
 	}
 }

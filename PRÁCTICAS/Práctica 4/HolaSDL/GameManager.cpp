@@ -76,6 +76,7 @@ void GameManager::receive(Message * msg)
 		lives_--;
 		setRunning(false);
 		setBadge(false);
+		resetCount();
 		if (lives_ <= 0) {
 			send(&Message(GAME_OVER));
 			gameOver_ = true;
@@ -88,8 +89,8 @@ void GameManager::receive(Message * msg)
 		killCount_--;
        		if (killCount_ == 0)
 		{
-       			send(&Message(BADGE_ON));
- 			badgeTimer_.start(5000);
+       			send(&Message(SUPERBULLETS_ON));
+ 			badgeTimer_.start(10000);
 		}
 			break;
 	case NO_MORE_ATROIDS:

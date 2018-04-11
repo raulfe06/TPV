@@ -19,8 +19,10 @@ private:
 	virtual void initializeObject(Bullet* o);
 	virtual void receive(Message* msg);
 	virtual void shoot(Fighter* owner, Vector2D position, Vector2D velocity);
+	void switchSuperBullets(bool active) { superBullets = active; };
 	FillRectRenderer bulletRenderer_;
 	BasicMotionPhysics bulletPhysics_;
 	void makeBulletsInactive();
+	bool superBullets;
 };
 
