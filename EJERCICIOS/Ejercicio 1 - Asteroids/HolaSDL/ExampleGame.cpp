@@ -7,6 +7,9 @@
 #include "ImageRenderer.h"
 #include "RotationInputComponent.h"
 #include "CircularMotionPhysics.h"
+#include "AcelerationInputComponent.h"
+#include "StarWarsBulletsManager.h"
+#include "GunInputComponent.h"
 
 ExampleGame::ExampleGame() :
 		SDLGame("Example Game", _WINDOW_WIDTH_, _WINDOW_HEIGHT_) {
@@ -30,32 +33,45 @@ void ExampleGame::initGame() {
 	demoObj_->setPosition(
 			Vector2D(getWindowWidth() / 2 - 5, getWindowHeight() / 2 - 5));
 	demoObj_->setVelocity(Vector2D(1, 1));
-	actors_.push_back(demoObj_);
+	//actors_.push_back(demoObj_);
 
 	// game object based on component
 	demoComp_ = new GameComponent(this);
-	inputComp_ = new BasicKBCtrlComponent(SDLK_a, SDLK_d, SDLK_w, SDLK_s,
-			SDLK_f);
+	starWarsManager_ = new StarWarsBulletsManager();
+	//inputComp_ = new BasicKBCtrlComponent(SDLK_a, SDLK_d, SDLK_w, SDLK_s,
+	//		SDLK_f);
+
 	physicsComp_ = new BasicMotionPhysics();
-	rotateComp_ = new RotationInputComponent(5, SDLK_z, SDLK_x);
+	rotateComp_ = new RotationInputComponent(5, SDLK_a, SDLK_d);
 	circularComp_ = new CircularMotionPhysics();
+	acelerationComp_ = new AcelerationInputComponent(SDLK_s, SDLK_w, 1,7,0.6);
+	gunInputComp_ = new GunInputComponent(starWarsManager_, SDLK_SPACE,0,500);
 
 	// choose either the filled rectangle or the image renderer
 	//
 	//	renderComp_ = new FillRectRenderer( { COLOR(0x11ff22ff) });
 	renderComp_ = new ImageRenderer( getResources()->getImageTexture(Resources::Airplanes));
-
 	demoComp_->setWidth(50);
 	demoComp_->setHeight(50);
 	demoComp_->setPosition(Vector2D(100, 100));
 	demoComp_->setVelocity(Vector2D(1, 0));
-	demoComp_->addInputComponent(inputComp_);
+	//demoComp_->addInputComponent(inputComp_);
 	demoComp_->addInputComponent(rotateComp_);
+	demoComp_->addInputComponent(gunInputComp_);
+
+	demoComp_->addInputComponent(acelerationComp_);
 	demoComp_->addPhysicsComponent(physicsComp_);
 	demoComp_->addPhysicsComponent(circularComp_);
 
 	demoComp_->addRenderComponent(renderComp_);
 	actors_.push_back(demoComp_);
+	actors_.push_back(starWarsManager_);
+
+	//Vector2D auxPos(demoComp_->getPosition().getX() + demoComp_->getWidth(), 
+	//	demoComp_->getPosition().getY() + demoComp_->getHeight() / 2);
+
+	//starWarsManager_->shoot(demoComp_, auxPos, demoComp_->getVelocity()*2);
+
 }
 
 void ExampleGame::closeGame() {
