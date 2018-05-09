@@ -46,17 +46,25 @@ void AsteroidsGame::initGame() {
 	gameManager_.registerObserver(&networkMessenger_);
 	gameManager_.registerObserver(&fightersManager_);
 	gameManager_.registerObserver(&bulletsManager_);
+	gameManager_.registerObserver(&asteroidsManager_);
+
 
 	networkMessenger_.registerObserver(&gameManager_);
 	networkMessenger_.registerObserver(&fightersManager_);
 	networkMessenger_.registerObserver(&bulletsManager_);
+	networkMessenger_.registerObserver(&asteroidsManager_);
+
 
 	fightersManager_.registerObserver(&networkMessenger_);
+	fightersManager_.registerObserver(&asteroidsManager_);
+
 
 	collisionManager_.registerObserver(&networkMessenger_);
 	collisionManager_.registerObserver(&fightersManager_);
 	collisionManager_.registerObserver(&bulletsManager_);
 	collisionManager_.registerObserver(&gameManager_);
+	collisionManager_.registerObserver(&asteroidsManager_);
+
 
 	networkMessenger_.init(&getConnection());
 	gameManager_.init();
@@ -64,6 +72,7 @@ void AsteroidsGame::initGame() {
 	actors_.push_back(&gameManager_);
 	actors_.push_back(&fightersManager_);
 	actors_.push_back(&bulletsManager_);
+	actors_.push_back(&asteroidsManager_);
 	actors_.push_back(&collisionManager_); // should be last to check collision at the end
 
 }

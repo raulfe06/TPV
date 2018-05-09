@@ -27,7 +27,7 @@ void MultiBulletsGunComponent::handleInput(GameObject * o, Uint32 time, const SD
 	v = o->getVelocity();
 	p = o->getPosition();
 	Vector2D auxPos{ w / 2, h / 2 };
-	auxPos = p;/*+ auxPos + d * (h / 2);*/
+	auxPos = p + auxPos; // +d * (h / 2); */
 
 	Vector2D auxVel(d*max(v.magnitude() * 5, 2.0));
 
