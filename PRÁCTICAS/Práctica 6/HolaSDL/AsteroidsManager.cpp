@@ -1,7 +1,7 @@
 #include "AsteroidsManager.h"
 
 
-AsteroidsManager::AsteroidsManager(SDLGame* game) : GameObject(game),
+AsteroidsManager::AsteroidsManager(SDLGame* game, GameManager* gm) : GameObject(game),gm_(gm),
 asteroidImage_(game->getResources()->getImageTexture(Resources::Astroid), RECT(0, 0, 151, 143)),
 rotationPhysics_(ROTATION_ANGLE), numOfasteroids_(0),timeInterval(10000),timePassed(0)
 {
@@ -21,6 +21,7 @@ void AsteroidsManager::update(Uint32 time)
 	}
 	if (time - timePassed > timeInterval && getGame()->isMasterClient()) {
 		timePassed = time;
+		if(gm_->getState() == GameManager::GameState::RUNNING)
 		addAsteroid();
 	}
 }
@@ -89,6 +90,9 @@ void AsteroidsManager::receive(Message * msg)
 
 	case GAME_START:
 		break;
+	case GAME_OVER:
+		disableAsteroids();
+		break;
 	case CREATE_ASTEROID:
 		AsteroidCreated * aux = static_cast<AsteroidCreated*>(msg);
 		Asteroid * a = getAsteroid();
@@ -101,11 +105,17 @@ void AsteroidsManager::receive(Message * msg)
 	}
 }
 
+void AsteroidsManager::disableAsteroids() 
+	{
+		for (Asteroid* b : objs_)
+			b->setActive(false);
+	}
+
 void AsteroidsManager::initializeObject(Asteroid * o)
 {
 
 	o->setActive(true);
-	o->addPhysicsComponent(&circularPhysics_);
+	o->addPhysicsComponent(&deactiveOnExitBordersPhysics_);
 	o->addRenderComponent(&asteroidImage_);
 	o->addPhysicsComponent(&rotationPhysics_);
 	o->addPhysicsComponent(&posPhysics_);

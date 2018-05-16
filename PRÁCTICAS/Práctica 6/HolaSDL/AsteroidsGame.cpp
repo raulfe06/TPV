@@ -9,7 +9,7 @@ AsteroidsGame::AsteroidsGame(char* host, int port) :
 		gameManager_(this), //
 		bulletsManager_(this), //
 		fightersManager_(this, &networkMessenger_, &bulletsManager_), //
-		asteroidsManager_(this), //
+		asteroidsManager_(this,&gameManager_), //
 		collisionManager_(this, &bulletsManager_, &fightersManager_,
 				&asteroidsManager_) //
 {
@@ -48,6 +48,11 @@ void AsteroidsGame::initGame() {
 	gameManager_.registerObserver(&bulletsManager_);
 	gameManager_.registerObserver(&asteroidsManager_);
 
+	asteroidsManager_.registerObserver(&networkMessenger_);
+	//asteroidsManager_.registerObserver(&fightersManager_);
+	//asteroidsManager_.registerObserver(&bulletsManager_);
+	//asteroidsManager_.registerObserver(&asteroidsManager_);
+	//asteroidsManager_.registerObserver(&gameManager_);
 
 	networkMessenger_.registerObserver(&gameManager_);
 	networkMessenger_.registerObserver(&fightersManager_);

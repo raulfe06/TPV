@@ -27,6 +27,7 @@ private:
 	void update(Uint32 time);
 	void render(Uint32 time);
 
+
 	const static int _WINDOW_WIDTH_ = 640;
 	const static int _WINDOW_HEIGHT_ = 480;
 

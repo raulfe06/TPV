@@ -13,6 +13,8 @@ enum MessageId {
 	FIGHETR_STATE,
 	FIGHTER_SHOOT,
 	BULLET_FIGHTER_COLLISION,
+	ASTEROID_FIGHTER_COLLISION,
+	BULLET_ASTEROID_COLLISION,
 	CREATE_ASTEROID,
 
 };
@@ -91,6 +93,26 @@ struct BulletFighterCollisionMsg: Message {
 					fighterId), bulletId_(bulletId), bulletOwnerId_(fbulletId) {
 	}
 	Uint8 fighterId_;
+	// the following uniquely identify a bullet
+	Uint16 bulletId_;
+	Uint8 bulletOwnerId_;
+};
+
+struct AsteoridFighterCollisionMsg : Message {
+	AsteoridFighterCollisionMsg(Uint8 fighterId, Uint16 asteroidId) :
+		Message(ASTEROID_FIGHTER_COLLISION, sizeof(AsteoridFighterCollisionMsg)), fighterId_(
+			fighterId), asteroidId_(asteroidId) {
+	}
+	Uint8 fighterId_;
+	Uint16 asteroidId_;
+};
+
+struct BulletAsteroidCollisionMsg : Message {
+	BulletAsteroidCollisionMsg(Uint8 asteroidId, Uint16 bulletId, Uint8 fbulletId) :
+		Message(BULLET_ASTEROID_COLLISION, sizeof(BulletAsteroidCollisionMsg)), asteroidId_(
+			asteroidId), bulletId_(bulletId), bulletOwnerId_(fbulletId) {
+	}
+	Uint8 asteroidId_;
 	// the following uniquely identify a bullet
 	Uint16 bulletId_;
 	Uint8 bulletOwnerId_;

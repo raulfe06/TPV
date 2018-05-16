@@ -24,17 +24,49 @@ void CollisionManager::update(Uint32 time) {
 	vector<Fighter*> fighters = fightersManager_->getFighters();
 	vector<Asteroid*> asteroids = asteroidsManager_->getAsteroids();
 
-	for (vector<Bullet*>& fighterBullets_ : bullets) {
-		for (Bullet* b : fighterBullets_) {
+	for (vector<Bullet*>& fighterBullets_ : bullets) 
+	{
+		for (Bullet* b : fighterBullets_) 
+		{
 			if (b->isActive()) {
-				for (Fighter* f : fighters) {
+				for (Fighter* f : fighters)
+				{
 					if (f != nullptr && f->isActive()
-							&& Collisions::collidesWithRotation(b, f)) {
+							&& Collisions::collidesWithRotation(b, f)) 
+					{
 						BulletFighterCollisionMsg m = { f->getId(),
 								b->getBulletId(), b->getFighterId() };
 						send(&m);
 						break; // it can kill only one fighter
 					}
+				}
+
+				for (Asteroid* a : asteroids)
+				{
+					if (a != nullptr && a->isActive()
+						&& Collisions::collidesWithRotation(b, a))
+					{
+						BulletAsteroidCollisionMsg m = { a->getAsteroidId(),
+							b->getBulletId(), b->getFighterId() };
+						send(&m);
+						break; // it can kill only one fighter
+					}
+				}
+			}
+		}
+	}
+	for (Fighter* f : fighters)
+	{
+		if (f->isActive())
+		{
+			for (Asteroid* a : asteroids)
+			{
+				if (a != nullptr && a->isActive()
+					&& Collisions::collidesWithRotation(f, a))
+				{
+					AsteoridFighterCollisionMsg m = { f->getId(),a->getAsteroidId() };
+					send(&m);
+					break; // it can kill only one fighter
 				}
 			}
 		}
