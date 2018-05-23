@@ -16,7 +16,7 @@ enum MessageId {
 	ASTEROID_FIGHTER_COLLISION,
 	BULLET_ASTEROID_COLLISION,
 	CREATE_ASTEROID,
-
+	CLIENT_DC,
 };
 
 typedef Uint16 header_t_;
@@ -129,7 +129,12 @@ struct AsteroidCreated : Message {
 	double width_;
 	double height_;
 };
-
+struct ClientDCMessage : Message {
+	ClientDCMessage(Uint8 clientId) :
+		Message(CLIENT_DC, sizeof(ClientDCMessage)), clientId_(clientId) {
+	}
+	Uint8 clientId_;
+};
 // this value should be bigger than the size of all messages
 #define MAX_MSG_SIZE 1000
 

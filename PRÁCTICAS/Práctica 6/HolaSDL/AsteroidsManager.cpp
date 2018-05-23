@@ -43,64 +43,25 @@ void AsteroidsManager::receive(Message * msg)
 
 	switch (msg->mType_)
 	{
-	//case BULLET_ASTROID_COLLISION:
-	//	x = static_cast<BulletAstroidCollision*>(msg)->astroid_;
-	//	//static_cast<BulletAstroidCollision*>(msg)->bullet_->setActive(false);
-
-	//	std::cout << numOfasteroids_ << std::endl;
-	//	numOfasteroids_--;
-
-	//	if (x->getGenerations() > 0)
-	//	{
-	//		auxVelocity = x->getVelocity();
-	//		auxDirection = x->getDirection();
-	//		auxPosition = x->getPosition();
-
-
-
-	//		int randomNumber = rand() % 3 + 2; //Random entre 2 y 4 
-
-	//		for (int i = 0; i < randomNumber; i++)
-	//		{
-	//			Asteroid* a = getAsteroid();
-
-	//			a->setActive(true);
-	//			a->setGenerations(x->getGenerations() - 1);
-
-
-	//			auxVelocity.rotate(i * 30);
-
-	//			a->setDirection(auxDirection);
-	//			a->setPosition(auxPosition);
-	//			a->setVelocity(auxVelocity);
-
-	//			a->setWidth(x->getWidth() * 3 / 4);
-	//			a->setHeight(x->getHeight() * 3 / 4);
-
-	//			numOfasteroids_++;
-	//		}
-	//	}
-	//	x->setActive(false);
-
-	//	if (numOfasteroids_ <= 0) {
-	//		//Message m = NO_MORE_ATROIDS;
-	//		//send(&m);
-	//	}
-	//	break;
-
 	case GAME_START:
 		break;
 	case GAME_OVER:
 		disableAsteroids();
 		break;
-	case CREATE_ASTEROID:
+	case CREATE_ASTEROID: {
 		AsteroidCreated * aux = static_cast<AsteroidCreated*>(msg);
 		Asteroid * a = getAsteroid();
+		a->setActive(true);
 		a->setVelocity(aux->vel_);
 		a->setDirection(aux->dir_);
 		a->setPosition(aux->pos_);
 		a->setHeight(aux->height_);
 		a->setWidth(aux->width_);
+		break;
+	}
+		
+	case CLIENT_DC:
+		disableAsteroids();
 		break;
 	}
 }

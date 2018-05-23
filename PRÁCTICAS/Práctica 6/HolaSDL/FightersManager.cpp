@@ -62,6 +62,9 @@ void FightersManager::receive(Message* msg) {
 	case ASTEROID_FIGHTER_COLLISION:
 		killPlayer(static_cast<AsteoridFighterCollisionMsg*>(msg)->fighterId_);
 		break;
+	case CLIENT_DC:
+		disableFighters();
+		break;
 	}
 }
 

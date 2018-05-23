@@ -84,14 +84,22 @@ void Server::start(int port) {
 					msg = clients_[i]->recvMessage();
 
 					if (msg == nullptr) {
+
 						// either the client closed the connection, or something went wrong,
 						// we disconnect the client
 						SDLNet_TCP_DelSocket(socketSet,
 								clients_[i]->getSocket()); // remove it from set -- very important!!
 						clients_[i]->close();
+						
 						delete clients_[i];
 						clients_[i] = nullptr;
 						cout << "Client " << i << " disconnected" << endl;
+						for (int j = 0; j < clients_.size(); j++) {
+							if (i != j && clients_[j] != nullptr) {
+								clients_[j]->sendMessage(&ClientDCMessage(i));
+							}
+
+						}
 					} else {
 						// if no error, forward the message to all clients
 						for (int j = 0; j < clients_.size(); j++) {
@@ -105,7 +113,7 @@ void Server::start(int port) {
 			}
 		}
 	}
-
+	
 	// close the master socket when we exit the loop
 	SDLNet_TCP_Close(masterSocket);
 }
